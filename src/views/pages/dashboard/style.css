@@ -1,0 +1,21 @@
+.dashboardLinkBox {
+    width: 110px;
+    height: 110px;
+    text-align: center;
+    background: #e8a3d6;
+    box-shadow: 0px 4px 4px 0px #181C3A40;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboardLinkBox a {
+    text-decoration: unset;
+    color: black;
+}
+
+.dashboardLinkBox p {
+    font-size: 12px;
+}
