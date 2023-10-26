@@ -25,12 +25,13 @@ export const TASKLIST_HEADER = [
     { label: 'Actions', align: 'left', id: 'actions' }
 ];
 
-export const EMPLOYEES_HEADER = [
+export const CUSTOMER_HEADER = [
     { label: 'S.No', align: "left", id: 'id' },
     { label: "First Name", align: "left", id: "first_name" },
     { label: "Last Name", align: "left", id: "last_name" },
     { label: "Email ID", align: "left", id: "email" },
     { label: "Mobile", align: "left", id: "mobile" },
+
 
     // { label: "Address", align: "left", id: "address" },
     // { label: "Country", align: "left", id: "country" },
@@ -65,22 +66,21 @@ export const INVOICE_HEADER = [
     { label: 'Actions', align: 'left', id: 'action' }
 ];
 
-    export const PRODUCT_HEADER = [
-      { label: "S.No", align: "left", id: "id" },
-      { label: "Product Name", align: "left", id: "product_name" },
-      { label: "Product Description", align: "left", id: "description" },
-      { label: "Category", align: "left", id: "quantity" },
-      { label: "Price", align: "left", id: "price" },
-      { label: "Actions", align: "left", id: "actions" },
-    ];
-    
-    export const CATEGORY_HEADER = [
-      { label: "S.No", align: "left", id: "id" },
-      {label: "Product Name", align: "left", id: "product_name"},
-      { label: "Category Name", align: "left", id: "category_name" },
-      { label: "Description", align: "left", id: "description" },
-      //   { label: "Quantity", align: "left", id: "quantity" },
-      //   { label: "Price", align: "left", id: "price" },
-      { label: "Actions", align: "left", id: "actions" },
-    ];
-    
+export const PRODUCT_HEADER = [
+    { label: "S.No", align: "left", id: "id" },
+    { label: "Product Name", align: "left", id: "product_name" },
+    { label: "Product Description", align: "left", id: "description" },
+    { label: "Category", align: "left", id: "quantity" },
+    { label: "Price", align: "left", id: "price" },
+    { label: "Actions", align: "left", id: "actions" },
+];
+
+export const CATEGORY_HEADER = [
+    { label: "S.No", align: "left", id: "id" },
+    { label: "Product Name", align: "left", id: "product_name" },
+    { label: "Category Name", align: "left", id: "category_name" },
+    { label: "Description", align: "left", id: "description" },
+    //   { label: "Quantity", align: "left", id: "quantity" },
+    //   { label: "Price", align: "left", id: "price" },
+    { label: "Actions", align: "left", id: "actions" },
+];

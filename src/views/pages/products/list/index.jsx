@@ -23,7 +23,6 @@ import { Link } from 'react-router-dom'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Employees from 'views/pages/employees/list'
 import TopBreaccrumb from 'components/TopBreadcrumb'
 import { deleteProductData, productListData } from 'redux/api/services/productService'
 import AddProductForm from '../addProductform'
@@ -45,7 +44,7 @@ function ProductList() {
     const dispatch = useDispatch()
     const productList = useSelector((state) => state?.product?.listProduct)
     const [directoryPage, setDirectoryPage] = useState('admin');
-    
+
 
 
     const stateValues = useSelector((state) => {
@@ -54,7 +53,7 @@ function ProductList() {
         }
     })
 
-   
+
 
     // cancel search
     const cancelSearch = () => {
@@ -72,7 +71,7 @@ function ProductList() {
             url: `${authEndPoints.product.list}?Perpage=10&page=${page}`,
         };
         try {
-            const res=await dispatch(productListData(parameters)).unwrap();
+            const res = await dispatch(productListData(parameters)).unwrap();
             console.log(res);
         } catch (errors) {
             errorAlert(errors?.error);
@@ -141,29 +140,29 @@ function ProductList() {
 
     return (
         <Box>
-            
-                <Box className="indexBox">
-                    <TopBreaccrumb title={'Products'} to={`/dashboard`} />
-                    <Box sx={{ my: 3 }}>
-                        <Stack direction={{ lg: "row", sm: "column" }} gap={2} alignItems={'center'} justifyContent={'space-between'}>
-                            <Stack direction={{ lg: "row", sm: "column" }} gap={2} alignItems={'center'}>
-                                <SearchInput
-                                    sx={{
-                                        border: '1px solid #303067',
-                                        borderRadius: '20px',
-                                        height: '32.69px',
-                                        '&.Mui-focused ': {
-                                            border: '1px solid #6473ff'
-                                        },
-                                        width: { xs: "100%", sm: "340px" },
-                                    }}
-                                    value={searchKey || ''}
-                                    onChange={e => onSearch(e)}
-                                    cancelSearch={cancelSearch}
-                                />
-                                <Button className='AddBtn' onClick={handleClickOpen}>Add</Button>
-                            </Stack>
-                            {/* <FormControl size="small" className="directorySelect">
+
+            <Box className="indexBox">
+                <TopBreaccrumb title={'Products'} to={`/dashboard`} />
+                <Box sx={{ my: 3 }}>
+                    <Stack direction={{ lg: "row", sm: "column" }} gap={2} alignItems={'center'} justifyContent={'space-between'}>
+                        <Stack direction={{ lg: "row", sm: "column" }} gap={2} alignItems={'center'}>
+                            <SearchInput
+                                sx={{
+                                    border: '1px solid #303067',
+                                    borderRadius: '20px',
+                                    height: '32.69px',
+                                    '&.Mui-focused ': {
+                                        border: '1px solid #6473ff'
+                                    },
+                                    width: { xs: "100%", sm: "340px" },
+                                }}
+                                value={searchKey || ''}
+                                onChange={e => onSearch(e)}
+                                cancelSearch={cancelSearch}
+                            />
+                            <Button className='AddBtn' onClick={handleClickOpen}>Add</Button>
+                        </Stack>
+                        {/* <FormControl size="small" className="directorySelect">
                                 <Select
                                     labelId="demo-select-small-label"
                                     id="demo-select-small"
@@ -174,82 +173,82 @@ function ProductList() {
                                     <MenuItem value={'employee'}>Employee</MenuItem>
                                 </Select>
                             </FormControl> */}
-                        </Stack>
-                    </Box>
-                    <TableContainer className="rolesPageTable">
-                        <Table>
-                            <TableHeader />
-                            <TableBody>
-                                {productList?.loading ? (
-                                    <TableRowsLoader rowsNum={10} colsNum={9} />
-                                ) : (
-                                    productList?.data?.data?.data?.map((row, i) => (
+                    </Stack>
+                </Box>
+                <TableContainer className="rolesPageTable">
+                    <Table>
+                        <TableHeader />
+                        <TableBody>
+                            {productList?.loading ? (
+                                <TableRowsLoader rowsNum={10} colsNum={9} />
+                            ) : (
+                                productList?.data?.data?.data?.map((row, i) => (
 
-                                        <TableRow key={row.id}>
-                                            <TableCell>{i + 1}</TableCell>
-                                            <TableCell>{row.product_name}</TableCell>
-                                            <TableCell>{row.description}</TableCell>
-                                            <TableCell>{row.category}</TableCell>
-                                            <TableCell>{row.cost}</TableCell>
-                                            <TableCell align="center">
-                                                <Stack direction={'row'} gap={2}>
-                                                    <Link to={`/products/${row.unique_label}`} >
-                                                        <VisibilityIcon className="table-icons" sx={{ color: "black" }} />
-                                                    </Link>
+                                    <TableRow key={row.id}>
+                                        <TableCell>{i + 1}</TableCell>
+                                        <TableCell>{row.product_name}</TableCell>
+                                        <TableCell>{row.description}</TableCell>
+                                        <TableCell>{row.category}</TableCell>
+                                        <TableCell>{row.cost}</TableCell>
+                                        <TableCell align="center">
+                                            <Stack direction={'row'} gap={2}>
+                                                <Link to={`/products/${row.unique_label}`} >
+                                                    <VisibilityIcon className="table-icons" sx={{ color: "black" }} />
+                                                </Link>
 
-                                                    <EditIcon className="table-icons" onClick={() => editDirectory(row.unique_label)} />
-                                                    <DeleteIcon className="table-icons"
-                                                        onClick={() => deleteDirectory(row.id)} />
-                                                </Stack>
-                                            </TableCell>
+                                                <EditIcon className="table-icons" onClick={() => editDirectory(row.unique_label)} />
+                                                <DeleteIcon className="table-icons"
+                                                    onClick={() => deleteDirectory(row.id)} />
+                                            </Stack>
+                                        </TableCell>
 
-                                        </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    {productList?.data?.data?.data?.length === 0 ? <Box sx={{ my: 2 }}>
-                        <Typography>No Data Found</Typography>
-                    </Box> :
-                        <TablePagination totalRecords={productList?.data?.data?.total} handlePageChanges={handlePageChanges}
-                            page={page} />
-                    }
-                    {deleteModalOpen &&
-                        <DeleteModal open={deleteModalOpen} close={() => deleteDirectoryModalClose()}
-                            title={'Delete Product'}
-                            content={'Are you sure want to delete this Product?'}
-                            submit={delteApiFn}
-                            loading={stateValues.deleteLoading}
-                        />
-                    }
+                                    </TableRow>
+                                ))
+                            )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {productList?.data?.data?.data?.length === 0 ? <Box sx={{ my: 2 }}>
+                    <Typography>No Data Found</Typography>
+                </Box> :
+                    <TablePagination totalRecords={productList?.data?.data?.total} handlePageChanges={handlePageChanges}
+                        page={page} />
+                }
+                {deleteModalOpen &&
+                    <DeleteModal open={deleteModalOpen} close={() => deleteDirectoryModalClose()}
+                        title={'Delete Product'}
+                        content={'Are you sure want to delete this Product?'}
+                        submit={delteApiFn}
+                        loading={stateValues.deleteLoading}
+                    />
+                }
 
-                    {open === true ? (
-                        <Dialog
-                            fullWidth={true}
-                            maxWidth={'sm'}
-                            open={open}
-                            TransitionComponent={Transition}
-                            keepMounted
-                            onClose={handleClose}
-                            aria-describedby="alert-dialog-slide-description"
-                        >
-                            <DialogTitle>
-                                <Stack direction={'row'}
-                                    alignItems={'center'} justifyContent={'space-between'}>
-                                    <Box> {singleData ? "Edit Directory" : "Add Directory"}
-                                    </Box>
-                                    <IconButton onClick={handleClose}>
-                                        <CloseIcon />
-                                    </IconButton>
-                                </Stack>
-                            </DialogTitle>
+                {open === true ? (
+                    <Dialog
+                        fullWidth={true}
+                        maxWidth={'sm'}
+                        open={open}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={handleClose}
+                        aria-describedby="alert-dialog-slide-description"
+                    >
+                        <DialogTitle>
+                            <Stack direction={'row'}
+                                alignItems={'center'} justifyContent={'space-between'}>
+                                <Box> {singleData ? "Edit Directory" : "Add Directory"}
+                                </Box>
+                                <IconButton onClick={handleClose}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </Stack>
+                        </DialogTitle>
 
-                                <AddProductForm onClick={handleButtonClick} initialData={singleData} type={addType} />
-                         
-                        </Dialog>
-                    ) : null}
-                </Box> 
+                        <AddProductForm onClick={handleButtonClick} initialData={singleData} type={addType} />
+
+                    </Dialog>
+                ) : null}
+            </Box>
         </Box>
     )
 }

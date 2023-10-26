@@ -63,7 +63,7 @@ const AdminSidebar = () => {
                     ) :
                         <div>
                             <Link to={`/dashboard`}>
-                                <img className="cg-logo-lg-img" src={logo} alt="logo" style={{}}/>
+                                <img className="cg-logo-lg-img" src={logo} alt="logo" style={{}} />
                             </Link>
                             <div className="cg-logo-lg-leftarrow">
                                 <img
@@ -80,7 +80,7 @@ const AdminSidebar = () => {
                 </div>
 
                 <MenuItem
-                    component={<Link to="/employees" className="link" />}
+                    component={<Link to="/customers" className="link" />}
                     icon={<IconComponent src={Project} />}
                 >
                     Customers
@@ -96,7 +96,7 @@ const AdminSidebar = () => {
 
 
                 <MenuItem
-                    component={<Link to="/products" className="link"  />}
+                    component={<Link to="/products" className="link" />}
                     icon={<IconComponent src={Chat} />}
                 >
                     Products

@@ -24,8 +24,8 @@ export const addEmployeeData = createAsyncThunk(
   }
 );
 // get
-export const employeeListData = createAsyncThunk(
-  "employeeListData",
+export const customerListData = createAsyncThunk(
+  "customerListData",
   async (params, thunkApi) => {
     const { url = "", ...others } = params;
     try {
@@ -72,4 +72,3 @@ export const viewEmployeeData = createAsyncThunk(
     }
   }
 );
-  

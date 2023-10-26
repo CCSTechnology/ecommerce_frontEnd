@@ -29,8 +29,8 @@ const Dashboard = lazy(() => import("views/pages/dashboard"));
 const CategoryList = lazy(() => import("views/pages/category/list"));
 const CategoryView = lazy(() => import("views/pages/category/categoryView"));
 const Jobs = lazy(() => import("views/pages/jobs"));
-const Employees = lazy(() => import("views/pages/employees/list"));
-const EmployeeView = lazy(() => import("views/pages/employees/employeeView"));
+const Customers = lazy(() => import("views/pages/customers/list"));
+const CustomerView = lazy(() => import("views/pages/customers/customerView"));
 const Products = lazy(() => import("views/pages/products/list"));
 const ProductView = lazy(() => import("views/pages/products/productView"));
 const Roles = lazy(() => import("views/pages/roles/list"));
@@ -115,10 +115,10 @@ function App() {
 						<Route path="/category" element={<CategoryList />}></Route>
 						<Route path="/category/:id" element={<CategoryView />}></Route>
 						<Route path="admin/jobs" element={<Jobs />}></Route>
-						<Route path="/employees" element={<Employees />}></Route>
-						<Route path="admin/employees/:id" element={<EmployeeView />}></Route>
+						<Route path="/customers" element={<Customers />}></Route>
+						<Route path="customers/:id" element={<CustomerView />}></Route>
 						<Route path="/products" element={<Products />}></Route>
-						<Route path="/products/:id" element={<ProductView/>}></Route>
+						<Route path="/products/:id" element={<ProductView />}></Route>
 						<Route path="admin/roles" element={<Roles />}></Route>
 						<Route path="admin/roleandPermission/:id" element={<RoleAndPermission />}></Route>
 						<Route path="admin/chats" element={<Chats />}></Route>

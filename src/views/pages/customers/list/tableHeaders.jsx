@@ -1,9 +1,9 @@
 import { TableCell, TableRow, TableHead } from '@mui/material'
 import React from 'react'
-import { EMPLOYEES_HEADER } from "constants/tableHeader"
+import { CUSTOMER_HEADER } from "constants/tableHeader"
 
 const TableHeaders = () => {
-  const header = EMPLOYEES_HEADER;
+  const header = CUSTOMER_HEADER;
   return (
     <>
       {!!header.length && (

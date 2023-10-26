@@ -17,19 +17,19 @@ export const authEndPoints = {
 		viewDirectory: (id) => `admin/directory/${id}`,
 	},
 	category: {
-		list: "/categories",		
-		removeCategory: (id) => `/category/${id}/1`,	
-		categoryView:(name) => `/category?unique_label=${name}`,
-		categoryAdd:"/category",
-        editCategory: (id) => `/categoty/${id}`,
+		list: "/categories",
+		removeCategory: (id) => `/category/${id}/1`,
+		categoryView: (name) => `/category?unique_label=${name}`,
+		categoryAdd: "/category",
+		editCategory: (id) => `/categoty/${id}`,
 	},
-	product:{
-		list:"/products",
-		deleteProductList:(id)=>`/product/${id}/1`,
-		productView:(name) => `/product?unique_label=${name}`,
-		productAdd:"/product",
-        editProduct: (id) => `/product/${id}`,
-		listCommon:(name) => `/commonlist?required=${name}`
+	product: {
+		list: "/products",
+		deleteProductList: (id) => `/product/${id}/1`,
+		productView: (name) => `/product?unique_label=${name}`,
+		productAdd: "/product",
+		editProduct: (id) => `/product/${id}`,
+		listCommon: (name) => `/commonlist?required=${name}`
 	},
 
 	role: {
@@ -54,7 +54,7 @@ export const authEndPoints = {
 	},
 	employee: {
 		newEmployee: "admin/user",
-		employeeList: "admin/user",
+		customerList: "customer/list",
 		removeEmployee: (id) => `admin/user/${id}`,
 		editEmployee: (id) => `admin/user/${id}`,
 		viewEmployee: (id) => `admin/user/${id}`,

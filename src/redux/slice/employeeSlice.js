@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  employeeListData,
+  customerListData,
   deleteEmployeeData,
   addEmployeeData,
   viewEmployeeData,
@@ -17,7 +17,7 @@ const initialState = {
     data: null,
     error: null,
   },
-  listEmployee: {
+  listCustomer: {
     loading: false,
     data: null,
     error: null,
@@ -37,17 +37,17 @@ export const employeeSlice = createSlice({
     //GET
     builder
       //   employeeList
-      .addCase(employeeListData.pending, (state, action) => {
-        state.listEmployee.loading = true;
+      .addCase(customerListData.pending, (state, action) => {
+        state.listCustomer.loading = true;
       })
-      .addCase(employeeListData.fulfilled, (state, action) => {
-        state.listEmployee.loading = false;
-        state.listEmployee.data = action.payload;
-        state.listEmployee.error = false;
+      .addCase(customerListData.fulfilled, (state, action) => {
+        state.listCustomer.loading = false;
+        state.listCustomer.data = action.payload;
+        state.listCustomer.error = false;
       })
-      .addCase(employeeListData.rejected, (state, action) => {
-        state.listEmployee.loading = false;
-        state.listEmployee.error = action.payload;
+      .addCase(customerListData.rejected, (state, action) => {
+        state.listCustomer.loading = false;
+        state.listCustomer.error = action.payload;
       })
       //Delete Employee
       .addCase(deleteEmployeeData.pending, (state, action) => {
