@@ -117,6 +117,16 @@ const productForm = yup.object().shape({
     .required("Description is required")
     .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
 });
+
+const categoryForm = yup.object().shape({
+  label: yup.string().required("Label is required"),
+  // .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+  parent_id: yup
+    .string()
+    .required("Parent Id is required")
+    .matches(/^[0-9]{0,9}$/, "Invalid Format"),
+});
+
 const addMiscForm = yup.object().shape({
     expenses: yup.array().of(
         yup.object().shape({
@@ -131,4 +141,4 @@ const addMiscForm = yup.object().shape({
     )
 })
 
-export { validateQuick, validateRecus, roleFormValidation, changePasswordSchema,addMiscForm, ProfileUpdateSchema, editEmployeeform, directoryForm, vaidateNotification,productForm }
+export { validateQuick, validateRecus, roleFormValidation, changePasswordSchema,addMiscForm, ProfileUpdateSchema, editEmployeeform, directoryForm, vaidateNotification,productForm,categoryForm }

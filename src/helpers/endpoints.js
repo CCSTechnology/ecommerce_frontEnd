@@ -20,8 +20,8 @@ export const authEndPoints = {
 		list: "/categories",		
 		removeCategory: (id) => `/category/${id}/1`,	
 		categoryView:(name) => `/category?unique_label=${name}`,
-		productAdd:"/category",
-        editProduct: (id) => `/categoty/${id}`,
+		categoryAdd:"/category",
+        editCategory: (id) => `/categoty/${id}`,
 	},
 	product:{
 		list:"/products",

@@ -21,7 +21,6 @@ import * as yup from "yup";
 import { Controller, get, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { authEndPoints } from "helpers/endpoints";
-import { essentialList } from "redux/api/services/essentialService";
 import { AddressFormater, errorAlert, successAlert } from "helpers/globalFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import { addDirectoryData, viewDirectoryData } from "redux/api/services/directoryService";
@@ -32,28 +31,29 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AdressField from "components/formField/AdressFiels";
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextFormField from "components/reusableFormFields/TextField";
-import { directoryForm } from "helpers/validate";
-import AddressField from "components/reusableFormFields/AddressField/addressField";
+import { categoryForm, productForm } from "helpers/validate";
 import SelectField from "components/reusableFormFields/selectField";
-import PasswordField from "components/reusableFormFields/TextField/passwordField";
 import ImageUploadComponent from "components/reusableFormFields/ImageUpload";
-import AutocompleteField from "components/reusableFormFields/Autocomplete";
-import MobileField from "components/reusableFormFields/TextField/mobileField";
 import FormLoader from "components/formLoader";
+import { addProductData, commonListData, editProductData, viewProductData } from "redux/api/services/productService";
+import TextMultiField from "components/reusableFormFields/TextMultiField";
+import { addCategoryData, editCategoryData, viewCategoryData } from "redux/api/services/categoryService";
 
 
 const AddCategoryForm = (props, disabled) => {
 
 	const { onClick, initialData = null, type } = props;
+
 	const [showPassword, setShowPassword] = useState(false);
 	const [adminsrole, setadminsRole] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [images, setImages] = useState("");
 	const dispatch = useDispatch();
-	const initialvalue = useSelector((state) => state?.directory?.viewDirectory?.data?.data)
-	const formLoading = useSelector((state) => state?.directory?.viewDirectory?.loading)
+	const initialvalue = useSelector((state) => state?.category?.viewProduct?.data?.data?.product)
+	
+	const formLoading = useSelector((state) => state?.product?.viewProduct?.loading)
 	const [essential, setEssential] = useState({
-		roles: [],
+		cateLists: []
 	});
 
 	const {
@@ -69,74 +69,21 @@ const AddCategoryForm = (props, disabled) => {
 		defaultValues: type === 'add' ? {
 
 		} : initialvalue,
-		resolver: yupResolver(directoryForm),
+		resolver: yupResolver(categoryForm),
 		mode: "onChange"
 	});
 
-	console.log(errors);
-
-	const handleChange = (e) => {
-		// const value = e.target.value;
-		// console.log(value);
-		// setValue(`role`, value.toString());
-	};
-
-
-	const handleFiles = (event) => {
-		console.log(event.target.files[0]);
-		const temp = event.target.files;
-		console.log(temp);
-		if (temp.length > 0) {
-			const file = temp[0];
-			const reader = new FileReader();
-			reader.readAsDataURL(file);
-			reader.onload = () => {
-				const base64String = reader.result;
-				setImages(base64String);
-				setValue(`image`, file);
-			};
-		}
-	};
-
-	const viewDirectory = async () => {
-		const parameters = {
-			url: `${authEndPoints.directory.viewDirectory(initialData?.id)}`,
-		};
-		try {
-			await dispatch(viewDirectoryData(parameters)).unwrap();
-		} catch (errors) {
-			errorAlert(errors?.error);
-		}
-	};
-
 
 	// Add Directory Api
-	const handleAddDirectory = async () => {
-
-		const values = getValues();
-		const formatedAddress = AddressFormater(values.address)
-		const {
-			image,
-			...others
-		} = values;
-
-		console.log(values)
-
-		const data = {
-			...values,
-			...formatedAddress
-		}
-		const dataEdit = {
-			...others,
-			...formatedAddress
-		}
+	const handleAddCategory = async (values) => {
+		console.log(values);
 
 		const parameters = {
-			url: initialData ? `${authEndPoints.directory.editDirectory(initialData.id)}` : authEndPoints.directory.newDirectory,
-			data: initialData ? dataEdit : data,
+			url: `${authEndPoints.category.categoryAdd}`,
+			data:  values,
 		};
 		try {
-			const response = await dispatch(addDirectoryData(parameters)).unwrap();
+			const response = await dispatch(addCategoryData(parameters)).unwrap();
 			onClick();
 			successAlert(response.message);
 		} catch (error) {
@@ -145,14 +92,42 @@ const AddCategoryForm = (props, disabled) => {
 		}
 	};
 
-	//Essential Api
-	const essentialListApi = async () => {
+	const handleEditCategory = async (values) => {
+		
 		const parameters = {
-			url: `${authEndPoints.essential.essentialSelect}`,
-			include: "roles",
+			url: `${authEndPoints.category.editCategory(initialvalue?.id)}`,
+			data:  values,
 		};
 		try {
-			const response = await dispatch(essentialList(parameters)).unwrap();
+			const response = await dispatch(editCategoryData(parameters)).unwrap();
+			onClick();
+			successAlert(response.message);
+		} catch (error) {
+			errorAlert(error.error);
+			console.log(errors);
+		}
+	};
+
+	// view product
+	const viewProduct = async () => {	
+        const parameters = {
+            url: `${authEndPoints.category.categoryView(initialData)}`,
+        };
+        try {
+            const res =await dispatch(viewCategoryData(parameters)).unwrap();	
+        } catch (errors) {
+            errorAlert(errors?.error);
+        }
+    };
+
+	//Essential Api
+	const essentialListApi = async () => {
+		const value = "category";
+		const parameters = {
+			url: `${authEndPoints.product.listCommon(value)}`,
+		};
+		try {
+			const response = await dispatch(commonListData(parameters)).unwrap();
 			setEssential(response.data);
 		} catch (errors) {
 			errorAlert(errors?.error);
@@ -181,13 +156,11 @@ const AddCategoryForm = (props, disabled) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		setValue('address', initialData?.address ? initialData.address : "");
-	}, [initialData, setValue]);
+
 
 	useEffect(() => {
 		if (type === "edit") {
-			viewDirectory()
+			viewProduct()
 		}
 	}, [type])
 
@@ -214,122 +187,70 @@ const AddCategoryForm = (props, disabled) => {
 		<Box sx={{ mx: 2 }}>
 			{formLoading ? (<FormLoader />)
 				: (
-					<form onSubmit={handleSubmit(handleAddDirectory)}>
-						<Grid container spacing={5} sx={{ mb: 2 }}>
-							<Grid item xs={6} direction={"column"}>
-								<TextFormField
-									name="first_name"
-									control={control}
-									Controller={Controller}
-									label="First Name"
-									error={errors?.first_name?.message}
-								/>
-							</Grid>
-							<Grid item xs={6} direction={"column"}>
-								<TextFormField
-									name="last_name"
-									control={control}
-									Controller={Controller}
-									label="Last Name"
-									error={errors?.last_name?.message}
-								/>
-							</Grid>
-						</Grid>
+					<form onSubmit={
+          type === "add"
+            ? handleSubmit(handleAddCategory)
+            : handleSubmit(handleEditCategory)
+        }>
+		  <Grid container spacing={5} sx={{ mb: 2 }}>
+          <Grid item xs={6} direction={"column"}>
+            <TextFormField
+              name="label"
+              control={control}
+              Controller={Controller}
+              label="Name"
+              error={errors?.label?.message}
+            />
+          </Grid>
+        </Grid>
 
-						<Grid container spacing={5} sx={{ mb: 2 }}>
-							<Grid item xs={6}>
-								<TextFormField
-									name="email"
-									control={control}
-									Controller={Controller}
-									label="Email"
-									error={errors?.email?.message}
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<MobileField
-									name="mobile"
-									control={control}
-									Controller={Controller}
-									label="Mobile"
-									error={errors?.mobile?.message}
-									InputProps={{
-										startAdornment: <InputAdornment position="start">+61</InputAdornment>,
-									}}
-								/>
-							</Grid>
-						</Grid>
+        <Grid container spacing={5} sx={{ mb: 2 }}>
+          <Grid item xs={6}>
+             {essential?.category && (
+              <SelectField
+                name="parent_id"
+                control={control}
+                label="Category"
+                Controller={Controller}
+                data={essential?.category}
+                error={errors?.category?.message}
+                // disabled={type === "edit" && true}
+              />
+            )}
 
-						<Grid container spacing={2} sx={{ mb: 2 }}>
-							<Grid item xs={12} md={12} className="address-employee">
-								<AddressField
-									name="address"
-									control={control}
-									Controller={Controller}
-									error={errors?.address?.message}
-									required={true}
-									label="Address"
-									type="text"
-								/>
-							</Grid>
-						</Grid>
-						<Grid container spacing={5} sx={{ mb: 2 }}>
-							<Grid mt={5} pl={5} xs={6}>
-								<TextFormField
-									name="zip_code"
-									control={control}
-									Controller={Controller}
-									label="Postal Code"
-									error={errors?.zip_code?.message}
-								/>
+          </Grid>
+        </Grid>
 
-							</Grid>
-							<Grid item xs={6}>
-								{essential.roles && (
-									<SelectField
-										name="role"
-										control={control}
-										label="Roles"
-										Controller={Controller}
-										data={essential.roles}
-										error={errors?.role?.message}
-										disabled={type === "edit" && true}
-									/>)}
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={12} md={12} className="address-employee">
+            <ImageUploadComponent
+              control={control}
+              Controller={Controller}
+              name="category_image"
+              label=" Image"
+              watch={watch}
+              setValue={setValue}
+            />
+          </Grid>
+        </Grid>
 
-							</Grid>
-						</Grid>
-
-						<Grid container spacing={5} sx={{ mb: 2 }}>
-							<Grid item xs={6}>
-
-								<ImageUploadComponent
-									control={control}
-									Controller={Controller}
-									name="image"
-									label="Profile Image"
-									watch={watch}
-									setValue={setValue}
-									error={errors?.image?.message}
-								/>
-							</Grid>
-
-							<Grid item xs={6}>
-								{type === "add" && (
-									<PasswordField
-										name="password"
-										control={control}
-										Controller={Controller}
-										error={errors?.password?.message}
-										label="Password"
-										type="text"
-									/>)}
-							</Grid>
-						</Grid>
-						<Stack direction={"row"} alignItems={"center"} justifyContent={"center"} gap={5} sx={{ p: 3 }}>
-							<LoadingButton loadingPosition="center" loading={isSubmitting} variant="contained" type="submit" className="submitBtnn">
-								Submit
-							</LoadingButton>
-						</Stack>
+        <Stack
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          gap={5}
+          sx={{ p: 3 }}
+        >
+          <LoadingButton
+            loadingPosition="center"
+            loading={isSubmitting}
+            variant="contained"
+            type="submit"
+            className="submitBtnn"
+          >
+            Submit
+          </LoadingButton>
+        </Stack>
 					</form >
 				)}
 		</Box >
