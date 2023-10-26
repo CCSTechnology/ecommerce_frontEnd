@@ -11,7 +11,7 @@ import TablePagination from 'components/Pagination'
 import TableHeaders from "./tableHeaders"
 import { authEndPoints } from "helpers/endpoints";
 import { errorAlert, successAlert } from "helpers/globalFunctions";
-import { deleteEmployeeData, customerListData } from "redux/api/services/employeeService";
+import { customerListData, deleteEmployeeData} from "redux/api/services/employeeService";
 import { useDebounce } from "use-debounce";
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
@@ -109,8 +109,8 @@ const Customers = () => {
             deleteLoading: state.employee.deleteEmployee.loading,
         }
     })
-    const customerListData = useSelector((state) => state)
-    console.log(customerListData)
+    const customerList = useSelector((state) => state)
+    console.log(customerList)
     console.log(customerData)
 
     // cancel search
