@@ -1,14 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { rootReducer } from "redux/reducer"
-
-// const makeStore = (preloadedState) => {
-// 	return configureStore({
-// 		reducer: rootReducer,
-// 	});
-// }
+import { rootPublicReducer, rootAdminReducer } from "redux/reducer"
 
 export const store = configureStore({
-	reducer: rootReducer,
+	reducer: {
+        ...rootAdminReducer,
+        ...rootPublicReducer
+    },
 })
 
 
