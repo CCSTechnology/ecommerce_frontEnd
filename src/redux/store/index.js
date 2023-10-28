@@ -1,11 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { rootPublicReducer, rootAdminReducer } from "redux/reducer"
+import { rootReducer} from "../../redux/reducer"
 
 export const store = configureStore({
-	reducer: {
-        ...rootAdminReducer,
-        ...rootPublicReducer
-    },
+	reducer: rootReducer,
 })
 
 

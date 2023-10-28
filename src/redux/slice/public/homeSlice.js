@@ -1,4 +1,5 @@
 import { homeDataService } from "../../api/public/homeService";
+import { createSlice } from "@reduxjs/toolkit";
 
 const homeCases = [{
     api : homeDataService,
