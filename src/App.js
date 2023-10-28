@@ -1,14 +1,14 @@
-import './App.css';
-import { ToastContainer } from 'react-toastify';
+import "./App.css";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
-import PublicLayout from './layouts/PublicLayout';
-import AdminLayout from './layouts/AdminLayout';
+import PublicLayout from "./layouts/PublicLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
 //Auth
-const Login = lazy(()=> import("./views/public/login"))
-const Home = lazy(()=> import("./views/public/home"))
+const Login = lazy(() => import("./views/public/login"));
+const Home = lazy(() => import("./views/public/home"));
 
 function App() {
   return (
@@ -25,19 +25,17 @@ function App() {
         pauseOnHover
         theme="light"
       />
-      <Suspense fallback={'Loading'} >
+      <Suspense fallback={"Loading"}>
         <Routes>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
-
+            <Route path="/" element={<Home />}></Route>
           </Route>
         </Routes>
-
       </Suspense>
-
     </>
   );
 }
