@@ -21,10 +21,7 @@ PUBLICSERVER.interceptors.request.use(function (config) {
 
 PUBLICSERVER.interceptors.response.use(
   (response) => {
-    const result = Promise.resolve(response);
-    if (result) {
-      return Promise.resolve(response);
-    }
+    return Promise.resolve(response.data);
   },
   (error) => {
     if (error?.response?.status === 403) {
