@@ -12,7 +12,7 @@ import {
 // import TableRowsLoader from "components/TableLoader";
 
 const UpComingTaskTable = (props) => {
-  const { tableData, loading } = props;
+  const { customer } = props;
 
   return (
     <Box>
@@ -21,25 +21,26 @@ const UpComingTaskTable = (props) => {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No</TableCell>
-              <TableCell align="left">Job</TableCell>
-              <TableCell align="left">Task Location</TableCell>
-              <TableCell align="left">Assignee</TableCell>
-              <TableCell align="left">Job Type</TableCell>
+              <TableCell>S.No</TableCell>
+              <TableCell align="left">First Name</TableCell>
+              <TableCell align="left">Last Name</TableCell>
+              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Mobile</TableCell>
               {/* <TableCell align="left">Status</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
             {/* <TableRowsLoader rowsNum={5} colsNum={6} /> */}
-
-            <TableRow>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              {/* <TableCell align="left">{data.status}</TableCell> */}
-            </TableRow>
+            {customer?.data?.data?.data.map((item, index) => (
+              <TableRow>
+                <TableCell align="left">{index + 1}</TableCell>
+                <TableCell align="left">{item.first_name}</TableCell>
+                <TableCell align="left">{item.last_name}</TableCell>
+                <TableCell align="left">{item.email}</TableCell>
+                <TableCell align="left">{item.mobile}</TableCell>
+                {/* <TableCell align="left">{data.status}</TableCell> */}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

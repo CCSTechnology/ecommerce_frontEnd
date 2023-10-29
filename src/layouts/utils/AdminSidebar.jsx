@@ -117,7 +117,7 @@ const AdminSidebar = () => {
           Products
         </MenuItem>
         <MenuItem
-          component={<Link to="admin/forms" className="link" />}
+          component={<Link to="admin/settings" className="link" />}
           icon={<IconComponent src={GoogleForms} />}
         >
           Settings

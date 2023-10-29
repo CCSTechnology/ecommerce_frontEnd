@@ -76,7 +76,6 @@ function ProductList() {
     };
     try {
       const res = await dispatch(productListData(parameters)).unwrap();
-      console.log(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -196,9 +195,9 @@ function ProductList() {
                   <TableRow key={row.id}>
                     <TableCell>{i + 1}</TableCell>
                     <TableCell>{row.product_name}</TableCell>
-                    <TableCell>{row.description}</TableCell>
                     <TableCell>{row.categoryname}</TableCell>
                     <TableCell>{row.cost}</TableCell>
+                    <TableCell>{row.description}</TableCell>
                     <TableCell align="center">
                       <Stack direction={"row"} gap={2}>
                         <Link to={`/admin/products/${row.unique_label}`}>

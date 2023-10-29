@@ -19,6 +19,7 @@ const ProductList = lazy(() => import("./views/admin/products/list"));
 const ProductView = lazy(() => import("./views/admin/products/productView"));
 const CustomerList = lazy(() => import("./views/admin/customers/list"));
 const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
+const Settings = lazy(() => import("./views/admin/settings"));
 function App() {
   return (
     <>
@@ -51,6 +52,7 @@ function App() {
               path="admin/customers/:id"
               element={<CustomerView />}
             ></Route>
+            <Route path="admin/settings" element={<Settings />}></Route>
           </Route>
           <Route element={<PlainLayout />}>
             <Route path="admin" element={<AdminLogin />}></Route>

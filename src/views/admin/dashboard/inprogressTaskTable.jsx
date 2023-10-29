@@ -12,7 +12,7 @@ import {
 import TableRowsLoader from "../../../components/TableLoader";
 
 const InProgressTaskTable = (props) => {
-  const { tableData, loading } = props;
+  const { product } = props;
 
   return (
     <Box>
@@ -21,25 +21,27 @@ const InProgressTaskTable = (props) => {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>No</TableCell>
-              <TableCell align="left">Job</TableCell>
-              <TableCell align="left">Task Location</TableCell>
-              <TableCell align="left">Assignee</TableCell>
-              <TableCell align="left">Job Type</TableCell>
+              <TableCell>S.No</TableCell>
+              <TableCell align="left">Product Name</TableCell>
+              <TableCell align="left">Category Name</TableCell>
+              <TableCell align="left">Cost</TableCell>
+              <TableCell align="left">Description</TableCell>
               {/* <TableCell align="left">Status</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
             {/* <TableRowsLoader rowsNum={5} colsNum={6} />  */}
+            {product?.data?.data?.data.map((item, index) => (
+              <TableRow>
+                <TableCell align="left">{index + 1}</TableCell>
+                <TableCell align="left">{item.product_name}</TableCell>
+                <TableCell align="left">{item.categoryname}</TableCell>
+                <TableCell align="left">{item.cost}</TableCell>
+                <TableCell align="left">{item.description}</TableCell>
 
-            <TableRow>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              <TableCell align="left"></TableCell>
-              {/* <TableCell align="left">{data.status}</TableCell> */}
-            </TableRow>
+                {/* <TableCell align="left">{data.status}</TableCell> */}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

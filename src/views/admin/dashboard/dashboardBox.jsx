@@ -29,7 +29,7 @@ function DashboardBox() {
       errorAlert(errors?.error);
     }
   };
-  console.log(dashboardContents);
+
   useEffect(() => {
     dashboardListApi();
   }, []);

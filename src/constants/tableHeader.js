@@ -67,9 +67,9 @@ export const INVOICE_HEADER = [
 export const PRODUCT_HEADER = [
   { label: "S.No", align: "left", id: "id" },
   { label: "Product Name", align: "left", id: "product_name" },
-  { label: "Product Description", align: "left", id: "description" },
   { label: "Category", align: "left", id: "quantity" },
   { label: "Price", align: "left", id: "price" },
+  { label: "Product Description", align: "left", id: "description" },
   { label: "Actions", align: "left", id: "actions" },
 ];
 

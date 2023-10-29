@@ -1,173 +1,171 @@
 :root {
-    --black: #000000;
-    --secondary-black: #555454;
-    --tableheader-color: #951e76;
-    --gray: #951e76;
-    --green: #951e76;
-    --white: #ffff;
-    --table-border-color: #969696;
+  --black: #000000;
+  --secondary-black: #555454;
+  --tableheader-color: #951e76;
+  --gray: #951e76;
+  --green: #951e76;
+  --white: #ffff;
+  --table-border-color: #969696;
 }
 
 * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray) transparent;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray) transparent;
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    margin-block: 5px;
-    margin-inline: 5px;
+  margin-block: 5px;
+  margin-inline: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--gray);
-    border-radius: 100vw;
+  background-color: var(--gray);
+  border-radius: 100vw;
 }
 
 .cg-header {
-    background-color: white !important;
+  background-color: white !important;
 }
 
 .cg-header {
-    box-shadow: none !important;
-    position: fixed !important;
-    top: 0 !important;
-    z-index: 11;
-    left: auto !important;
-    right: 0 !important;
+  box-shadow: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  z-index: 11;
+  left: auto !important;
+  right: 0 !important;
 }
 
 .ps-sidebar-container {
-    z-index: 15 !important;
+  z-index: 15 !important;
 }
 
 .full-h {
-    height: 100%;
+  height: 100%;
 }
 
 .primary-bg {
-    background-color: #951e76;
+  background-color: #951e76;
 }
 
 .light-bg {
-
-    background-color: rgba(95, 188, 97, 0.21);
-    height: 700px !important;
+  background-color: rgba(95, 188, 97, 0.21);
+  height: 700px !important;
 }
 
 .light-bg-ext {
-    background-color: rgba(233, 236, 239, 0.53);
+  background-color: rgba(233, 236, 239, 0.53);
 }
 
 .page {
-    padding: 20px;
+  padding: 20px;
 }
 
 .ps-sidebar-root {
-    border: 0px !important
+  border: 0px !important;
 }
 
 .ps-menu-button {
-    position: relative;
-    transition: all 0.3s ease-in-out;
+  position: relative;
+  transition: all 0.3s ease-in-out;
 }
 
-.ps-menu-button>span:first-child {
-    color: #951e76;
+.ps-menu-button > span:first-child {
+  color: #951e76;
 }
 
-.ps-menu-button>span:last-child {
-    color: #951e76;
-    font-weight: 600;
+.ps-menu-button > span:last-child {
+  color: #951e76;
+  font-weight: 600;
 }
 
 .ps-menu-button:hover {
-    background-color: #951e76 !important;
+  background-color: #951e76 !important;
 }
 
-.ps-menu-button:hover>span {
-    color: #fff !important;
+.ps-menu-button:hover > span {
+  color: #fff !important;
 }
 
 .ps-submenu-content.ps-open {
-    background-color: #aed4c1 !important;
+  background-color: #aed4c1 !important;
 }
 
 .cg-wrapper {
-    display: flex;
-    height: 100vh;
-    justify-content: flex-start;
+  display: flex;
+  height: 100vh;
+  justify-content: flex-start;
 }
 
 .cg-content {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .cg-content {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    z-index: 5;
-    /* margin-top: 60px; */
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 5;
+  /* margin-top: 60px; */
 }
 
 .cg-content .cg-layout {
-    width: 100%;
-    height: 100%;
-    padding: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 }
 
 .cg-header {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .cg-logo {
-    /* direction: ltr;
+  /* direction: ltr;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     height: 64px; */
-    position: relative;
-    background-color: #ffff;
+  position: relative;
+  background-color: #ffff;
 }
 
 .cg-logo-lg-img {
-    height: 80px;
-    width: 173px;
+  height: 80px;
+  width: 173px;
 }
 
 .cg-logo-lg-leftarrow {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    right: 0;
-    top: 70%;
-    background-color: #F0FAF5;
-    align-items: "center";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  right: 0;
+  top: 70%;
+  background-color: #f0faf5;
+  align-items: "center";
 }
 
 .cg-logo-lg-leftarrow .rotate {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .cg-logo-mobile-img {
-    height: 60px;
-    width: 65px;
+  height: 60px;
+  width: 65px;
 }
 
-.cg-logo>span {
-    margin-left: auto;
+.cg-logo > span {
+  margin-left: auto;
 }
 
-.box-addmore>li {
-    display: flex;
+.box-addmore > li {
+  display: flex;
 }
-
 
 /* .cg-pages {
     height: calc(100% - 64px);
@@ -183,389 +181,411 @@
     height: 100%;
 } */
 
-
 .cg-forms .form-field {
-    background-color: #ffff;
-    /* height: 65vh;
+  background-color: #ffff;
+  /* height: 65vh;
     width: 650px; */
-    width: 600px;
-    height: 600px;
-    max-height: 65vh;
-    overflow-y: auto;
+  width: 600px;
+  height: 600px;
+  max-height: 65vh;
+  overflow-y: auto;
 }
 
 .cg-forms .form-field .divider {
-    padding: 30px 60px;
+  padding: 30px 60px;
 }
 
 /* login page styles */
 
 .welcomeHead {
-    font-weight: 700 !important;
-    font-size: 32px !important;
-    line-height: 38px !important;
-    color: var(--black);
+  font-weight: 700 !important;
+  font-size: 32px !important;
+  line-height: 38px !important;
+  color: var(--black);
 }
 
 .welcomeSubHead {
-    font-weight: 400 !important;
-    font-size: 14px !important;
-    line-height: 16px !important;
-    color: var(--secondary-black);
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 16px !important;
+  color: var(--secondary-black);
 }
 
 .forgotCtr {
-    text-align: right;
-    padding: 10px 0px !important;
+  text-align: right;
+  padding: 10px 0px !important;
 }
 
 .forgotCtr a {
-    font-size: 14px;
-    line-height: 14px;
-    color: #C19393;
-    text-decoration: unset;
+  font-size: 14px;
+  line-height: 14px;
+  color: #c19393;
+  text-decoration: unset;
 }
 
 /* roles page design */
 
 .rolesPageTable {
-    border: 1px solid var(--table-border-color);
-    background: var(--tableheader-color);
-    border-radius: 10px;
+  border: 1px solid var(--table-border-color);
+  background: var(--tableheader-color);
+  border-radius: 10px;
 }
 
 .rolesPageTable table tr td {
-    background: var(--white);
-    color: var(--black);
+  background: var(--white);
+  color: var(--black);
 }
 
 .rolesPageTable table tbody tr:last-child td {
-    border-bottom: none !important;
+  border-bottom: none !important;
 }
 
 .rolesPageTable table thead tr th {
-    border-right: 1px solid var(--table-border-color);
-    border-bottom: 1px solid var(--table-border-color);
-    color: var(--white);
-    padding: 10px 15px;
-    text-align: center;
+  border-right: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
+  color: var(--white);
+  padding: 10px 15px;
+  text-align: center;
 }
 
 .rolesPageTable table tbody tr td:last-child {
-    border-right: 0px solid;
+  border-right: 0px solid;
 }
 
 .rolesPageTable table thead tr th:last-child {
-    border-right: 0px solid;
+  border-right: 0px solid;
 }
 
 .rolesPageTable table tbody tr td {
-    border-right: 1px solid var(--table-border-color);
-    border-bottom: 1px solid var(--table-border-color);
+  border-right: 1px solid var(--table-border-color);
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 .table-icons {
-    border: 1px solid #93939347;
-    padding: 2px;
-    font-size: 16px !important;
-    cursor: pointer;
+  border: 1px solid #93939347;
+  padding: 2px;
+  font-size: 16px !important;
+  cursor: pointer;
 }
 
 .AddBtn {
-    background: #951e76 !important;
-    color: white !important;
-    padding: 6px 40px !important;
-    border-radius: 10px !important;
+  background: #951e76 !important;
+  color: white !important;
+  padding: 6px 40px !important;
+  border-radius: 10px !important;
 }
 
 .modal-close-icon {
-    position: absolute;
-    top: 5%;
-    right: 5%;
+  position: absolute;
+  top: 5%;
+  right: 5%;
 }
 
 .form-popup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    background-color: rgba(213, 232, 202, 1);
-    border-radius: 25px;
-    /* height: 400px; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  background-color: rgba(213, 232, 202, 1);
+  border-radius: 25px;
+  /* height: 400px; */
 }
 
 /* view page design */
 
 .viewCtr {
-    background: #DDF1DE;
-    margin: 0 auto;
-    width: 35%;
+  background: #ddf1de;
+  margin: 0 auto;
+  width: 35%;
 }
 
 .viewLeftSide {
-    border-bottom: 1px solid white;
-    border-right: 1px solid white;
-    /* max-height: 100% !important; */
+  border-bottom: 1px solid white;
+  border-right: 1px solid white;
+  /* max-height: 100% !important; */
 }
 
 .viewLeftSide p {
-    /* position: relative;
+  /* position: relative;
     left: -15px; */
-    font-weight: bold;
-    padding-left: 15px;
+  font-weight: bold;
+  padding-left: 15px;
 }
 
 .viewRightSide {
-    border-bottom: 1px solid white;
-    /* max-height: 100% !important; */
+  border-bottom: 1px solid white;
+  /* max-height: 100% !important; */
 }
 
 .viewRightSide p {
-    padding-left: 15px;
+  padding-left: 15px;
 }
-
 
 .viewLeftSideAddress {
-    padding-bottom: 64px !important;
+  padding-bottom: 64px !important;
 }
 
-
 .submitBtnn {
-    height: 30px !important;
-    width: 100px !important;
-    background-color: #951e76!important;
+  height: 30px !important;
+  width: 100px !important;
+  background-color: #951e76 !important;
 }
 
 /* location lookup */
 .pac-container {
-    z-index: 99999 !important;
+  z-index: 99999 !important;
 }
 
 .formLeftList .MuiListItem-dense {
-    padding-left: 0px;
+  padding-left: 0px;
 }
 
 .formDisableField input {
-    border: 1px solid rgba(0, 0, 0, 0.42);
-    /* background: white; */
-    padding: 10px;
-    font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.42);
+  /* background: white; */
+  padding: 10px;
+  font-size: 14px;
 }
 
 .formDisableSelectField .MuiInputBase-root {
-    border: 1px solid rgba(0, 0, 0, 0.42);
-    /* background: white; */
-    padding: 10px;
-    font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.42);
+  /* background: white; */
+  padding: 10px;
+  font-size: 14px;
 }
 
 .tableTablist .MuiTabs-scroller {
-    background: #951e76;
-    padding: 10px;
-    border-radius: 10px;
+  background: #951e76;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .tableTablist .Mui-selected {
-    color: #969696 !important;
-    background: white;
-    border-radius: 10px;
-    padding: 0px 30px;
-    min-height: 35px;
-    margin-right: 20px;
+  color: #969696 !important;
+  background: white;
+  border-radius: 10px;
+  padding: 0px 30px;
+  min-height: 35px;
+  margin-right: 20px;
 }
 
 .tableTablist button {
-    color: #E5E7E6;
-    background: transparent;
-    border: 1px solid white;
-    border-radius: 10px;
-    padding: 0px 30px;
-    min-height: 35px;
-    margin-right: 20px;
+  color: #e5e7e6;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 0px 30px;
+  min-height: 35px;
+  margin-right: 20px;
 }
 
 /* taskview */
 
 .taskview {
-    border-radius: 5px;
-    border: 1px solid #96E2FF;
+  border-radius: 5px;
+  border: 1px solid #96e2ff;
 }
 
 .taskview-one {
-    border-radius: 5px;
-    border: 1px solid #96E2FF;
-    height: 145px;
+  border-radius: 5px;
+  border: 1px solid #96e2ff;
+  height: 145px;
 }
 
 .taskview-font {
-    font-size: 14px !important;
+  font-size: 14px !important;
 }
-.taskview-day{
-    height: 50px;
-    width: 50px !important;
+.taskview-day {
+  height: 50px;
+  width: 50px !important;
 }
 
 .taskform-divider {
-    background-color: #96E2FF;
+  background-color: #96e2ff;
 }
 
 .taskPageTable {
-    border: 1px solid #96E2FF;
-    border-radius: 10px;
+  border: 1px solid #96e2ff;
+  border-radius: 10px;
 }
 
 .taskgrid {
-    padding-top: 30px !important;
+  padding-top: 30px !important;
 }
 
 .pac-target-input {
-    padding: 8.5px 14px;
-    height: 1.4375em;
-    border: 1px solid #979797;
-    border-radius: 5px;
-    width: 92%;
-    /* width: -moz-available; */
-    background: transparent;
+  padding: 8.5px 14px;
+  height: 1.4375em;
+  border: 1px solid #979797;
+  border-radius: 5px;
+  width: 92%;
+  /* width: -moz-available; */
+  background: transparent;
 }
 
 .address-employee .pac-target-input {
-    padding: 8.5px 14px;
-    height: 1.4375em;
-    border: 1px solid #979797;
-    border-radius: 5px;
-    width: 95%;
-    background: white;
-    /* width: -moz-available; */
-
+  padding: 8.5px 14px;
+  height: 1.4375em;
+  border: 1px solid #979797;
+  border-radius: 5px;
+  width: 95%;
+  background: white;
+  /* width: -moz-available; */
 }
 
 .pac-target-input:focus-visible {
-    outline: none;
+  outline: none;
 }
 
 .indexBox {
-    margin-top: 60px;
+  margin-top: 60px;
 }
 
 .MuiDrawer-paper {
-    width: 380px !important;
-    background: #C7DEE0 !important;
+  width: 380px !important;
+  background: #c7dee0 !important;
 }
 
 .calenderSearch .inputSearch svg {
-    color: white;
+  color: white;
 }
 
 .calenderSearch .inputSearch input {
-    color: white;
+  color: white;
 }
 
 .directorySelect fieldset legend {
-    display: none;
+  display: none;
 }
 
 /* add misc */
 .misc-addicon {
-    height: 18px;
-    margin-top: 39px;
-    cursor: pointer;
+  height: 18px;
+  margin-top: 39px;
+  cursor: pointer;
 }
 
 .delete-icons {
-    border: 1px solid #93939347;
-    padding: 2px;
-    font-size: 16px !important;
-    cursor: pointer;
-    margin-top: 6px;
+  border: 1px solid #93939347;
+  padding: 2px;
+  font-size: 16px !important;
+  cursor: pointer;
+  margin-top: 6px;
 }
 
 .form-control:hover {
-    border: 1px solid black !important;
+  border: 1px solid black !important;
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .class-1 fieldset {
-    border-color: #d32f2f !important;
+  border-color: #d32f2f !important;
 }
 
 .class-2 fieldset {
-    border-color: rgba(0, 0, 0, 0.23) !important;
+  border-color: rgba(0, 0, 0, 0.23) !important;
 }
 
 .errorMsg {
-    color: #d32f2f !important;
-    /* margin-left: 14px !important; */
+  color: #d32f2f !important;
+  /* margin-left: 14px !important; */
 }
 
 .errorBorder {
-    border: 1px solid #d32f2f !important;
+  border: 1px solid #d32f2f !important;
 }
 
 .imageSelectError .uploader__container .uploader__placeholder {
-    border: 1px solid #d32f2f !important;
+  border: 1px solid #d32f2f !important;
 }
 
 .pac-target-input {
-    padding: 8.5px 14px;
-    height: 1.4375em;
-    border: 1px solid #979797;
-    border-radius: 5px;
-    width: -webkit-fill-available;
-    background: transparent !important;
+  padding: 8.5px 14px;
+  height: 1.4375em;
+  border: 1px solid #979797;
+  border-radius: 5px;
+  width: -webkit-fill-available;
+  background: transparent !important;
 }
 
 .errorBorder {
-    padding: 8.5px 14px;
-    height: 1.4375em;
-    border-radius: 5px;
-    width: -webkit-fill-available;
-    background: transparent !important;
+  padding: 8.5px 14px;
+  height: 1.4375em;
+  border-radius: 5px;
+  width: -webkit-fill-available;
+  background: transparent !important;
 }
 
 .react-datepicker__input-container ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: white;
-    opacity: 1;
-    /* Firefox */
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1;
+  /* Firefox */
 }
 
 .react-datepicker__input-container :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: white;
+  /* Internet Explorer 10-11 */
+  color: white;
 }
 
 .react-datepicker__input-container ::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: white;
+  /* Microsoft Edge */
+  color: white;
 }
 
 .myprofilePara {
-    border: 1px solid rgba(0, 0, 0, 0.38);
-    border-radius: 5px;
-    padding: 10px;
-    color: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  border-radius: 5px;
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.38);
 }
 
-ogo
-
-.backimg{
-    background-image: url('../src/assets/images/Rectangle\ 729.png');
-    background-repeat: no-repeat;
-    width: 578px !important;
-    height: 316px !important;
-    flex-shrink: 0;
-    background-color: 'gray';
-    background-size: cover;
+ogo .backimg {
+  background-image: url("../src/assets/images/Rectangle\ 729.png");
+  background-repeat: no-repeat;
+  width: 578px !important;
+  height: 316px !important;
+  flex-shrink: 0;
+  background-color: "gray";
+  background-size: cover;
 }
 
-.login-logo{
-    margin-top: -78px;
+.login-logo {
+  margin-top: -78px;
 }
 
+.css-788yu5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #951e76 !important;
+  border-bottom: 1px solid black !important;
+}
+
+.css-1aquho2-MuiTabs-indicator {
+  position: absolute;
+  height: 2px;
+  bottom: 0;
+  width: 100%;
+  -webkit-transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #951e76 !important;
+}
+
+.settings-button:hover {
+  background-color: #951e76 !important;
+}
+.settings-button:active {
+  background-color: #951e76 !important;
+}
+
+.multiple-imageupload:hover {
+  background-color: #951e76 !important;
+}
+.multiple-imageupload:active {
+  background-color: #951e76 !important;
+}

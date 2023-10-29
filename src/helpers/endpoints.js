@@ -45,4 +45,12 @@ export const authEndPoints = {
   dashboard: {
     dashboardData: `/dashboard`,
   },
+
+  setting: {
+    imageSetting: "/viewimageforflyer",
+    imageSettingAdd: "/addbannerimage",
+    imageSettingDelete: (id) => `deletebannerimage/${id}`,
+    imageSettingEdit: (id) => `changeimageforflyer/${id}`,
+    imageView: (id) => `getbanner/${id}`,
+  },
 };
