@@ -13,7 +13,6 @@ const ADMINSERVER = axios.create({
 
 ADMINSERVER.interceptors.request.use(function (config) {
   const TOKEN = sessionStorage.getItem("token");
-
   if (TOKEN) {
     config.headers[TOKEN_PAYLOAD_KEY] = `Bearer ${TOKEN}`;
   }

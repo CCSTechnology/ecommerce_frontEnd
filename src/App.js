@@ -8,6 +8,10 @@ import AdminLayout from "./layouts/AdminLayout";
 import PlainLayout from "./layouts/PlainLayout";
 import Loadercomponent from "./components/loader";
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 //Auth
 const Login = lazy(() => import("./views/public/login"));
 const Home = lazy(() => import("./views/public/home"));

@@ -1,0 +1,1 @@
+export const ImagePath = process.env.REACT_APP_IMG_URL || ""

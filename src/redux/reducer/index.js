@@ -5,6 +5,7 @@ import adminProductReducer from "../../redux/slice/admin/productSlice";
 import adminAuthReducer from "../../redux/slice/admin/authSlice";
 import dashboardReducer from "../../redux/slice/admin/dashboardSlice";
 import adminSettingReducer from "../../redux/slice/admin/settingSlice";
+import homeReducer from "../../redux/slice/public/homeSlice";
 
 export const rootReducer = combineReducers({
   adminAuth: adminAuthReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   adminProduct: adminProductReducer,
   dashboard: dashboardReducer,
   adminSetting: adminSettingReducer,
+  home: homeReducer,
 });
