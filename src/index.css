@@ -2,6 +2,7 @@
 /* 
 @import url('~slick-carousel/slick/slick.css');
 @import url('~slick-carousel/slick/slick-theme.css'); */
+/* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"); */
 
 :root {
     --primary: "yellow"
@@ -296,7 +297,7 @@ a {
 }
 
 @media (max-width: 767px) {
-    .site-footer-bottom-inner{
+    .site-footer-bottom-inner {
         display: block;
     }
 }
@@ -308,4 +309,3 @@ a {
 /*--------------------------------------------------------------
 # Site Footer
 --------------------------------------------------------------*/
-

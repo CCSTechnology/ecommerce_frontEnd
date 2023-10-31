@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Stack } from "@mui/material"
 import HomeBanner from './HomeBanner'
-import homeData from '../../../db/home'
+// import homeData from '../../../db/home'
 import HomeCategorySlide from './HomeCategorySlide'
 import { homeDataService } from '../../../redux/api/public/homeService'
 import {
@@ -13,7 +13,7 @@ import HomeAboutUs from './HomeAboutUs'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const categories = useSelector((state) => state.home.homeDataService.data)
+  const homeData = useSelector((state) => state.home.homeDataService.data)
   function fetchHomeContent() {
     Promise.all([dispatch(homeDataService())])
   }
@@ -25,15 +25,15 @@ const Home = () => {
 
   return (
     <Stack gap={5}>
-      <HomeBanner banners={homeData.banner} />
       {
-        categories && <>
-          <HomeCategorySlide categories={categories} title="Our Products" subtitle={"WHAT WE DO"} />
-          <HomeFeatured categories={categories} title="Our Products" subtitle={"WHAT WE DO"} />
+        homeData && <>
+          <HomeBanner banners={homeData.banner || []} />
+          <HomeCategorySlide category={homeData?.category || null} />
+          <HomeFeatured products={homeData?.products || null} />
+          <HomeAboutUs  aboutUs={homeData?.about_us || null}/>
         </>
       }
 
-      <HomeAboutUs />
 
 
 

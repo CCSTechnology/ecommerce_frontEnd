@@ -3,7 +3,7 @@ import PUBLICSERVER from "../../../utils/publicServer";
 
 export const homeDataService = createAsyncThunk("homeDataService", async(params, thunkApi)=>{
   try {
-    const response = await PUBLICSERVER.get("/categories", {
+    const response = await PUBLICSERVER.get("/homepage", {
         params
     })
     return response.data

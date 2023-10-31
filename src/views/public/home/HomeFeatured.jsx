@@ -6,38 +6,72 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Autoplay } from 'swiper/modules';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
 import { ImagePath } from '../../../utils/helpers';
-import { Link } from 'react-router-dom';
 
 
 
-function MediaCard({ category }) {
+
+function MediaCard({ products }) {
     return (
-        <Box className="services-style-two">
-                <div className="services-style-two-item text-center">
-                  <div className="info">
-                    <div className="thumb">
-                      <img src={ImagePath + category.category_image} alt="Image" className="img-fluid" />
-                    </div>
-                  </div>
-                  <div className="content-wrap">
-                    <div className="icon-wrap">
-                      <div className="master-icon">
-                        <img src={'https://truevinefoods.com/wp-content/uploads/2023/07/ready.png'} alt="Image" className="img-fluid" width="40" />
-                      </div>
-                    </div>
-                    <h5 className="title">
-                      <Link href={category.link}>{category.label}</Link>
-                    </h5>
-                  </div>
-                </div>
-              </Box>
+        <Card sx={{ maxWidth: 345, marginBlock: 4, marginInline: "auto", borderRadius: "5px" }}>
+            <CardMedia
+                sx={{ height: 180 }}
+                image={ImagePath + products.file_name}
+                title={products.product_name}
+            />
+            <CardContent>
+                <Box gutterBottom variant="h5" component="div" sx={{
+                    display: "flex",
+                }}>
+                    <Box component={'span'} sx={{
+                        overflow: "hidden",
+                        maxWidth: "120px",
+                        textOverflow: "ellipsis",
+                        "& span": {
+                            whiteSpace: 'nowrap'
+                        }
+                    }}>
+                        <span>
+                            {products.product_name}
+                        </span>
+                    </Box>
+                    {
+                        products.gram && <Box>
+                            | {'  '}
+                            {products.gram}
+                        </Box>
+                    }
+
+
+                </Box>
+                <Typography variant="body2" color="text.secondary">
+                   Rs: {products.cost}/-
+                </Typography>
+            </CardContent>
+            <CardActions sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                maring: 0,
+                padding: 0
+            }}>
+                <Button fullWidth sx={{
+                    height: "100%",
+                    borderRadius: "none"
+                }} variant="contained" size="small">Add To Cart</Button>
+            </CardActions>
+        </Card>
     );
 }
 
 
 
-export default function HomeFeatured({ categories = [], title = "", subtitle = "" }) {
+export default function HomeFeatured({ products }) {
 
     return <Container maxWidth="lg">
         <Box sx={{
@@ -49,11 +83,12 @@ export default function HomeFeatured({ categories = [], title = "", subtitle = "
                 alignItems: "center",
                 width: "100%",
             }}>
-                <Typography color={'#951e76'} sx={{
+                {products.subtitle && <Typography color={'#951e76'} sx={{
                     borderLeft: "4px solid",
                     fontWeight: "600",
                     paddingLeft: "10px"
-                }} variant='h5'>{subtitle}</Typography>
+                }} variant='h5'>{products.subtitle}</Typography>}
+
             </Box>
             <Box component={'p'} sx={{
                 fontSize: "24px",
@@ -63,7 +98,7 @@ export default function HomeFeatured({ categories = [], title = "", subtitle = "
                     color: "#9f4103",
 
                 }
-            }}>{String(title).split(' ').map((titles, index, array) => {
+            }}>{String(products?.title || '').split(' ').map((titles, index, array) => {
                 return index === 0 && <>
                     <span>{array[0]}</span>
                     {' '}
@@ -73,17 +108,19 @@ export default function HomeFeatured({ categories = [], title = "", subtitle = "
 
         </Box>
         <Swiper
+            spaceBetween={50}
+            slidesPerView={4}
             speed={3500}
             // navigation={true}
             loop={true}
-            // modules={[Autoplay]}
+            modules={[Autoplay]}
 
             className="mySwiper"
-            // autoplay={{
-            //     delay: 2000,
-            //     disableOnInteraction: true,
-            //     pauseOnMouseEnter: true
-            // }}
+            autoplay={{
+                delay: 2000,
+                disableOnInteraction: true,
+                pauseOnMouseEnter: true
+            }}
             breakpoints={{
                 // when window width is >= 320px
                 320: {
@@ -102,38 +139,23 @@ export default function HomeFeatured({ categories = [], title = "", subtitle = "
                 },
                 // when window width is >= 720px
                 720: {
-                    slidesPerView: 3,
-                    spaceBetween: 40
-                },
-                 // when window width is >= 720px
-                1200: {
                     slidesPerView: 4,
                     spaceBetween: 40
                 },
-               
+                // when window width is >= 1200px
+                1200: {
+                    slidesPerView: 5,
+                    spaceBetween: 40
+                }
             }
             }
         // onSlideChange={() => console.log('slide change')}
         // onSwiper={(swiper) => console.log(swiper)}
         >
-            {categories?.data?.map((category, index) => {
+            {products.product_details?.map((products, index) => {
                 return (
                     <SwiperSlide key={index}>
-                        <MediaCard category={category} />
-                    </SwiperSlide>
-                )
-            })}
-            {categories?.data?.map((category, index) => {
-                return (
-                    <SwiperSlide key={index}>
-                        <MediaCard category={category} />
-                    </SwiperSlide>
-                )
-            })}
-            {categories?.data?.map((category, index) => {
-                return (
-                    <SwiperSlide key={index}>
-                        <MediaCard category={category} />
+                        <MediaCard products={products} />
                     </SwiperSlide>
                 )
             })}

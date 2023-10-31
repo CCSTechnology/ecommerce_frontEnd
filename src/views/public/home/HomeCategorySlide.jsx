@@ -3,74 +3,42 @@ import React from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { ImagePath } from '../../../utils/helpers';
-
+import { Link } from 'react-router-dom';
 
 
 function MediaCard({ category }) {
     return (
-        <Card sx={{ maxWidth: 345, marginBlock: 4, marginInline: "auto", borderRadius: "5px" }}>
-            <CardMedia
-                sx={{ height: 180 }}
-                image={ImagePath + category.category_image}
-                title={category.label}
-            />
-            <CardContent>
-                <Box gutterBottom variant="h5" component="div" sx={{
-                    display: "flex",
-                }}>
-                    <Box component={'span'} sx={{
-                        overflow: "hidden",
-                        maxWidth: "120px",
-                        textOverflow: "ellipsis",
-                        "& span": {
-                            whiteSpace: 'nowrap'
-                        }
-                    }}>
-                        <span>
-                            {category.label}
-                        </span>
-                    </Box>
-                    {
-                        category.gram && <Box>
-                            | {'  '}
-                            {category.gram}
-                        </Box>
-                    }
-
-
-                </Box>
-                <Typography variant="body2" color="text.secondary">
-                    {category.price || "Rs 250 /-"}
-                </Typography>
-            </CardContent>
-            <CardActions sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                maring: 0,
-                padding: 0
-            }}>
-                <Button fullWidth sx={{
-                    height: "100%",
-                    borderRadius: "none"
-                }} variant="contained" size="small">Add To Cart</Button>
-            </CardActions>
-        </Card>
+        <Box className="services-style-two" sx={{
+            marginBlock: "34px"
+        }}>
+            <div className="services-style-two-item text-center">
+                <div className="info">
+                    <div className="thumb">
+                        <img src={ImagePath + category.category_image} alt="Image" className="img-fluid" />
+                    </div>
+                </div>
+                <div className="content-wrap">
+                    <div className="icon-wrap">
+                        <div className="master-icon">
+                            <img src={'https://truevinefoods.com/wp-content/uploads/2023/07/ready.png'} alt="Image" className="img-fluid" width="40" />
+                        </div>
+                    </div>
+                    <h5 className="title">
+                        <Link href={category.link}>{category.label}</Link>
+                    </h5>
+                </div>
+            </div>
+        </Box>
     );
 }
 
 
-
-export default function HomeCategorySlide({ categories = [], title = "", subtitle }) {
+export default function HomeCategory({ category }) {
 
     return <Container maxWidth="lg">
         <Box sx={{
@@ -82,11 +50,14 @@ export default function HomeCategorySlide({ categories = [], title = "", subtitl
                 alignItems: "center",
                 width: "100%",
             }}>
-                <Typography color={'#951e76'} sx={{
-                    borderLeft: "4px solid",
-                    fontWeight: "600",
-                    paddingLeft: "10px"
-                }} variant='h5'>{subtitle}</Typography>
+                {
+                    category?.subtitle &&  <Typography color={'#951e76'} sx={{
+                        borderLeft: "4px solid",
+                        fontWeight: "600",
+                        paddingLeft: "10px"
+                    }} variant='h5'>{category?.subtitle}</Typography>
+                }
+               
             </Box>
             <Box component={'p'} sx={{
                 fontSize: "24px",
@@ -96,7 +67,7 @@ export default function HomeCategorySlide({ categories = [], title = "", subtitl
                     color: "#9f4103",
 
                 }
-            }}>{String(title).split(' ').map((titles, index, array) => {
+            }}>{String(category?.title || '' ).split(' ').map((titles, index, array) => {
                 return index === 0 && <>
                     <span>{array[0]}</span>
                     {' '}
@@ -106,8 +77,6 @@ export default function HomeCategorySlide({ categories = [], title = "", subtitl
 
         </Box>
         <Swiper
-            spaceBetween={50}
-            slidesPerView={4}
             speed={3500}
             // navigation={true}
             loop={true}
@@ -137,37 +106,24 @@ export default function HomeCategorySlide({ categories = [], title = "", subtitl
                 },
                 // when window width is >= 720px
                 720: {
+                    slidesPerView: 3,
+                    spaceBetween: 40
+                },
+                // when window width is >= 720px
+                1200: {
                     slidesPerView: 4,
                     spaceBetween: 40
                 },
-                // when window width is >= 1200px
-                1200: {
-                    slidesPerView: 5,
-                    spaceBetween: 40
-                }
+
             }
             }
         // onSlideChange={() => console.log('slide change')}
         // onSwiper={(swiper) => console.log(swiper)}
         >
-            {categories?.data?.map((category, index) => {
+            {category?.category_list?.map((singleCategory, index) => {
                 return (
                     <SwiperSlide key={index}>
-                        <MediaCard category={category} />
-                    </SwiperSlide>
-                )
-            })}
-            {categories?.data?.map((category, index) => {
-                return (
-                    <SwiperSlide key={index}>
-                        <MediaCard category={category} />
-                    </SwiperSlide>
-                )
-            })}
-            {categories?.data?.map((category, index) => {
-                return (
-                    <SwiperSlide key={index}>
-                        <MediaCard category={category} />
+                        <MediaCard category={singleCategory} />
                     </SwiperSlide>
                 )
             })}
@@ -175,4 +131,7 @@ export default function HomeCategorySlide({ categories = [], title = "", subtitl
     </Container >
 
 }
+
+
+
 

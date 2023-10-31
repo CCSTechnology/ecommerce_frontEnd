@@ -4,19 +4,19 @@ const homeData = {
     banner  : [
         {
             slug : "home",
-            image : 'https://www.soulfull.co.in/cdn/shop/files/MicrosoftTeams-image_10.jpg?v=1695312891',
+            image : 'https://truevinefoods.com/wp-content/uploads/2023/07/Banner1.jpg',
         },
         {
             slug : "home",
-            image : 'https://www.soulfull.co.in/cdn/shop/files/MicrosoftTeams-image_10.jpg?v=1695312891',
+            image : 'https://truevinefoods.com/wp-content/uploads/2023/07/Banner2.jpg',
         },
         {
             slug : "home",
-            image : 'https://www.soulfull.co.in/cdn/shop/files/MicrosoftTeams-image_10.jpg?v=1695312891',
+            image : 'https://truevinefoods.com/wp-content/uploads/2023/07/Banner1.jpg',
         },
         {
             slug : "home",
-            image : 'https://www.soulfull.co.in/cdn/shop/files/MicrosoftTeams-image_10.jpg?v=1695312891',
+            image : 'https://truevinefoods.com/wp-content/uploads/2023/07/Banner2.jpg',
         }
     ],
     categories : {
