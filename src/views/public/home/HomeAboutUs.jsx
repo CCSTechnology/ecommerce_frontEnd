@@ -30,7 +30,7 @@ const HomeAboutUs = ({ aboutUs }) => {
               }
             }}>
               <div dangerouslySetInnerHTML={{
-                __html : aboutUs.content
+                __html : aboutUs.data
               }}>
               </div>
               <Box marginBlock={3}>
