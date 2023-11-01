@@ -83,3 +83,18 @@ export const CATEGORY_HEADER = [
   //   { label: "Price", align: "left", id: "price" },
   { label: "Actions", align: "left", id: "actions" },
 ];
+
+export const ORDER_HEADER = [
+  { label: "S.No", align: "left", id: "id" },
+  { label: "Date", align: "left", id: "date" },
+  { label: "Order No", align: "left", id: "order_no" },
+  { label: "Invoice No", align: "left", id: "invoice_no" },
+  { label: "Customer Name", align: "left", id: "customer_name" },
+  { label: " Amount", align: "left", id: "amount" },
+  { label: " Total Tax", align: "left", id: "total_tax" },
+  { label: "Shipping Cost", align: "left", id: "shipping_cost" },
+  { label: "Grand Total", align: "left", id: "grand_total" },
+  { label: "status", align: "left", id: "status" },
+  { label: "Payment Status", align: "left", id: "payment_status" },
+  { label: "Actions", align: "left", id: "actions" },
+];

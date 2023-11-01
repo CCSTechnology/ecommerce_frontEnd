@@ -8,9 +8,9 @@ import AdminLayout from "./layouts/AdminLayout";
 import PlainLayout from "./layouts/PlainLayout";
 import Loadercomponent from "./components/loader";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 //Auth
 const Login = lazy(() => import("./views/public/login"));
@@ -24,6 +24,7 @@ const ProductView = lazy(() => import("./views/admin/products/productView"));
 const CustomerList = lazy(() => import("./views/admin/customers/list"));
 const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
 const Settings = lazy(() => import("./views/admin/settings"));
+const OrderList = lazy(() => import("./views/admin/orders/list"));
 function App() {
   return (
     <>
@@ -52,6 +53,7 @@ function App() {
             <Route path="admin/products" element={<ProductList />}></Route>
             <Route path="admin/products/:id" element={<ProductView />}></Route>
             <Route path="admin/customers" element={<CustomerList />}></Route>
+            <Route path="admin/orders" element={<OrderList />}></Route>
             <Route
               path="admin/customers/:id"
               element={<CustomerView />}
