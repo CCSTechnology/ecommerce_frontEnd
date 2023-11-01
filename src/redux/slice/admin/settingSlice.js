@@ -5,6 +5,12 @@ import {
   settingImageDelete,
   settingImageEdit,
   settingImageData,
+  featuredDataList,
+  featuredDataAdd,
+  featuredDataDelete,
+  searchFeatureList,
+  ContentAddAboutus,
+  ContentViewAboutus,
 } from "../../../redux/api/admin/settingService";
 
 const settingCases = [
@@ -27,6 +33,30 @@ const settingCases = [
   {
     api: settingImageData,
     name: "settingImageData",
+  },
+  {
+    api: featuredDataList,
+    name: "featuredDataList",
+  },
+  {
+    api: featuredDataAdd,
+    name: "featuredDataAdd",
+  },
+  {
+    api: featuredDataDelete,
+    name: "featuredDataDelete",
+  },
+  {
+    api: searchFeatureList,
+    name: "searchFeatureList",
+  },
+  {
+    api: ContentAddAboutus,
+    name: "ContentAddAboutus",
+  },
+  {
+    api: ContentViewAboutus,
+    name: "ContentViewAboutus",
   },
 ];
 

@@ -52,5 +52,11 @@ export const authEndPoints = {
     imageSettingDelete: (id) => `deletebannerimage/${id}`,
     imageSettingEdit: (id) => `changeimageforflyer/${id}`,
     imageView: (id) => `getbanner/${id}`,
+    dataFeature: "/listfeaturedproduct",
+    dataFeatureAdd: "/featuredproduct",
+    dataFeatureDelete: (id) => `/removefeaturedproduct/${id}`,
+    searchFeature: "/productsearch",
+    addContent: "/updateTopData",
+    viewContent: (name) => `/viewtopdata?type=${name}`,
   },
 };
