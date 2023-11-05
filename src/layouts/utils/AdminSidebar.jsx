@@ -95,21 +95,18 @@ const AdminSidebar = () => {
             </div>
           )}
         </div>
-
         <MenuItem
           component={<Link to="admin/customers" className="link" />}
           icon={<IconComponent src={Project} />}
         >
           Customers
         </MenuItem>
-
         <MenuItem
           component={<Link to="admin/category" className="link" />}
           icon={<IconComponent src={Friends} />}
         >
           Categories
         </MenuItem>
-
         <MenuItem
           component={<Link to="admin/products" className="link" />}
           icon={<IconComponent src={Chat} />}
@@ -117,16 +114,16 @@ const AdminSidebar = () => {
           Products
         </MenuItem>
         <MenuItem
-          component={<Link to="admin/settings" className="link" />}
-          icon={<IconComponent src={GoogleForms} />}
-        >
-          Settings
-        </MenuItem>
-        <MenuItem
           component={<Link to="admin/orders" className="link" />}
           icon={<IconComponent src={GoogleForms} />}
         >
           Orders
+        </MenuItem>
+        <MenuItem
+          component={<Link to="admin/settings" className="link" />}
+          icon={<IconComponent src={GoogleForms} />}
+        >
+          Settings
         </MenuItem>
       </Menu>
     </Sidebar>

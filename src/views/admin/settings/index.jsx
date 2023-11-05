@@ -77,7 +77,7 @@ function Settings() {
   });
   const [expanded, setExpanded] = useState(false);
   const [contentData, setContentData] = useState(null);
-  console.log(contentData);
+  console.log(homeData);
   const imageData = useSelector(
     (state) => state?.adminSetting?.settingImageView
   );
@@ -105,7 +105,9 @@ function Settings() {
   });
 
   const handleExpand = (row) => {
+    console.log(row);
     setHomeData(row);
+    setContentData(null);
     setExpanded(!expanded);
   };
 
@@ -240,6 +242,7 @@ function Settings() {
   };
 
   const contentView = async () => {
+    console.log(homeData);
     const parameters = {
       url: `${authEndPoints.setting.viewContent(homeData)}`,
     };
@@ -252,6 +255,7 @@ function Settings() {
   };
 
   useEffect(() => {
+    console.log(homeData);
     if (homeData) {
       contentView();
     }
@@ -391,7 +395,9 @@ function Settings() {
                     </Stack>
                   </Stack>
                 </Box>
-                {expanded && <EditorForm contentHome={contentData} />}
+                {contentData && expanded && (
+                  <EditorForm contentHome={contentData} />
+                )}
               </TabPanel>
               <TabPanel value="3">
                 <Box sx={{ my: 3 }}>
