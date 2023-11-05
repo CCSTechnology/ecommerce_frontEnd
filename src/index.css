@@ -309,3 +309,221 @@ a {
 /*--------------------------------------------------------------
 # Site Footer
 --------------------------------------------------------------*/
+
+
+/* PRODUCT SECTION */
+
+.product-block .inner-box {
+    position: relative;
+    display: block;
+}
+
+.product-block .upper {
+    position: relative;
+    display: block;
+}
+
+.product-block .image-box {
+    position: relative;
+    display: block;
+    background: #222222;
+}
+
+.product-block .image-box img {
+    position: relative;
+    display: block;
+    width: 100%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.product-block:hover .image-box img {
+    opacity: 0.15;
+}
+
+.product-block .hvr-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -30px 0px 0px -30px;
+    width: 60px;
+    height: 60px;
+    font-size: 36px;
+    text-align: center;
+    line-height: 70px;
+    border-radius: 2px;
+    background: #951e76;
+    color: #ffffff;
+    opacity: 0;
+    -ms-transform: scale(0);
+    transform: scale(0);
+    z-index: 6;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.product-block .hvr-icon a {
+    color: #ffffff;
+}
+
+.product-block:hover .hvr-icon {
+    opacity: 1;
+    -ms-transform: scale(1);
+    transform: scale(1);
+}
+
+.product-block .lower {
+    position: relative;
+    padding: 25px 30px 25px 30px;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+} 
+
+.product-block h5 {
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: capitalize;
+    line-height: 1.5em;
+    margin-bottom: 12px;
+}
+
+.product-block h5 a {
+    color: #132728;
+}
+
+.product-block:hover h5 a {
+    color: #951e76;
+}
+
+.product-block .text {
+    position: relative;
+    display: block;
+    font-size: 15px;
+    line-height: 1.7em;
+    font-weight: 400;
+    margin: 0 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.product-block .more-link {
+    position: relative;
+    display: block;
+    padding-top: 15px;
+}
+
+.product-block .more-link a {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 24px;
+    color: #02351c;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 15px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.product-block .more-link a i {
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.product-details-block .product-content {
+    margin-top: 50px;
+}
+
+.product-details-block .heading {
+    position: relative;
+    padding-left: 80px;
+    min-height: 72px;
+    margin-bottom: 18px;
+}
+
+.product-details-block .heading:before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 40px;
+    height: 60px;
+    background: #55c604;
+}
+
+.product-details-block .heading .heading-icon {
+    position: absolute;
+    left: 20px;
+    top: 24px;
+}
+
+.product-details-block .heading .subtitle {
+    position: relative;
+    display: block;
+    line-height: 1.2em;
+    font-size: 14px;
+    color: #55c604;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 5px;
+}
+
+.product-details-block .heading h2 {
+    position: relative;
+    display: block;
+    font-size: 34px;
+    line-height: 1em;
+    color: #132728;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+
+.product-details-block .product-content p {
+    text-align: justify;
+}
+
+.product-details-block .product-content ul {
+    margin-top: 28px;
+}
+
+.product-details-block .custom-list li {
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 30px;
+    font-size: 17px;
+}
+
+.product-details-block .custom-list li:before {
+    content: "\f00c";
+    position: absolute;
+    font-family: 'Font Awesome 5 Free';
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    color: #fff;
+    background: #98257a;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+}

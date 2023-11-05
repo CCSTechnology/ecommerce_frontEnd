@@ -28,8 +28,8 @@ function MediaCard({ category }) {
                             <img src={'https://truevinefoods.com/wp-content/uploads/2023/07/ready.png'} alt="Image" className="img-fluid" width="40" />
                         </div>
                     </div>
-                    <h5 className="title">
-                        <Link href={category.link}>{category.label}</Link>
+                    <h5 className="title" >
+                        <Link to={`/category/${category.unique_label}`}>{category.label}</Link>
                     </h5>
                 </div>
             </div>
@@ -39,7 +39,7 @@ function MediaCard({ category }) {
 
 
 export default function HomeCategory({ category }) {
-
+    
     return <Container maxWidth="lg">
         <Box sx={{
             textAlign: "center"
@@ -51,13 +51,13 @@ export default function HomeCategory({ category }) {
                 width: "100%",
             }}>
                 {
-                    category?.subtitle &&  <Typography color={'#951e76'} sx={{
+                    category?.subtitle && <Typography color={'#951e76'} sx={{
                         borderLeft: "4px solid",
                         fontWeight: "600",
                         paddingLeft: "10px"
                     }} variant='h5'>{category?.subtitle}</Typography>
                 }
-               
+
             </Box>
             <Box component={'p'} sx={{
                 fontSize: "24px",
@@ -67,7 +67,7 @@ export default function HomeCategory({ category }) {
                     color: "#9f4103",
 
                 }
-            }}>{String(category?.title || '' ).split(' ').map((titles, index, array) => {
+            }}>{String(category?.title || '').split(' ').map((titles, index, array) => {
                 return index === 0 && <>
                     <span>{array[0]}</span>
                     {' '}

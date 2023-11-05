@@ -22,7 +22,6 @@ const HomeAboutUs = ({ aboutUs }) => {
                     return index === 0 && <h2 key={index} className="title">{aboutUs?.title}</h2>
                   })}</>)
               }
-
             </div>
             <Box className="about-content" sx={{
               "& p": {

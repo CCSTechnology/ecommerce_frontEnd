@@ -12,9 +12,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-//Auth
+//Public
 const Login = lazy(() => import("./views/public/login"));
 const Home = lazy(() => import("./views/public/home"));
+const Category = lazy(() => import("./views/public/category"));
+const Product = lazy(() => import("./views/public/product"));
+
+
+
+//Admin
 const AdminLogin = lazy(() => import("./views/admin/login"));
 const AdminDashboard = lazy(() => import("./views/admin/dashboard"));
 const CategoryList = lazy(() => import("./views/admin/category/list"));
@@ -41,10 +47,12 @@ function App() {
         theme="light"
       />
       <Suspense fallback={<Loadercomponent isFetching={true} />}>
-        <Routes>
-          <Route element={<PublicLayout />}>
+        <Routes >
+          <Route element={<PublicLayout />} >
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/category/:categorySlug" element={<Category />}></Route>
+            <Route path="/product/:productSlug" element={<Product />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>

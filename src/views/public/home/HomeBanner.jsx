@@ -12,6 +12,7 @@ export default function HomeBanner({ banners = [] }) {
     return <Box sx={{
         height: "100%",
         width: "100%",
+
     }}>
         <Swiper
             // spaceBetween={50}
@@ -27,14 +28,19 @@ export default function HomeBanner({ banners = [] }) {
         >
             {
                 banners.map((banner, index) => {
+                    const path = ImagePath + banner.image
+                    console.log(path)
                     return <SwiperSlide key={index}>
                         <Box sx={{
-                            "& img": {
-                                height: "100%",
-                                width: "100%"
-                            }
+                            height: "590px",
+                            maxHeight : "90vh",
+                            backgroundImage :`url(${path})`,
+                            backgroundPosition : "center",
+                            backgroundSize : "100% 100%",
+                            backgroundRepeat : "no-repeat",
+
                         }}>
-                            <img src={ImagePath + banner.image} alt="" />
+                            {/* <img src={ImagePath + banner.image} alt="" /> */}
                         </Box>
                     </SwiperSlide>
                 })
