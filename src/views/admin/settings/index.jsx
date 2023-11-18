@@ -77,7 +77,8 @@ function Settings() {
   });
   const [expanded, setExpanded] = useState(false);
   const [contentData, setContentData] = useState(null);
-  console.log(homeData);
+  console.log(searchList);
+  console.log(dataListFeature);
   const imageData = useSelector(
     (state) => state?.adminSetting?.settingImageView
   );

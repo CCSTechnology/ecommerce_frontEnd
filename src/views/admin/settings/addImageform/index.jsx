@@ -89,6 +89,7 @@ const SettingForm = (props, disabled) => {
   };
 
   const handleEditProduct = async (values) => {
+    console.log(values);
     const parameters = {
       url: `${authEndPoints.setting.imageSettingEdit(initialValue.id)}`,
       data: values,

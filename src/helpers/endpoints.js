@@ -55,7 +55,7 @@ export const authEndPoints = {
     dataFeature: "/listfeaturedproduct",
     dataFeatureAdd: "/featuredproduct",
     dataFeatureDelete: (id) => `/removefeaturedproduct/${id}`,
-    searchFeature: "/productsearch",
+    searchFeature: `/productsearch`,
     addContent: "/updateTopData",
     viewContent: (name) => `/viewtopdata?type=${name}`,
   },
