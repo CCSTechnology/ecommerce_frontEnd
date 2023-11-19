@@ -1,6 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-export const baseURL = process.env.REACT_APP_MAIN_URL;
+
+// export const baseURL = process.env.REACT_APP_MAIN_URL;
+export const baseURL = import.meta.env.VITE_APP_MAIN_URL;
+
 const SECONDS = 30;
 const MILISECONDS = 1000;
 const timeout = SECONDS * MILISECONDS;

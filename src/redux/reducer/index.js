@@ -11,6 +11,8 @@ import adminSettingReducer from "../../redux/slice/admin/settingSlice";
 import homeReducer from "../../redux/slice/public/homeSlice";
 import categoryReducer from "../../redux/slice/public/categorySlice";
 import productReducer from "../../redux/slice/public/productSlice";
+import cartReducer from "../../redux/slice/public/cartSlice";
+
 
 
 export const rootReducer = combineReducers({
@@ -23,4 +25,5 @@ export const rootReducer = combineReducers({
   home: homeReducer,
   category: categoryReducer,
   product: productReducer,
+  cart : cartReducer
 });

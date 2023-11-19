@@ -91,7 +91,7 @@ function Settings() {
     (state) => state?.adminSetting?.searchFeatureList?.data?.data
   );
 
-  const imageUrl = process.env.REACT_APP_IMG_URL;
+  const imageUrl = import.meta.env.VITE_APP_IMG_URL;
   const {
     register,
     handleSubmit,

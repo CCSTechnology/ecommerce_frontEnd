@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
 	authLogin,
-	authRegister,
-	forgetPassword,
+	// authRegister,
+	// forgetPassword,
 	logout,
-	resetPassword,
+	// resetPassword,
 } from "../../../redux/api/admin/authService";
 
 const initialState = {

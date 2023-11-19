@@ -17,7 +17,7 @@ const CategoryView = () => {
     (state) => state.adminCategory.viewCategory
   );
   const role = localStorage.getItem("roleName");
-  const imageUrl = process.env.REACT_APP_IMG_URL;
+  const imageUrl = import.meta.env.VITE_APP_IMG_URL;
 
   //list api
   const viewCategoryList = async () => {
