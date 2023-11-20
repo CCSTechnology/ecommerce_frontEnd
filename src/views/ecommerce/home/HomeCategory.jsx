@@ -2,6 +2,8 @@ import { Box, styled } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { ImagePath } from '../../../utils/helpers'
+import HomeTitle from '../../../components/ecommerce/HomeTitle';
+import { Swiper , SwiperSlide} from 'swiper/react';
 
 
 function CategoryThumb({ category }) {
@@ -26,7 +28,7 @@ const HomeCategory = () => {
     const categories = category?.category_list || []
     return (
         <HomeCategoryWrapper>
-            <CategoryTitle>{category?.title}</CategoryTitle>
+            <HomeTitle featured={category} />
             <CategoryList>
                 {categories?.map((cat) => {
                     return <CategoryThumb category={cat} key={cat.id} />
@@ -56,7 +58,7 @@ const CategoryTitle = styled('p')`
     line-height: 120%; /* 38.4px */
 `
 
-const CategoryList = styled('div')`
+const CategoryList = styled(Swiper)`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -71,7 +73,7 @@ const CategoryList = styled('div')`
 
 
 
-const VegetableComponentWrapper = styled(Box)(({ theme }) => ({
+const VegetableComponentWrapper = styled(SwiperSlide)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",

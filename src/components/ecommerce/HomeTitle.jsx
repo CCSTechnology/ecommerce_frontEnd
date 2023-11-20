@@ -1,21 +1,21 @@
 import { Box, styled } from "@mui/material";
 
-export function FeaturedProductTitle({ featured }) {
+export default function HomeTitle({ featured }) {
     return (
-      <FeaturedProductTitleWrapper>
+      <HomeTitleWrapper>
         <Title>{featured?.title}</Title>
         <Content>
           <ViewAll>View All</ViewAll>
           <Image loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cabddc-d124-4af6-8d00-44a0757bd526?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
         </Content>
-      </FeaturedProductTitleWrapper>
+      </HomeTitleWrapper>
     );
   }
 
 
 
 
-  const FeaturedProductTitleWrapper = styled(Box)`
+  const HomeTitleWrapper = styled(Box)`
   justify-content: space-between;
   display: flex;
   gap: 20px;

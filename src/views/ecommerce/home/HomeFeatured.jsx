@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import ProductCard from "../../../components/ecommerce/ProductCard";
-import { FeaturedProductTitle } from "../../../components/ecommerce/HomeTitle";
+import HomeTitle from "../../../components/ecommerce/HomeTitle";
 
 
 
@@ -12,7 +12,7 @@ export default function HomeFeatured() {
   const productList = products?.product_details || []
 
   return <FeaturedProductWrapper>
-    <FeaturedProductTitle featured={products} />
+    <HomeTitle featured={products} />
     <HomeFeaturedList >
       {productList?.map((product) => {
         return <ProductCard key={product.id} product={product} />

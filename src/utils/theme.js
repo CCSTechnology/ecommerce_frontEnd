@@ -18,7 +18,8 @@ const tokens = {
     100: "#040509",
     200: "#080b12",
     300: "#0c101b",
-    400: "rgba(0, 178, 7, 1)", // manually changed
+    400 : "#951e76",
+    // 400: "rgba(0, 178, 7, 1)", // manually changed
     500: "#141b2d",
     600: "#1F2A40",
     700: "#727681",
@@ -60,7 +61,7 @@ const tokens = {
   },
 }
 
-const shadows = ["0px 0px 12px 0px rgba(32, 181, 38, 0.32),0px 0px 12px 0px rgba(32, 181, 38, 0.32),0px 0px 12px 0px rgba(32, 181, 38, 0.32)",
+const shadows = ["10px 10px 13px -8px rgba(149,30,118,0.42),10px 10px 13px -8px rgba(149,30,118,0.42),10px 10px 13px -8px rgba(149,30,118,0.42)",
   "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
   "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
   "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",

@@ -24,6 +24,7 @@ PUBLICSERVER.interceptors.request.use(function (config) {
 
 PUBLICSERVER.interceptors.response.use(
   (response) => {
+    console.log(response,"res")
     return Promise.resolve(response.data);
   },
   (error) => {

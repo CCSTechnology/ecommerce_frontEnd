@@ -1,12 +1,12 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
+import { logo } from "../../helpers/images";
 
 function Navbar() {
   return (
     <NavbarWrapper>
       <LogoContainer>
-        <Logo loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/85bb30b8-1534-495a-b93c-510849dcd63c?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
-        <LogoText>Ecobazar</LogoText>
+        <Logo loading="lazy" src={logo} />
       </LogoContainer>
       <SearchContainer>
         <SearchIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a878d6b6-f3e2-4273-8d96-7792848ff1af?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
@@ -45,27 +45,15 @@ const LogoContainer = styled(Box)`
 `;
 
 const Logo = styled('img')`
-  aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
-  width: 32px;
+  width: 180px;
   overflow: hidden;
   max-width: 100%;
   margin: auto 0;
+  padding: 4px;
 `;
 
-const LogoText = styled('p')`
-  color: var(--gren-gray-scale-900, #002603);
-  letter-spacing: -0.96px;
-  align-self: stretch;
-  flex-grow: 1;
-  white-space: nowrap;
-  font: 500 32px/38px Poppins, sans-serif;
-
-  @media (max-width: 991px) {
-    white-space: initial;
-  }
-`;
 
 const SearchContainer = styled(Box)`
   display: flex;
@@ -95,6 +83,7 @@ const CartContainer = styled(Box)`
   padding: 0 16px ;
   justify-content: space-between;
   gap: 0px;
+  height: 80px;
 
   @media (max-width: 991px) {
     max-width: 100%;

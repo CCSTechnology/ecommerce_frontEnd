@@ -8,10 +8,14 @@ import HomeDelivery from './HomeDelivery'
 import HomeCategory from './HomeCategory'
 import HomeFeatured from './HomeFeatured'
 
-const Home = () => {
+export default function Home(){
   const dispatch = useDispatch()
-  const HomeApi = () => {
-    dispatch(homeDataService())
+  const HomeApi = async () => {
+    try {
+     await dispatch(homeDataService()).unwrap()
+    } catch (error) {
+      console.log("HomeApi", error)
+    }
   }
   useEffect(() => {
     HomeApi()
@@ -28,8 +32,6 @@ const Home = () => {
     </StyledContainer>
   )
 }
-
-export default Home
 
 const HomeWrapper = styled(Box)(({ }) => ({
 }))
