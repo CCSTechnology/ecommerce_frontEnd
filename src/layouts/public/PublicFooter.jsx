@@ -12,9 +12,7 @@ export default function PublicFooter(props) {
               <Div5>
                 <Img
                   loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ced853c3-5f0a-49d8-aed2-707f16364b8c?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <Div6>Ecobazar</Div6>
+                  src={logo}                />
               </Div5>
               <Div7>
                 Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
