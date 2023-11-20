@@ -53,14 +53,14 @@ function App() {
         pauseOnHover
         theme="light"
       />
-      <Suspense fallback={<Loadercomponent isFetching={true} />}>
+      <Suspense fallback={<LoaderComponent isFetching={true} />}>
         <Routes>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            {/* <Route path="/login" element={<Login />}></Route> */}
             <Route
               path="/category/:categorySlug"
-              element={<Category />}
+              element={<Products />}
             ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
             <Route path="/cart" element={<Cart />}></Route>

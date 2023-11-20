@@ -88,7 +88,6 @@ export default function PublicFooter(props) {
         </Div2>
       </Div>
     </StyledContainer>
-
   );
 }
 
