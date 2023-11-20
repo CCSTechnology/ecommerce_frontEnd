@@ -75,7 +75,7 @@ function CategoryList() {
   //list api
   const categoryListApi = async () => {
     const parameters = {
-      url: `${authEndPoints.category.list}?per_page=10&page=${page}`,
+      url: `${authEndPoints.category.list}?per_page=10&page=${page}&search=${searchKey}`,
     };
     try {
       await dispatch(categoryListDatas(parameters)).unwrap();

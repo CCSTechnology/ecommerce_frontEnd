@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -19,6 +20,7 @@ import {
   TableHead,
   TableRow,
   Tabs,
+  TextField,
   Typography,
 } from "@mui/material";
 import SearchInput from "../../../components/searchInput";
@@ -54,6 +56,7 @@ import SettingForm from "./addImageform";
 import Editor from "../../../components/editor";
 import EditorField from "../../../components/editor";
 import EditorForm from "./editiorForm";
+import { useDebounce } from "use-debounce";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -77,8 +80,10 @@ function Settings() {
   });
   const [expanded, setExpanded] = useState(false);
   const [contentData, setContentData] = useState(null);
-  console.log(searchList);
+  console.log(searchList?.data);
   console.log(dataListFeature);
+  const [searchKey, setSearchKey] = useState("");
+  const [searchValue] = useDebounce(searchKey, 1000);
   const imageData = useSelector(
     (state) => state?.adminSetting?.settingImageView
   );
@@ -104,6 +109,16 @@ function Settings() {
   } = useForm({
     mode: "onChange",
   });
+
+  // cancel search
+  const cancelSearch = () => {
+    setSearchKey("");
+  };
+
+  //on search
+  const onSearch = (e) => {
+    setSearchKey(e.target.value);
+  };
 
   const handleExpand = (row) => {
     console.log(row);
@@ -182,10 +197,11 @@ function Settings() {
 
   const featureSearchList = async () => {
     const parameters = {
-      url: `${authEndPoints.setting.searchFeature}`,
+      url: `${authEndPoints.setting.searchFeature}?search=${searchKey}`,
     };
     try {
       const res = await dispatch(searchFeatureList(parameters)).unwrap();
+      console.log(res);
       setSerachList(res);
     } catch (errors) {
       errorAlert(errors?.error);
@@ -233,8 +249,9 @@ function Settings() {
     };
     try {
       const response = await dispatch(featuredDataAdd(parameters)).unwrap();
-      featuredData();
       featureSearchList();
+      featuredData();
+      reset();
       successAlert(response.message);
     } catch (error) {
       errorAlert(error.error);
@@ -265,8 +282,11 @@ function Settings() {
   useEffect(() => {
     settingImageDataView();
     featuredData();
-    featureSearchList();
   }, []);
+
+  useEffect(() => {
+    featureSearchList();
+  }, [searchValue]);
   return (
     <Box>
       <Box className="indexBox">
@@ -553,7 +573,7 @@ function Settings() {
               <Box sx={{ mx: 2 }}>
                 <Grid container spacing={5} sx={{ mb: 2 }}>
                   <Grid item xs={6} direction={"column"}>
-                    {searchList?.data && (
+                    {/* {searchList?.data && (
                       <SelectField
                         name="value"
                         control={control}
@@ -561,10 +581,29 @@ function Settings() {
                         Controller={Controller}
                         data={searchList?.data}
                         error={errors?.value?.message}
-
-                        // disabled={type === "edit" && true}
                       />
-                    )}
+                    )} */}
+                    <Controller
+                      name="value" // Replace with your form field name
+                      control={control}
+                      defaultValue={null}
+                      render={({ field }) => (
+                        <Autocomplete
+                          {...field}
+                          disablePortal
+                          id="combo-box-demo"
+                          options={searchList?.data}
+                          getOptionLabel={(option) => option.label}
+                          onChange={(e, value) =>
+                            field.onChange(value?.value || null)
+                          }
+                          sx={{ width: 300 }}
+                          renderInput={(params) => (
+                            <TextField {...params} label="Product Name" />
+                          )}
+                        />
+                      )}
+                    />
                   </Grid>
                 </Grid>
 

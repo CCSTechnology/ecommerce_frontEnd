@@ -72,7 +72,7 @@ function ProductList() {
   //list api
   const productsListApi = async () => {
     const parameters = {
-      url: `${authEndPoints.product.list}?Perpage=10&page=${page}`,
+      url: `${authEndPoints.product.list}?Perpage=10&page=${page}&search=${searchKey}`,
     };
     try {
       const res = await dispatch(productListData(parameters)).unwrap();
