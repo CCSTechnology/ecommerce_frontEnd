@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import StyledContainer from "../../components/ecommerce/StyledContainer";
+import { logo } from "../../helpers/images";
 
 export default function PublicFooter(props) {
   return (
