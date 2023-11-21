@@ -39,20 +39,20 @@ import { styled } from "@mui/material";
 import { Box, Typography, Divider } from "@mui/material";
 
 export default function TopBar() {
-    return (
-        <TopBarWrapper>
-            <LogoContainer>
-                <StoreLogo
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/6f8dddfc-8f66-4be6-9891-231ccd54f6ea?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <StoreLocation>
-                    Store Location: Lincoln- 344, Illinois, Chicago, USA
-                </StoreLocation>
-            </LogoContainer>
-        </TopBarWrapper>
+  return (
+    <TopBarWrapper>
+      <LogoContainer>
+        <StoreLogo
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/6f8dddfc-8f66-4be6-9891-231ccd54f6ea?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+        />
+        <StoreLocation>
+          Plot no 17, Balan avenue, KTC Nagar, Tirunelveli, Tamil Nadu - 627011 India.
+        </StoreLocation>
+      </LogoContainer>
+    </TopBarWrapper>
 
-    );
+  );
 }
 
 

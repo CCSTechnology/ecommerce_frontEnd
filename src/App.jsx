@@ -1,13 +1,23 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 import AdminLayout from "./layouts/AdminLayout";
 import PlainLayout from "./layouts/PlainLayout";
 import LoaderComponent from "./components/loader";
 import PublicLayout from "./layouts/PublicLayout";
 
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
+//Public
+// const Login = lazy(() => import("./views/public/login"));
+// const Home = lazy(() => import("./views/public/home"));
+// const Category = lazy(() => import("./views/public/category"));
+// const Product = lazy(() => import("./views/public/product"));
+const SuccessPage = lazy(() => import("./views/public/successpage"));
+const ErrorPage = lazy(() => import("./views/public/errorpage"));
 //Admin
 const AdminLogin = lazy(() => import("./views/admin/login"));
 const AdminDashboard = lazy(() => import("./views/admin/dashboard"));
@@ -18,6 +28,7 @@ const ProductView = lazy(() => import("./views/admin/products/productView"));
 const CustomerList = lazy(() => import("./views/admin/customers/list"));
 const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
 const Settings = lazy(() => import("./views/admin/settings"));
+const Search = lazy(() => import("./views/admin/search"));
 const OrderList = lazy(() => import("./views/admin/orders/list"));
 
 //Ecommerce
@@ -26,8 +37,6 @@ const Home = lazy(() => import("./views/ecommerce/home"));
 const Products = lazy(() => import("./views/ecommerce/products"));
 const Product = lazy(() => import("./views/ecommerce/product"));
 const Cart = lazy(() => import("./views/ecommerce/cart"));
-
-
 
 function App() {
   return (
@@ -44,23 +53,17 @@ function App() {
         pauseOnHover
         theme="light"
       />
-      {/* <PublicLayout > */}
-      {/* <Cart /> */}
-      {/* <Product /> */}
-      {/* <Products /> */}
-      {/* <Home /> */}
-      {/* <CheckOut /> */}
-      {/* </PublicLayout> */}
-
       <Suspense fallback={<LoaderComponent isFetching={true} />}>
-        <Routes >
-          <Route element={<PublicLayout />} >
+        <Routes>
+          <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
             {/* <Route path="/login" element={<Login />}></Route> */}
-            <Route path="/category/:categorySlug" element={<Products />}></Route>
+            <Route
+              path="/category/:categorySlug"
+              element={<Products />}
+            ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
-
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
@@ -75,15 +78,18 @@ function App() {
               element={<CustomerView />}
             ></Route>
             <Route path="admin/settings" element={<Settings />}></Route>
+            <Route path="admin/search" element={<Search />}></Route>
           </Route>
           <Route element={<PlainLayout />}>
             <Route path="admin" element={<AdminLogin />}></Route>
             <Route path="admin/login" element={<AdminLogin />}></Route>
+            <Route path="/successpage" element={<SuccessPage />}></Route>
+            <Route path="/errorpage" element={<ErrorPage />}></Route>
           </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
