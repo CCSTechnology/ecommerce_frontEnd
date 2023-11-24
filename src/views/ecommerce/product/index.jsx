@@ -129,8 +129,8 @@ function VegetableCard({ product }) {
                 </SKU>
             </Details>
             <Price>
-                <OriginalPrice>$48.00</OriginalPrice>
-                <DiscountedPrice>${Number(product?.cost).toFixed(2)}</DiscountedPrice>
+                <OriginalPrice>₹ 48.00</OriginalPrice>
+                <DiscountedPrice>₹ {Number(product?.cost).toFixed(2)}</DiscountedPrice>
             </Price>
         </Card>
             <Divider /> 
@@ -247,8 +247,9 @@ const Price = styled(Box)`
 `;
 
 const OriginalPrice = styled(Box)`
-  color: var(--gray-scale-gray-300, #b3b3b3);
-  text-decoration-line: strikethrough;
+  /* color: var(--gray-scale-gray-300, #b3b3b3); */
+  color: #e10000;
+  text-decoration-line: line-through;
   margin: auto 0;
   font: 400 20px/30px Poppins, sans-serif;
 `;

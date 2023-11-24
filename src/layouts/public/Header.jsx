@@ -47,7 +47,7 @@ const LogoContainer = styled(Box)`
 const Logo = styled('img')`
   object-fit: contain;
   object-position: center;
-  width: 180px;
+  width: 118px;
   overflow: hidden;
   max-width: 100%;
   margin: auto 0;

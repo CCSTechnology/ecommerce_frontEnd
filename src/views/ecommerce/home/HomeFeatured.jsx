@@ -14,7 +14,7 @@ export default function HomeFeatured() {
   return <FeaturedProductWrapper>
     <HomeTitle featured={products} />
     <HomeFeaturedList >
-      {productList?.map((product) => {
+      {productList?.slice(0,4).map((product) => {
         return <ProductCard key={product.id} product={product} />
       })}
     </HomeFeaturedList>
@@ -23,6 +23,7 @@ export default function HomeFeatured() {
 
 
 const FeaturedProductWrapper = styled(Box)`
+padding-inline: 20px;
         display: flex;
         flex-direction: column;
         gap: 32px;
@@ -35,7 +36,8 @@ const FeaturedProductWrapper = styled(Box)`
 
 const HomeFeaturedList = styled(Box)(({ }) => ({
   display : "flex",
-  flexWrap : "wrap",
+  overflow : "auto",
+  // flexWrap : "wrap",
   gap : "10px",
-  justifyContent : "center"
+  justifyContent : "space-around"
 }))

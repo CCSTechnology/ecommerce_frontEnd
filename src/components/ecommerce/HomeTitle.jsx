@@ -29,6 +29,7 @@ const Title = styled(Box)`
   color: var(--gray-scale-gray-900, #1a1a1a);
   flex-grow: 1;
   flex-basis: auto;
+  text-transform: capitalize;
   font: 600 32px/38px Poppins, sans-serif;
 `;
 
