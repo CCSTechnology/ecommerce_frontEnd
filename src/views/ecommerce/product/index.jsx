@@ -463,16 +463,18 @@ const AddToCart = ({quantity, product}) => {
 
   const addToCart = async(e)=>{
     e.preventDefault()
-    console.log(product?.id, quantity,"quantity")
     try {
       const response = await dispatch(addCartServices({
-        // product_id : product?.id,
-         product_id : 2,
+        product_id : product?.id,
+        //  product_id : 2,
         quantity,
       })).unnwrap()
       console.log(response, "res")
+      if(response?.cartdetails){
+        localStorage.setItem('cart_id', response?.cartdetails.cart_id)
+      }
     } catch (error) {
-      
+        
     }
   }
 
@@ -500,8 +502,8 @@ const BuyNow = ({quantity, product}) => {
     console.log(product?.id, quantity,"quantity")
     try {
       const response = await dispatch(addCartServices({
-        // product_id : product?.id,
-         product_id : 2,
+        product_id : product?.id,
+        //  product_id : 2,
         quantity,
       })).unnwrap()
       console.log(response, "res")

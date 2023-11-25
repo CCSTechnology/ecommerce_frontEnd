@@ -1,11 +1,12 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
 import { logo } from "../../helpers/images";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
     <NavbarWrapper>
-      <LogoContainer>
+      <LogoContainer to="/">
         <Logo loading="lazy" src={logo} />
       </LogoContainer>
       <SearchContainer>
@@ -36,7 +37,7 @@ const NavbarWrapper = styled(Box)`
   }
 `;
 
-const LogoContainer = styled(Box)`
+const LogoContainer = styled(Link)`
   align-items: center;
   align-self: center;
   display: flex;
