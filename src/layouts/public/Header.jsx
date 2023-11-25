@@ -17,7 +17,7 @@ function Navbar() {
         <Divider />
         <CartInfo>
           <CartTitle>Shopping cart:</CartTitle>
-          <CartPrice>$57.00</CartPrice>
+          <CartPrice>₹ 57.00</CartPrice>
         </CartInfo>
       </CartContainer>
     </NavbarWrapper>

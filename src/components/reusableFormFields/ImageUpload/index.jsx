@@ -14,7 +14,7 @@ function ImageUploadComponent(props) {
             field.onChange(file)
         }
     };
-    const imageUrl = process.env.REACT_APP_IMG_URL;
+    const imageUrl = import.meta.env.REACT_APP_IMG_URL;
     // const handleDeleteImage = () => {
     //     setValue(name, '')
     // };

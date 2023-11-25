@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addCartServices } from "../../api/public/cartServices";
 
-const cartCases = []
+const cartCases = [{
+    api : addCartServices,
+    name : "addCartServices"
+}]
 
 const initialState = {
     cartProducts : [] 
@@ -18,7 +22,7 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addCart :(state, {payload})=>{
+        addCart :(state, {payload})=>{     
             const filteredProduct = state.cartProducts.filter((cart)=> cart.id === payload.id)
             if(filteredProduct.length >= 1){
                 filteredProduct[0].count = filteredProduct[0].count + payload.count

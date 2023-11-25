@@ -14,7 +14,7 @@ export default function AddressAutoComplete(props) {
                     types: ["address"],
                     componentRestrictions: { country: "ca" },
                 }}
-                apiKey={process.env.REACT_APP_API_MAP_ENDPOINT}
+                apiKey={import.meta.env.REACT_APP_API_MAP_ENDPOINT}
                 onPlaceSelected={onChange}
                 disabled={disabled}
             />

@@ -25,7 +25,7 @@ import { Autoplay } from "swiper/modules";
 import Container from "@mui/material/Container";
 
 function MediaCard({ products }) {
-  const imageUrl = process.env.REACT_APP_IMG_URL;
+  const imageUrl = import.meta.env.REACT_APP_IMG_URL;
   console.log(products);
   return (
     <Card
