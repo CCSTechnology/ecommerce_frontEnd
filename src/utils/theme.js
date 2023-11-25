@@ -1,4 +1,3 @@
-import { createContext, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 
 // color design tokens export
@@ -61,7 +60,7 @@ const tokens = {
   },
 }
 
-const shadows = ["10px 10px 13px -8px rgba(149,30,118,0.42),10px 10px 13px -8px rgba(149,30,118,0.42),10px 10px 13px -8px rgba(149,30,118,0.42)",
+const shadows = ["0px 0px 55px -29px rgba(149,30,118,0.77),0px 0px 55px -29px rgba(149,30,118,0.77),0px 0px 55px -29px rgba(149,30,118,0.77)",
   "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
   "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
   "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",

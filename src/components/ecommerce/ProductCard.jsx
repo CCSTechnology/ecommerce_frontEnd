@@ -1,11 +1,12 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
 import { ImagePath } from "../../utils/helpers";
+import { Link } from "react-router-dom";
 
 
 function ProductCard({ product }) {
   return (
-    <ProductCardWrapper>
+    <ProductCardWrapper to={"/product/" + product.unique_label}>
       <ProductImage srcSet={ImagePath + product.file_name} />
       <ProductName>{String(product.product_name)}</ProductName>
       <ProductPrice>${Number(product.cost).toFixed(2)}</ProductPrice>
@@ -24,13 +25,13 @@ const Card = styled(Box)`
 `;
 
 
-const ProductCardWrapper = styled(Box)(({theme})=>({
+const ProductCardWrapper = styled(Link)(({theme})=>({
   border : `1px solid ${theme.palette.grey[100]}`,
   display: "flex",
   flexDirection : "column",
   borderRadius : "5px",
   width : "264px",
-  padding : "0 5px",
+  padding : "5px",
   cursor : "pointer",
   ":hover" :{
     boxShadow :theme.shadows[0],

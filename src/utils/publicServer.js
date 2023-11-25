@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// export const baseURL = process.env.REACT_APP_MAIN_URL;
+// export const baseURL = import.meta.env.REACT_APP_MAIN_URL;
 export const baseURL = import.meta.env.VITE_APP_MAIN_URL;
 
 const SECONDS = 30;
@@ -10,7 +10,7 @@ const timeout = SECONDS * MILISECONDS;
 const TOKEN_PAYLOAD_KEY = "authorization";
 
 const PUBLICSERVER = axios.create({
-  baseURL,
+  baseURL : "http://staggingapi.truevine.in/api",
   timeout,
 });
 
@@ -24,7 +24,6 @@ PUBLICSERVER.interceptors.request.use(function (config) {
 
 PUBLICSERVER.interceptors.response.use(
   (response) => {
-    console.log(response,"res")
     return Promise.resolve(response.data);
   },
   (error) => {

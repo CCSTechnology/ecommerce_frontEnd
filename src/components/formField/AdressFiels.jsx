@@ -26,7 +26,7 @@ const AdressField = React.forwardRef((props, ref) => {
 								types: ["address"],
 								componentRestrictions: { country: "aus" },
 							}}
-							apiKey={process.env.REACT_APP_GOOGLE_AUTOCOMPLETE_KEY}
+							apiKey={import.meta.env.REACT_APP_GOOGLE_AUTOCOMPLETE_KEY}
 							onPlaceSelected={(e) => {
 								field.onChange(e.formatted_address);
 								const formatted_address = AddressFormater(e);

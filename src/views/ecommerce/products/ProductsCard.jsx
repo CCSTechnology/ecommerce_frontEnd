@@ -1,10 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 import { ImagePath } from "../../../utils/helpers";
+import { Box } from "@mui/material";
+import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 export default function ProductCard({product}) {
   return (
-    <Card>
+    <Card to={"/product/" + product.unique_label}>
       <ImageContainer>
         <LazyImage loading="lazy"
       srcSet={ImagePath + product.file_name} />
@@ -15,7 +17,7 @@ export default function ProductCard({product}) {
         />
       </ImageContainer>
       <Title>{product.product_name}</Title>
-      <Price>${Number(product.cost).toFixed(2)}</Price>
+      <Price>₹ {Number(product.cost).toFixed(2)}</Price>
       <LazyImage3
         loading="lazy"
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/22d01039-76ca-4fc5-9922-6b85c686924f?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
@@ -24,18 +26,18 @@ export default function ProductCard({product}) {
   );
 }
 
-const Card = styled.div`
-  border-radius: 8px;
-  border: 1px solid var(--branding-success-dark, #2c742f);
-  box-shadow: 0px 0px 12px 0px rgba(32, 181, 38, 0.32);
-  background-color: var(--gray-scale-white, #fff);
-  display: flex;
-  width: 312px;
-  padding: 0 5px;
-  flex-direction: column;
-`;
+const Card = styled(Link)(({theme})=>({
+  borderRadius: "8px",
+  border: `1px solid var(--branding-success-dark, ${theme.palette.primary.main[400]})`,
+  // boxShadow: theme.shadow[0],
+  backgroundColor: "var(--gray-scale-white, #fff)",
+  display: "flex",
+  width: "312px",
+  padding:" 0 5px",
+  flexDirection: "column",
+}))
 
-const ImageContainer = styled.div`
+const ImageContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -52,7 +54,7 @@ const ImageContainer = styled.div`
   }
 `;
 
-const LazyImage = styled.img`
+const LazyImage = styled("img")`
   position: absolute;
   height: 100%;
   width: 100%;
@@ -60,7 +62,7 @@ const LazyImage = styled.img`
   object-position: center;
 `;
 
-const LazyImage2 = styled.img`
+const LazyImage2 = styled("img")`
   aspect-ratio: 0.47;
   object-fit: contain;
   object-position: center;
@@ -74,13 +76,13 @@ const LazyImage2 = styled.img`
   }
 `;
 
-const Title = styled.div`
+const Title = styled(Box)`
   color: var(--branding-success-dark, #2c742f);
   margin-top: 22px;
   font: 400 14px/21px Poppins, sans-serif;
 `;
 
-const Price = styled.div`
+const Price = styled(Box)`
   color: var(--gray-scale-gray-900, #1a1a1a);
   align-self: center;
   white-space: nowrap;
@@ -91,7 +93,7 @@ const Price = styled.div`
   }
 `;
 
-const LazyImage3 = styled.img`
+const LazyImage3 = styled("img")`
   aspect-ratio: 5;
   object-fit: contain;
   object-position: center;

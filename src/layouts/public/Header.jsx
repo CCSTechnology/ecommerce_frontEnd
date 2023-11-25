@@ -1,11 +1,12 @@
 import { Box, styled } from "@mui/material";
 import React from "react";
 import { logo } from "../../helpers/images";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
     <NavbarWrapper>
-      <LogoContainer>
+      <LogoContainer to="/">
         <Logo loading="lazy" src={logo} />
       </LogoContainer>
       <SearchContainer>
@@ -17,7 +18,7 @@ function Navbar() {
         <Divider />
         <CartInfo>
           <CartTitle>Shopping cart:</CartTitle>
-          <CartPrice>$57.00</CartPrice>
+          <CartPrice>₹ 57.00</CartPrice>
         </CartInfo>
       </CartContainer>
     </NavbarWrapper>
@@ -36,7 +37,7 @@ const NavbarWrapper = styled(Box)`
   }
 `;
 
-const LogoContainer = styled(Box)`
+const LogoContainer = styled(Link)`
   align-items: center;
   align-self: center;
   display: flex;
@@ -47,7 +48,7 @@ const LogoContainer = styled(Box)`
 const Logo = styled('img')`
   object-fit: contain;
   object-position: center;
-  width: 180px;
+  width: 118px;
   overflow: hidden;
   max-width: 100%;
   margin: auto 0;

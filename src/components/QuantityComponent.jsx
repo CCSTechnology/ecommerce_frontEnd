@@ -1,10 +1,19 @@
 import { Box, styled } from "@mui/material"
+import { useState } from "react"
 
-export default function QuantityComponent(){
+export default function QuantityComponent({quantity = 1, setQuantity}){
     return <QuantityComponentWrapper>
-        <ADDMINUS>-</ADDMINUS>
-        <Input>1</Input>
-        <ADDMINUS>+</ADDMINUS>
+        <ADDMINUS onClick={(e)=>{
+          e.preventDefault()
+          if(quantity > 1){
+            setQuantity((state)=> state -1)
+          }
+        }}>-</ADDMINUS>
+        <Input>{quantity}</Input>
+        <ADDMINUS onClick={(e)=>{
+          e.preventDefault()
+          setQuantity((state)=>state + 1)
+        }}>+</ADDMINUS>
     </QuantityComponentWrapper>
 }
 

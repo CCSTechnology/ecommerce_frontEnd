@@ -50,7 +50,7 @@ const NavbarWrapper = styled(Box)(({ theme }) => ({
     display : "flex",
     alignItems : "center",
     justifyContent :"space-between",
-    padding : "16px 20px"
+    padding : "10px 20px"
 }))
 
 

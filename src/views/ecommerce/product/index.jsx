@@ -1,20 +1,26 @@
 import { Box, Button, Typography, styled } from "@mui/material"
 import CustomBreadcrumbs from "../../../components/ecommerce/Breadcrumps"
 import StyledContainer from "../../../components/ecommerce/StyledContainer"
-import { productListService } from "../../../redux/api/public/productService"
+import { productViewService } from "../../../redux/api/public/productService"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import ProductSlides from "./ProductSlides"
+import { useParams } from "react-router-dom"
+import ProductView from "../../admin/products/productView"
+import QuantityComponent from "../../../components/QuantityComponent"
+import { addCartServices } from "../../../redux/api/public/cartServices"
 
 
-const CartComponent = () => {
-    return  <>
-        <CartComponentWrapper>
-            <QuantityComponent />
-            <AddToCart />
-        </CartComponentWrapper>
-        <Divider />
-    </>
+const CartComponent = ({count = 1, product =null}) => {
+  const [quantity, setQuantity] = useState(count)
+  return <>
+    <CartComponentWrapper>
+      <QuantityComponent quantity={quantity} setQuantity={setQuantity} />
+      <AddToCart quantity={quantity} setQuantity={setQuantity} product={product} />
+      <BuyNow quantity={quantity} setQuantity={setQuantity} product={product} />
+    </CartComponentWrapper>
+    <Divider />
+  </>
 }
 
 
@@ -26,35 +32,38 @@ gap: 10px;
 `
 
 const Product = () => {
-    const dispatch = useDispatch()
-    const { data: productData } = useSelector((state) => state.product.productListService)
-    const productSingle = productData?.data?.[0] || null
-    console.log(productSingle, "productSingle")
-    function fetchProduct(params) {
-        dispatch(productListService())
-    }
+  const dispatch = useDispatch()
+  const { productSlug } = useParams()
+  const { data: productData } = useSelector((state) => state.product.productViewService)
+  const productSingle = productData?.product || null
+  // console.log(productSingle, "productSingle")
+  function fetchProduct(unique_label) {
+    dispatch(productViewService({
+      unique_label,
+    }))
+  }
 
-    useEffect(() => {
-        fetchProduct()
-    }, [])
-    return (
-        <StyledContainer>
-            <ProductWrapper>
-                <CustomBreadcrumbs />
-                <ProductContainer>
-                    <ProductSlider>
-                        <ProductSlides />
-                    </ProductSlider>
-                    <ProductDetails >
-                        <VegetableCard product={productSingle} />
-                        <UpdatedComponent product={productSingle} />
-                        <CartComponent />
-                    </ProductDetails>
-                </ProductContainer>
-                
-            </ProductWrapper>
-        </StyledContainer>
-    )
+  useEffect(() => {
+    fetchProduct(productSlug)
+  }, [productSlug])
+  return (
+    <StyledContainer>
+      <ProductWrapper>
+        <CustomBreadcrumbs />
+        <ProductContainer>
+          <ProductSlider>
+            <ProductSlides product={productSingle} />
+          </ProductSlider>
+          <ProductDetails >
+            <VegetableCard product={productSingle} />
+            <UpdatedComponent product={productSingle} />
+            <CartComponent product={productSingle} />
+          </ProductDetails>
+        </ProductContainer>
+
+      </ProductWrapper>
+    </StyledContainer>
+  )
 }
 
 export default Product
@@ -92,50 +101,51 @@ justify-content: space-between;
 
 
 function VegetableCard({ product }) {
-    return (
-        <>
-        <Card>
-            <Header>
-                <Title>{product?.product_name}</Title>
-                <Status>In Stock</Status>
-            </Header>
-            <Images>
-                <LazyImage
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/c01ddc69-c87d-4fa9-bdf3-cde42678a7ef?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <LazyImage
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/1f88450d-b5d8-4d2a-9ea1-af9eaeb74c61?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <LazyImage
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/afc1a752-946c-44e4-ae33-7a96763aeb71?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <LazyImage
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/d88ea37e-2886-48a4-97e6-f5d1f9c9dcf2?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <LazyImage
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7ddeec8-c97f-414b-8187-57bc6914a9d5?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                />
-                <ReviewCount>4 Review</ReviewCount>
-            </Images>
-            <Details>
-                <SKU>
-                    <Label>SKU:</Label>
-                    <Value>2,51,594</Value>
-                </SKU>
-            </Details>
-            <Price>
-                <OriginalPrice>$48.00</OriginalPrice>
-                <DiscountedPrice>${Number(product?.cost).toFixed(2)}</DiscountedPrice>
-            </Price>
-        </Card>
-            <Divider /> 
-        </>
-    );
+  console.log(product, "product")
+  return (
+    <>
+      <Card>
+        <Header>
+          <Title>{product?.product_name}</Title>
+          <Status>In Stock</Status>
+        </Header>
+        <Images>
+          <LazyImage
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c01ddc69-c87d-4fa9-bdf3-cde42678a7ef?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
+          <LazyImage
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/1f88450d-b5d8-4d2a-9ea1-af9eaeb74c61?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
+          <LazyImage
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/afc1a752-946c-44e4-ae33-7a96763aeb71?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
+          <LazyImage
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d88ea37e-2886-48a4-97e6-f5d1f9c9dcf2?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
+          <LazyImage
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7ddeec8-c97f-414b-8187-57bc6914a9d5?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
+          <ReviewCount>4 Review</ReviewCount>
+        </Images>
+        <Details>
+          <SKU>
+            <Label>SKU: {product?.sku}</Label>
+            <Value>2,51,594</Value>
+          </SKU>
+        </Details>
+        <Price>
+          <OriginalPrice>₹ {Number(product?.cost).toFixed(2)}</OriginalPrice>
+          <DiscountedPrice>₹ {Number(product?.cost).toFixed(2)}</DiscountedPrice>
+        </Price>
+      </Card>
+      <Divider />
+    </>
+  );
 }
 
 const Card = styled(Box)`
@@ -247,8 +257,9 @@ const Price = styled(Box)`
 `;
 
 const OriginalPrice = styled(Box)`
-  color: var(--gray-scale-gray-300, #b3b3b3);
-  text-decoration-line: strikethrough;
+  /* color: var(--gray-scale-gray-300, #b3b3b3); */
+  color: #e10000;
+  text-decoration-line: line-through;
   margin: auto 0;
   font: 400 20px/30px Poppins, sans-serif;
 `;
@@ -279,14 +290,15 @@ const Divider = styled(Box)`
 
 
 function UpdatedComponent({ product }) {
-    return (
-        <Container>
-            <UpdatedComponentHeader>
-                <Brand>Sizes:</Brand>
+  return (
+    <Container>
+      <UpdatedComponentHeader>
+        <Brand>Description: </Brand>
+        {/* <Brand>Sizes:</Brand> */}
 
-                {/* <BrandName>farmary</BrandName> */}
-            </UpdatedComponentHeader>
-            {/* <ShareSection>
+        {/* <BrandName>farmary</BrandName> */}
+      </UpdatedComponentHeader>
+      {/* <ShareSection>
         <ShareLabel>Share item:</ShareLabel>
         <ShareIcons>
           <img
@@ -311,12 +323,12 @@ function UpdatedComponent({ product }) {
           />
         </ShareIcons>
       </ShareSection> */}
-            <Content>
-                {product?.description}
-            </Content>
-            <Divider />
-        </Container>
-    );
+      <Content>
+        {product?.description}
+      </Content>
+      <Divider />
+    </Container>
+  );
 }
 
 const Container = styled(Box)`
@@ -404,13 +416,14 @@ const Content = styled(Box)`
 `;
 
 
-const QuantityComponent = () => {
-    return <QuantityComponentWrapper>
-        <ADDMINUS>-</ADDMINUS>
-        <Input>1</Input>
-        <ADDMINUS>+</ADDMINUS>
-    </QuantityComponentWrapper>
-}
+// const QuantityComponent = () => {
+  
+//   return <QuantityComponentWrapper>
+//     <ADDMINUS>-</ADDMINUS>
+//     <Input>1</Input>
+//     <ADDMINUS>+</ADDMINUS>
+//   </QuantityComponentWrapper>
+// }
 
 const QuantityComponentWrapper = styled(Box)`
 display: flex;
@@ -444,12 +457,66 @@ width: 20px;
 
 `
 
-const AddToCart = () => {
-    return <AddToCartWrapper fullWidth variant="contained"> Add to Cart</AddToCartWrapper>
+const AddToCart = ({quantity, product}) => {
+  const dispatch = useDispatch()
+
+
+  const addToCart = async(e)=>{
+    e.preventDefault()
+    try {
+      const response = await dispatch(addCartServices({
+        product_id : product?.id,
+        //  product_id : 2,
+        quantity,
+      })).unnwrap()
+      console.log(response, "res")
+      if(response?.cartdetails){
+        localStorage.setItem('cart_id', response?.cartdetails.cart_id)
+      }
+    } catch (error) {
+        
+    }
+  }
+
+  return <AddToCartWrapper fullWidth variant="contained" onClick={addToCart}> Add to Cart</AddToCartWrapper>
 }
 
 
 const AddToCartWrapper = styled(Button)`
+
+    color: white;
+    border-radius: 170px;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 19.2px */ 
+`
+
+
+
+const BuyNow = ({quantity, product}) => {
+
+  const BuyNow = async(e)=>{
+    e.preventDefault()
+    console.log(product?.id, quantity,"quantity")
+    try {
+      const response = await dispatch(addCartServices({
+        product_id : product?.id,
+        //  product_id : 2,
+        quantity,
+      })).unnwrap()
+      console.log(response, "res")
+    } catch (error) {
+      
+    }
+  }
+
+  return <BuyNowWrapper fullWidth variant="contained" onClick={BuyNow}> BuyNow</BuyNowWrapper>
+}
+
+
+const BuyNowWrapper = styled(Button)`
 
     color: white;
     border-radius: 170px;

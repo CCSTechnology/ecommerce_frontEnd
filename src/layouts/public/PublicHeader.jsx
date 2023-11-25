@@ -7,7 +7,7 @@ import StyledContainer from '../../components/ecommerce/StyledContainer'
 const PublicHeader = () => {
   return (
     <StyledContainer>
-      <Topbar />
+      {/* <Topbar /> */}
       <Header />
       <Navbar />
     </StyledContainer>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-// export const baseURL = process.env.REACT_APP_MAIN_URL;
+// export const baseURL = import.meta.env.REACT_APP_MAIN_URL;
 export const baseURL = import.meta.env.VITE_APP_MAIN_URL;
 const SECONDS = 30;
 const MILISECONDS = 1000;
@@ -8,7 +8,7 @@ const timeout = SECONDS * MILISECONDS;
 const TOKEN_PAYLOAD_KEY = "authorization";
 
 const ADMINSERVER = axios.create({
-  baseURL,
+  baseURL : "http://staggingapi.truevine.in/api",
   timeout,
 });
 
