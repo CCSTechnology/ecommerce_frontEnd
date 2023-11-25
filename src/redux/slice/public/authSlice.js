@@ -1,9 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {publicAuthLogin  } from "../../api/public/authServices";
+import { guestAddAddress, publicAddAddress } from "../../api/public/authService";
 
 const authCases = [{
     api : addauthServices,
     name : "addauthServices"
+},{
+    api : publicAddAddress,
+    name : "publicAddAddress"
+}, {
+    api : guestAddAddress,
+    name : "guestAddAddress"
+}, {
+    api : publicAuthLogin,
+    name : "publicAuthLogin"
 }]
 
 const initialState = {

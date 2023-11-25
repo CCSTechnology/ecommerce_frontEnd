@@ -2,16 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import QuantityComponent from "../../../components/QuantityComponent";
 import { Button } from "@mui/material";
+import { ImagePath } from "../../../utils/helpers";
 
-export default function CartProductCard(props) {
+export default function CartProductCard({product, quantityShow = true}) {
   return (
     <Container>
-      <Image loading="lazy" srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
-      <Title>Green Capsicum</Title>
-      <QuantityComponent />
+      <Image loading="lazy" srcSet={ImagePath + product.products.file_name} />
+      <Title>{product.products.product_name}</Title>
+      {
+        quantityShow &&  <QuantityComponent quantity={product.quantity} />
+      }
+     
       <PriceContainer>
-        <Price>$14.99</Price>
-        <DiscountPrice>$20.99</DiscountPrice>
+        <Price>₹ {product.total_amount}</Price>
+        {/* <DiscountPrice>$20.99</DiscountPrice> */}
       </PriceContainer>
       <StockContainer>
         <StockStatus>In Stock</StockStatus>

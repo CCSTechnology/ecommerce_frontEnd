@@ -5,13 +5,13 @@ import { productViewService } from "../../../redux/api/public/productService"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import ProductSlides from "./ProductSlides"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import ProductView from "../../admin/products/productView"
 import QuantityComponent from "../../../components/QuantityComponent"
 import { addCartServices } from "../../../redux/api/public/cartServices"
 
 
-const CartComponent = ({count = 1, product =null}) => {
+const CartComponent = ({ count = 1, product = null }) => {
   const [quantity, setQuantity] = useState(count)
   return <>
     <CartComponentWrapper>
@@ -36,7 +36,6 @@ const Product = () => {
   const { productSlug } = useParams()
   const { data: productData } = useSelector((state) => state.product.productViewService)
   const productSingle = productData?.product || null
-  // console.log(productSingle, "productSingle")
   function fetchProduct(unique_label) {
     dispatch(productViewService({
       unique_label,
@@ -101,7 +100,6 @@ justify-content: space-between;
 
 
 function VegetableCard({ product }) {
-  console.log(product, "product")
   return (
     <>
       <Card>
@@ -417,7 +415,7 @@ const Content = styled(Box)`
 
 
 // const QuantityComponent = () => {
-  
+
 //   return <QuantityComponentWrapper>
 //     <ADDMINUS>-</ADDMINUS>
 //     <Input>1</Input>
@@ -457,24 +455,25 @@ width: 20px;
 
 `
 
-const AddToCart = ({quantity, product}) => {
+const AddToCart = ({ quantity, product }) => {
   const dispatch = useDispatch()
 
 
-  const addToCart = async(e)=>{
+  const addToCart = async (e) => {
     e.preventDefault()
     try {
+      const id = localStorage.getItem('card_id')
       const response = await dispatch(addCartServices({
-        product_id : product?.id,
+        product_id: product?.id,
         //  product_id : 2,
         quantity,
-      })).unnwrap()
-      console.log(response, "res")
-      if(response?.cartdetails){
+        id,
+      })).unwrap()
+      if (response?.cartdetails) {
         localStorage.setItem('cart_id', response?.cartdetails.cart_id)
       }
     } catch (error) {
-        
+      console.log(error, "error")
     }
   }
 
@@ -495,20 +494,22 @@ const AddToCartWrapper = styled(Button)`
 
 
 
-const BuyNow = ({quantity, product}) => {
+const BuyNow = ({ quantity, product }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const BuyNow = async(e)=>{
+  const BuyNow = async (e) => {
     e.preventDefault()
-    console.log(product?.id, quantity,"quantity")
     try {
       const response = await dispatch(addCartServices({
-        product_id : product?.id,
+        product_id: product?.id,
         //  product_id : 2,
         quantity,
-      })).unnwrap()
+      })).unwrap()
       console.log(response, "res")
+      navigate("/cart")
     } catch (error) {
-      
+      console.log(error, "ee")
     }
   }
 

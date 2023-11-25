@@ -32,11 +32,17 @@ const Search = lazy(() => import("./views/admin/search"));
 const OrderList = lazy(() => import("./views/admin/orders/list"));
 
 //Ecommerce
-// const Login = lazy(() => import("./views/public/login"));
+const Login = lazy(() => import("./views/ecommerce/auth/login"));
+const SignUp = lazy(() => import("./views/ecommerce/auth/sign-up"));
+
 const Home = lazy(() => import("./views/ecommerce/home"));
 const Products = lazy(() => import("./views/ecommerce/products"));
 const Product = lazy(() => import("./views/ecommerce/product"));
 const Cart = lazy(() => import("./views/ecommerce/cart"));
+const GuestCheckOut = lazy(() => import("./views/ecommerce/auth/getLoginCheckout"));
+
+const CheckOut = lazy(() => import("./views/ecommerce/checkout"));
+
 
 function App() {
   return (
@@ -55,15 +61,20 @@ function App() {
       />
       <Suspense fallback={<LoaderComponent isFetching={true} />}>
         <Routes>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<SignUp />}></Route>
+            <Route path="/guest-login" element={<GuestCheckOut />}></Route>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
-            {/* <Route path="/login" element={<Login />}></Route> */}
             <Route
               path="/category/:categorySlug"
               element={<Products />}
             ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
+
             <Route path="/cart" element={<Cart />}></Route>
+            <Route path="/checkout" element={<GuestCheckOut />}></Route>
+
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
