@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
 import { Box, Button, Typography } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function OrderSummary({ checkout , guest, handleCheckOutGuest , handleCheckOut, handleSubmit}) {
+    const navigate = useNavigate()
     return (
         <OrderSummaryWrapper>
             <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
@@ -22,9 +24,7 @@ export default function OrderSummary({ checkout , guest, handleCheckOutGuest , h
                     <span>₹ {Number(checkout?.grand_total || 0).toFixed(2)}</span>
                 </OrderAmountWrapper>
             </Box>
-
             <ButtonWrapper>
-
             {
                         guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
 
@@ -38,7 +38,9 @@ export default function OrderSummary({ checkout , guest, handleCheckOutGuest , h
                             </Button>
                         </form>
                     }
-                <Button variant='contained'>
+                <Button variant='contained' onClick={()=>{
+                    navigate("/")
+                }}>
                     Continue Shopping
                 </Button>
             </ButtonWrapper>

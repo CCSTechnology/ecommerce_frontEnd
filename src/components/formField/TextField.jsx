@@ -16,6 +16,7 @@ export const FormInputText = ({ name, control, label, value, onChange, error }) 
             }) => (
                 <TextField
                     {...field}
+                    inputRef={field.ref}
                     helperText={error}
                     size="small"
                     placeholder={label}
