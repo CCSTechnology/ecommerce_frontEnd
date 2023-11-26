@@ -1,9 +1,26 @@
 import { Box, styled } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { logo } from "../../helpers/images";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartViewServices } from "../../redux/api/public/cartServices";
 
 function Navbar() {
+  const {data : carTData} = useSelector((state) => state.cart.cartViewServices)
+  const cartAmount = carTData?.grand_total || 0
+  const dispatch = useDispatch()
+  const cartId = localStorage.getItem("cart_id") || null
+  
+  function fetchCart(cart_id) {
+    dispatch(cartViewServices({
+      cart_id
+    }))
+  }
+
+  useEffect(() => {
+    fetchCart(cartId)
+  }, [cartId])
+
   return (
     <NavbarWrapper>
       <LogoContainer to="/">
@@ -18,7 +35,7 @@ function Navbar() {
         <Divider />
         <CartInfo>
           <CartTitle>Shopping cart:</CartTitle>
-          <CartPrice>₹ 57.00</CartPrice>
+          <CartPrice>₹ {Number(cartAmount).toFixed(2)}</CartPrice>
         </CartInfo>
       </CartContainer>
     </NavbarWrapper>

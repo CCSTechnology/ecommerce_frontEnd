@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Dialog, Grid } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from '@mui/material';
 import GuestLoginForm from './getLoginPopUp';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
@@ -72,18 +72,17 @@ export default function GetLoginCheckout() {
 	async function handleCheckOutGuest(values) {
 		try {
 			const { trigger, formState: { isValid } } = AddressForm
-			
+
 			if (isValid) {
 				const response = await dispatch(checkOutWithGuest({
-					billing_address_id : guestAllow?.billing_id,
-					shipping_address_id : guestAllow?.billing_id,
-					cart_id : cartId,
-					delivery_charges : 0,
-					guest_id : 10
+					billing_address_id: guestAllow?.billing_id,
+					shipping_address_id: guestAllow?.billing_id,
+					cart_id: cartId,
+					delivery_charges: 0,
+					guest_id: 10
 				})).unwrap()
-				console.log(response, "response")
 				window.location.href = response.payment_details
-			}else {
+			} else {
 				trigger()
 				// setGuest(true)
 			}
@@ -148,16 +147,16 @@ export default function GetLoginCheckout() {
 				}
 				{
 					guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
-					
-					<Button type='submit' variant='contained' >
-						Guest Check out
-					</Button>
-				</form> : <form onSubmit={handleSubmit(handleCheckOut)}>
-					
-					<Button type='submit' variant='contained' >
-						Check out
-					</Button>
-				</form>
+
+						<Button type='submit' variant='contained' >
+							Guest Check out
+						</Button>
+					</form> : <form onSubmit={handleSubmit(handleCheckOut)}>
+
+						<Button type='submit' variant='contained' >
+							Check out
+						</Button>
+					</form>
 				}
 				{/* <form onSubmit={handleSubmit(handleCheckOut)}>
 					
@@ -168,16 +167,31 @@ export default function GetLoginCheckout() {
 					</Button>
 				</form> */}
 				{
-					popUp ? <Dialog open={popUp}>
-						<Button onClick={() => {
-							const path = cartId ? `/login?callBackUrl=/checkout&cart_id=${cartId}` : "/login?callBackUrl=/checkout"
-							navigate(path)
-						}}>Login</Button>
-						<Button onClick={() => {
-							setGuest(true)
-							setPopup(false)
-						}}>Guest Login</Button>
-					</Dialog> : null
+					popUp ? <Dialog title='Please Login'   aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description" open={popUp}>
+						<DialogTitle id="alert-dialog-title">
+							{"Please Login"}
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText id="alert-dialog-description">
+								You are not Logged In, Please Login!
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={() => {
+								const path = cartId ? `/login?callBackUrl=/checkout&cart_id=${cartId}` : "/login?callBackUrl=/checkout"
+								navigate(path)
+							}}>Login</Button>
+							<Button onClick={() => {
+								setPopup(false)
+								setGuest(true)
+								// setGuestAllow(true)
+								// navigate("/guest-login")
+							}}>Guest Login</Button>
+						</DialogActions>
+
+					</Dialog>
+						: null
 				}
 
 

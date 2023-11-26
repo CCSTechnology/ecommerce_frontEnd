@@ -186,7 +186,7 @@ import { object } from 'yup';
 //     );
 // }
 
-export default function GuestLoginForm({ user, getMe, formHook,setGuestAllow }) {
+export default function GuestLoginForm({ user, getMe, formHook, setGuestAllow }) {
     const ref = React.useRef(null)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -306,7 +306,7 @@ export default function GuestLoginForm({ user, getMe, formHook,setGuestAllow }) 
     async function AddAddress(values) {
         values.is_default = 1
         values.address = "222 Citigate Drive, Barrhaven, ON, Canada",
-        values.type = "Shipping Address"
+            values.type = "Shipping Address"
         try {
             if (user) {
                 const response = await dispatch(publicAddAddress(values)).unwrap()
@@ -316,15 +316,15 @@ export default function GuestLoginForm({ user, getMe, formHook,setGuestAllow }) 
                 const details = {}
                 values.same_address = true
                 values.cart_id = localStorage.getItem('cart_id') || null
-                const array = ['country', 'state', 'city', 'street_name', 'line1','zipcode', 'address']
+                const array = ['country', 'state', 'city', 'street_name', 'line1', 'zipcode', 'address']
                 for (const [key, value] of Object.entries(values)) {
-                    if(array.includes(key)){
+                    if (array.includes(key)) {
                         details[key] = value
                         delete values[key]
                     }
-                    
+
                 }
-                values.address_details =  [details]
+                values.address_details = [details]
                 const response = await dispatch(guestAddAddress(values)).unwrap()
                 setGuestAllow(response)
             }
@@ -411,7 +411,7 @@ export default function GuestLoginForm({ user, getMe, formHook,setGuestAllow }) 
                             className="Submitbtn"
                             style={{ backgroundColor: "#951e76" }}
                         >
-                            Check out
+                           Add Address
                         </LoadingButton>
                     </Box>
                 </Grid>
@@ -419,16 +419,24 @@ export default function GuestLoginForm({ user, getMe, formHook,setGuestAllow }) 
 
             </form>
             {
-                popUp ? <Dialog open={popUp}>
-                    <Button onClick={() => {
-                        const path = carId ? `/login?callBackUrl=/checkout&cart_id=${carId}` : "/login?callBackUrl=/checkout"
-                        navigate(path)
-                    }}>Login</Button>
-                    <Button onClick={() => {
-                        navigate("/guest-login")
-                    }}>Guest Login</Button>
-                </Dialog> : null
+                popUp ? <Dialog title='Please Login' open={popUp}>
+                    <Box>
+                        You are not Logged In, Please Login!
+                    </Box>
+                    <Box sx={{
+                        display :"flex"
+                    }}>
+                        <Button onClick={() => {
+                            const path = carId ? `/login?callBackUrl=/checkout&cart_id=${carId}` : "/login?callBackUrl=/checkout"
+                            navigate(path)
+                        }}>Login</Button>
+                        <Button onClick={() => {
+                            navigate("/guest-login")
+                        }}>Guest Login</Button>
+                    </Box>
+                </Dialog>
+        : null
             }
-        </Box>
     </Box>
+    </Box >
 }

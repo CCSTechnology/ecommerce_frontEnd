@@ -462,13 +462,14 @@ const AddToCart = ({ quantity, product }) => {
   const addToCart = async (e) => {
     e.preventDefault()
     try {
-      const id = localStorage.getItem('card_id')
+      const id = localStorage.getItem('cart_id')
       const response = await dispatch(addCartServices({
         product_id: product?.id,
         //  product_id : 2,
         quantity,
         id,
       })).unwrap()
+      
       if (response?.cartdetails) {
         localStorage.setItem('cart_id', response?.cartdetails.cart_id)
       }

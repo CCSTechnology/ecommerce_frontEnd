@@ -5,7 +5,9 @@ export const addCartServices = createAsyncThunk("addCartServices", async(params,
   const {id, ...data} = params
   try {
     const response = await PUBLICSERVER.post("/cart/save", data, {
-      params : id
+      params : {
+        cart_id :id
+      }
     })
     return response.data
   } catch (error) {
