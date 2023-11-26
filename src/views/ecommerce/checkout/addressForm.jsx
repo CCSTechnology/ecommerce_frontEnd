@@ -19,6 +19,8 @@ import {
 } from "../../../redux/api/public/authService";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+import { errorAlert } from "../../../helpers/globalFunctions";
+import { toast } from "react-toastify";
 
 export default function BillingAddressForm({
     user,
@@ -167,6 +169,7 @@ export default function BillingAddressForm({
                 const response = await dispatch(publicAddAddress(values)).unwrap();
                 await getMe();
                 console.log(response, "res");
+                toast.success("Address Added")
             } else {
                 const details = {};
                 values.same_address = true;
@@ -189,9 +192,11 @@ export default function BillingAddressForm({
                 values.address_details = [details];
                 const response = await dispatch(guestAddAddress(values)).unwrap();
                 setGuestAllow(response);
+                toast.success("Address Added")
             }
         } catch (error) {
             console.log(error);
+            errorAlert(error?.error)
         }
     }
 

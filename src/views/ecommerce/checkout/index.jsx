@@ -91,7 +91,7 @@ export default function GetLoginCheckout() {
                     shipping_address_id: guestAllow?.billing_id,
                     cart_id: cartId,
                     delivery_charges: 0,
-                    guest_id: 10
+                    guest_id: guestAllow?.billing_id
                 })).unwrap()
                 window.location.href = response.payment_details
             } else {
