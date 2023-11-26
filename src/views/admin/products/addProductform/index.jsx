@@ -213,7 +213,7 @@ const AddProductForm = (props, disabled) => {
                 control={control}
                 Controller={Controller}
                 label="Name"
-                error={errors?.name?.message}
+                error={errors?.product_name?.message}
               />
             </Grid>
             <Grid item xs={6}>

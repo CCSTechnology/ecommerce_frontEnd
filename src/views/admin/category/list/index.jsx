@@ -196,13 +196,25 @@ function CategoryList() {
               ) : (
                 categoryListData?.data?.data?.data?.map((row, i) => (
                   <TableRow key={row.id}>
-                    <TableCell>{i + 1}</TableCell>
-                    <TableCell>{row.label}</TableCell>
-                    <TableCell>{row.parent}</TableCell>
-                    <TableCell>description</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {i + 1}
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {row.label}
+                    </TableCell>
+                    {/* <TableCell>{row.parent}</TableCell>
+                    <TableCell>description</TableCell> */}
 
                     <TableCell align="center">
-                      <Stack direction={"row"} gap={2}>
+                      <Stack
+                        direction={"row"}
+                        gap={2}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Link to={`/admin/category/${row.unique_label}`}>
                           <VisibilityIcon
                             className="table-icons"
