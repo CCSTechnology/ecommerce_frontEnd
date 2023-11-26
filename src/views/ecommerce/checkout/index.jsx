@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
 
 import { useForm } from 'react-hook-form';
 // import { CheckOutProduct } from '../../../components/CheckoutProduct';
-import { publicGetMe } from '../../../redux/api/public/authService';
-import { useNavigate } from 'react-router-dom';
-import CartProductCard from '../cart/CartProductCard';
-import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
 import styled from '@emotion/styled';
-import OrderSummary from './OrderSummary';
+import { useNavigate } from 'react-router-dom';
+import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
 import StyledContainer from '../../../components/ecommerce/StyledContainer';
-import { errorAlert } from '../../../helpers/globalFunctions';
-import AddressPopUp from './addressForm';
+import { publicGetMe } from '../../../redux/api/public/authService';
+import OrderSummary from './OrderSummary';
+import BillingAddressForm from './addressForm';
 
 
 export default function GetLoginCheckout() {
@@ -155,53 +153,7 @@ export default function GetLoginCheckout() {
             <CardTitle>Check Out</CardTitle>
             <Grid container spacing={2} >
                 <Grid item lg={6}>
-                    {
-                        cartList?.map((cart, index) => {
-                            return <CartProductCard product={cart} key={index} />
-                        })
-                    }
-                    {
-                        guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
-
-                            <Button type='submit' variant='contained' >
-                                Guest Check out
-                            </Button>
-                        </form> : <form onSubmit={handleSubmit(handleCheckOut)}>
-
-                            <Button type='submit' variant='contained' >
-                                Check out
-                            </Button>
-                        </form>
-                    }
-                    {
-                        popUp ? <Dialog title='Please Login' aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description" open={popUp}>
-                            <DialogTitle id="alert-dialog-title">
-                                {"Please Login"}
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    You are not Logged In, Please Login!
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => {
-                                    const path = cartId ? `/login?callBackUrl=/checkout&cart_id=${cartId}` : "/login?callBackUrl=/checkout"
-                                    navigate(path)
-                                }}>Login</Button>
-                                <Button onClick={() => {
-                                    setPopup(false)
-                                    setGuest(true)
-                                    // setGuestAllow(true)
-                                    // navigate("/guest-login")
-                                }}>Guest Login</Button>
-                            </DialogActions>
-
-                        </Dialog>
-                            : null
-                    }
-
-
+                    <BillingAddressForm formHook={AddressForm} user={user} setGuestAllow={setGuestAllow} />
                 </Grid>
                 <Grid item lg={6} sx={{
                     height: "100%",
@@ -213,8 +165,35 @@ export default function GetLoginCheckout() {
                 </Grid>
             </Grid>
             {
-                addressPopUp && <AddressPopUp AddressForm={AddressForm} open={addressPopUp} setOpen={setAddressPopUp} sumbit={()=>{}} />
+                popUp ? <Dialog title='Please Login' aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description" open={popUp}>
+                    <DialogTitle id="alert-dialog-title">
+                        {"Please Login"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            You are not Logged In, Please Login!
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => {
+                            const path = cartId ? `/login?callBackUrl=/checkout&cart_id=${cartId}` : "/login?callBackUrl=/checkout"
+                            navigate(path)
+                        }}>Login</Button>
+                        <Button onClick={() => {
+                            setPopup(false)
+                            setGuest(true)
+                            // setGuestAllow(true)
+                            // navigate("/guest-login")
+                        }}>Guest Login</Button>
+                    </DialogActions>
+
+                </Dialog>
+                    : null
             }
+            {/* {
+                addressPopUp && <AddressPopUp AddressForm={AddressForm} open={addressPopUp} setOpen={setAddressPopUp} sumbit={()=>{}} />
+            } */}
         </StyledContainer>
 
     )

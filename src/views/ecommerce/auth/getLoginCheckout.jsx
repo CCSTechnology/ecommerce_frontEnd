@@ -13,7 +13,7 @@ import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
 import styled from '@emotion/styled';
 
 
-export default function GetLoginCheckout() {
+export default function CheckOutAddressForm() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [popUp, setPopup] = useState(false)
