@@ -9,7 +9,7 @@ function ProductCard({ product }) {
     <ProductCardWrapper to={"/product/" + product.unique_label}>
       <ProductImage srcSet={ImagePath + product.file_name} />
       <ProductName>{String(product.product_name)}</ProductName>
-      <ProductPrice>${Number(product.cost).toFixed(2)}</ProductPrice>
+      <ProductPrice>₹ {Number(product.cost).toFixed(2)}</ProductPrice>
       {/* <LazyImage loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fff469ad-32cf-4db1-abf5-2751b2e40a7f?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" /> */}
     </ProductCardWrapper>
   );

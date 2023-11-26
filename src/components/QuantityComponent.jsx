@@ -1,20 +1,74 @@
 import { Box, styled } from "@mui/material"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { addCartServices, guestAddCartServices } from "../redux/api/public/cartServices"
+import { toast } from "react-toastify"
+import { errorAlert } from "../helpers/globalFunctions"
 
-export default function QuantityComponent({quantity = 1, setQuantity}){
-    return <QuantityComponentWrapper>
-        <ADDMINUS onClick={(e)=>{
-          e.preventDefault()
-          if(quantity > 1){
-            setQuantity((state)=> state -1)
-          }
-        }}>-</ADDMINUS>
-        <Input>{quantity}</Input>
-        <ADDMINUS onClick={(e)=>{
-          e.preventDefault()
-          setQuantity((state)=>state + 1)
-        }}>+</ADDMINUS>
-    </QuantityComponentWrapper>
+export default function QuantityComponent({ product = null, setQuantity, quantity, finishApi = () => { }, cartType }) {
+  const token = localStorage.getItem('public_token') || null
+  const cart_id = localStorage.getItem('cart_id') || null
+
+  const dispatch = useDispatch()
+  const addToCart = async (type = "add") => {
+    const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
+    if (token) {
+      try {
+        const response = await dispatch(addCartServices({
+          product_id: type === "add" ? product?.product_id : product?.id,
+          quantity: 1, 
+          type,
+        })).unwrap()
+        finishApi()
+
+        setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
+        console.log(response, "addCartServices")
+        toast.success(message)
+      } catch (error) {
+        console.log(error, "error")
+        errorAlert(error?.error)
+      }
+    } else {
+      try {
+        const response = await dispatch(guestAddCartServices({
+          cart_id,
+          product_id: type === "add" ? product?.product_id : product?.id,
+          quantity: 1,
+          type
+        })).unwrap()
+        finishApi()
+        setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
+        console.log(response, "res")
+        if(response?.cartdetails){
+            localStorage.setItem('cart_id',response?.cartdetails.cart_id )
+        }
+        toast.success(message)
+      } catch (error) {
+        console.log(error, "error")
+        errorAlert(error?.error)
+      }
+    }
+  }
+  return <QuantityComponentWrapper>
+    <ADDMINUS onClick={(e) => {
+      e.preventDefault()
+      if(cartType === "product"){
+        setQuantity((state)=> state - 1)
+      }else{
+        if (quantity > 1) {
+          addToCart('minus')
+        }
+      }
+    }}>-</ADDMINUS>
+    <Input>{quantity}</Input>
+    <ADDMINUS onClick={(e) => {
+      if(cartType === "product"){
+        setQuantity((state)=> state + 1)
+      }else{
+          addToCart('add')
+      }
+    }}>+</ADDMINUS>
+  </QuantityComponentWrapper>
 }
 
 const QuantityComponentWrapper = styled(Box)`
@@ -28,6 +82,7 @@ padding: 2px;
 border-radius: 170px;
 border: 1px solid var(--gray-scale-gray-100, #E6E6E6);
 background: var(--gray-scale-white, #FFF);
+flex: 1;
 
 `
 

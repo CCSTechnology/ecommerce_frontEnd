@@ -1,21 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import QuantityComponent from "../../../components/QuantityComponent";
 import { Button } from "@mui/material";
+import { ImagePath } from "../../../utils/helpers";
+import { useDispatch } from "react-redux";
+import { errorAlert } from "../../../helpers/globalFunctions";
+import { removeCartServices } from "../../../redux/api/public/cartServices";
 
-export default function CartProductCard(props) {
+export default function CartProductCard({product, quantityShow = true, finishApi}) {
+  const dispatch = useDispatch()
+  const count = product?.quantity || 1
+  const [quantity, setQuantity] = useState(count)
+  async function removeCart(id) {
+    try {
+      const response = await dispatch(removeCartServices(id)).unwrap()
+      console.log(response,"response")
+      await finishApi()
+    } catch (error) {
+      errorAlert(error?.error)
+    }
+  }
   return (
     <Container>
-      <Image loading="lazy" srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/06193402-92be-478d-81ac-503d8d5774b9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
-      <Title>Green Capsicum</Title>
-      <QuantityComponent />
+      <Image loading="lazy" srcSet={ImagePath + product.products.file_name} />
+      <Title>{product.products.product_name}</Title>
+      {
+        quantityShow &&  <QuantityComponent  product={product|| null} setQuantity={setQuantity} quantity={quantity}  finishApi={finishApi}/>
+      }
+     
       <PriceContainer>
-        <Price>$14.99</Price>
-        <DiscountPrice>$20.99</DiscountPrice>
+        <Price>₹ {product.total_amount}</Price>
+        {/* <DiscountPrice>$20.99</DiscountPrice> */}
       </PriceContainer>
       <StockContainer>
         <StockStatus>In Stock</StockStatus>
-        <AddToCartButton variant="contained">
+        <AddToCartButton variant="contained" onClick={()=>{
+          removeCart(product.id)
+        }}>
             Remove
         </AddToCartButton>
       </StockContainer>

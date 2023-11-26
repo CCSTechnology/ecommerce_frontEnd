@@ -3,8 +3,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { ImagePath } from '../../../utils/helpers'
 import HomeTitle from '../../../components/ecommerce/HomeTitle';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { useNavigate } from 'react-router-dom';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 
 
 function CategoryThumb({ category }) {
@@ -16,7 +18,7 @@ function CategoryThumb({ category }) {
             <Image
                 loading="lazy"
                 srcSet={ImagePath + category.category_image}
-            // srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/841af5a1-177e-4b7c-8d09-6924a8a9755b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+                alt={category.unique_label}
             />
             <Title>{category.label}</Title>
         </VegetableComponentWrapper>
@@ -33,9 +35,21 @@ const HomeCategory = () => {
     return (
         <HomeCategoryWrapper>
             <HomeTitle featured={category} />
-            <CategoryList>
-                {categories?.slice(0, 3).map((cat) => {
-                    return <CategoryThumb category={cat} key={cat.id} />
+            <CategoryList
+                spaceBetween={30}
+                slidesPerView={3}
+                autoplay={{
+                    waitForTransition : 2000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter : true
+                }}
+                loop
+                modules={[Autoplay]}
+            >
+                {categories?.slice(0, 3).map((cat, index) => {
+                    return <SwiperSlide key={cat.id}>
+                        <CategoryThumb category={cat}  />
+                    </SwiperSlide>
                 })}
             </CategoryList>
         </HomeCategoryWrapper>
@@ -68,6 +82,7 @@ const CategoryList = styled(Swiper)`
     justify-content: center;
     align-items: center;
     gap: 16px; 
+    padding: 30px 20px;
 `
 
 
@@ -77,7 +92,7 @@ const CategoryList = styled(Swiper)`
 
 
 
-const VegetableComponentWrapper = styled(SwiperSlide)(({ theme }) => ({
+const VegetableComponentWrapper = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",

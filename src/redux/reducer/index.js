@@ -12,8 +12,7 @@ import homeReducer from "../../redux/slice/public/homeSlice";
 import categoryReducer from "../../redux/slice/public/categorySlice";
 import productReducer from "../../redux/slice/public/productSlice";
 import cartReducer from "../../redux/slice/public/cartSlice";
-
-
+import publicAuthReducer from "../../redux/slice/public/authSlice";
 
 export const rootReducer = combineReducers({
   adminAuth: adminAuthReducer,
@@ -25,5 +24,6 @@ export const rootReducer = combineReducers({
   home: homeReducer,
   category: categoryReducer,
   product: productReducer,
-  cart : cartReducer
+  cart: cartReducer,
+  publicAuth: publicAuthReducer,
 });

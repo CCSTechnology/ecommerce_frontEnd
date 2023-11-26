@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import * as yup from 'yup'
+import * as yup from "yup";
 
 const productForm = yup.object().shape({
   product_name: yup
@@ -23,11 +23,10 @@ const productForm = yup.object().shape({
 const categoryForm = yup.object().shape({
   label: yup.string().required("Label is required"),
   // .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
-  parent_id: yup
-    .string()
-    .required("Parent Id is required")
-    .matches(/^[0-9]{0,9}$/, "Invalid Format"),
+  // parent_id: yup
+  //   .string()
+  //   .required("Parent Id is required")
+  //   .matches(/^[0-9]{0,9}$/, "Invalid Format"),
 });
 
-
-export { productForm,categoryForm }
+export { productForm, categoryForm };

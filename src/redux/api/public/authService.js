@@ -6,31 +6,53 @@ import PUBLICSERVER from "../../../utils/publicServer";
 export const publicAuthLogin = createAsyncThunk("authLogin", async (params, thunkApi) => {
 	const { url = "", data = {} } = params;
 	try {
-		const response = await PUBLICSERVER.post("/auth/login", {
+		const response = await PUBLICSERVER.post("/customer/login", {
 			...data,
 		});
-		const { token } = response.data;
-
-		// const fcm_token = await getNewToken();
-		// await axios({
-		// 	url: baseURL + "/" + authEndPoints.profile.tokenGenerate,
-		// 	method: "PATCH",
-		// 	headers: {
-		// 		authorization: `Bearer ${token}`,
-		// 	},
-		// 	data: {
-		// 		fcm_token,
-		// 	},
-		// });
-		// localStorage.setItem("fcm_token", fcm_token);
 		return response.data;
 	} catch (error) {
 		return thunkApi.rejectWithValue(error);
 	}
 });
 
+export const publicAuthRegister = createAsyncThunk("publicAuthRegister", async (data, thunkApi) => {
+	try {
+		const response = await PUBLICSERVER.post("/customer/register", data);
+		return response;
+	} catch (error) {
+		return thunkApi.rejectWithValue(error);
+	}
+});
 
 
+export const publicGetMe = createAsyncThunk('publicGetMe', async(params, thunkApi)=>{
+	try {
+		const response = await PUBLICSERVER.get('/customer/me')
+		return response.data
+	} catch (error) {
+		return thunkApi.rejectWithValue(error)
+	}
+})
+
+
+export const publicAddAddress = createAsyncThunk('publicAddAddress', async(params, thunkApi)=>{
+	try {
+		const response = await PUBLICSERVER.post('/customer/address', params)
+		return response.data
+	} catch (error) {
+		return thunkApi.rejectWithValue(error)
+	}
+})
+
+
+export const guestAddAddress = createAsyncThunk('guestAddAddress', async(params, thunkApi)=>{
+	try {
+		const response = await PUBLICSERVER.post('/guest/address', params)
+		return response.data
+	} catch (error) {
+		return thunkApi.rejectWithValue(error)
+	}
+})
 
 
 export const PublicAuthlogout = createAsyncThunk("PublicAuthlogout", async (params, thunkApi) => {

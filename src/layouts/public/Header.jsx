@@ -1,11 +1,28 @@
 import { Box, styled } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { logo } from "../../helpers/images";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartViewServices } from "../../redux/api/public/cartServices";
 
 function Navbar() {
+  const {data : carTData} = useSelector((state) => state.cart.cartViewServices)
+  const cartAmount = carTData?.grand_total || 0
+  const dispatch = useDispatch()
+  const cartId = localStorage.getItem("cart_id") || null
+  
+  function fetchCart(cart_id) {
+    dispatch(cartViewServices({
+      cart_id
+    }))
+  }
+
+  useEffect(() => {
+    fetchCart(cartId)
+  }, [cartId])
+
   return (
-    <NavbarWrapper>
+    <NavbarWrapper to='/cart'>
       <LogoContainer to="/">
         <Logo loading="lazy" src={logo} />
       </LogoContainer>
@@ -15,21 +32,23 @@ function Navbar() {
       </SearchContainer>
       <CartContainer>
         <CartIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3dacf0af-d9ab-4feb-9173-044d05adfe1e?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
-        <Divider />
+        {/* <Divider /> */}
         <CartInfo>
           <CartTitle>Shopping cart:</CartTitle>
-          <CartPrice>₹ 57.00</CartPrice>
+          <CartPrice>₹ {Number(cartAmount).toFixed(2)}</CartPrice>
         </CartInfo>
       </CartContainer>
     </NavbarWrapper>
   );
 }
 
-const NavbarWrapper = styled(Box)`
+const NavbarWrapper = styled(Link)`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 20px;
   padding: 0 20px;
+  cursor: pointer;
 
   @media (max-width: 991px) {
     flex-wrap: wrap;
@@ -84,7 +103,8 @@ const CartContainer = styled(Box)`
   padding: 0 16px ;
   justify-content: space-between;
   gap: 0px;
-  height: 80px;
+  height: 100%;
+  /* height: 40px; */
 
   @media (max-width: 991px) {
     max-width: 100%;
@@ -112,6 +132,7 @@ const Divider = styled(Box)`
 const CartInfo = styled(Box)`
   align-items: center;
   display: flex;
+  padding: 16px ;
   justify-content: space-between;
   gap: 12px;
 `;

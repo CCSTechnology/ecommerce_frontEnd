@@ -1,5 +1,5 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -23,9 +23,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import SearchInput from "../../../components/searchInput";
+import Autocomplete from "@mui/material/Autocomplete";
 import TopBreaccrumb from "../../../components/TopBreadcrumb";
-import React, { useEffect, useRef, useState } from "react";
+
 import { LoadingButton, TabContext, TabList, TabPanel } from "@mui/lab";
 import MultipleImageUpload from "../../../components/reusableFormFields/multipleImageUpload";
 
@@ -61,7 +61,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Settings() {
+const Settings = () => {
   const dispatch = useDispatch();
   const [valueData, setValueData] = useState("1");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -631,17 +631,6 @@ function Settings() {
       </Box>
     </Box>
   );
-}
+};
 
 export default Settings;
-
-
-// import React from 'react'
-
-// const Settings = () => {
-//   return (
-//     <div>Settings</div>
-//   )
-// }
-
-// export default Settings

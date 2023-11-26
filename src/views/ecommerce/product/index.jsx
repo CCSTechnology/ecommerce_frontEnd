@@ -3,21 +3,68 @@ import CustomBreadcrumbs from "../../../components/ecommerce/Breadcrumps"
 import StyledContainer from "../../../components/ecommerce/StyledContainer"
 import { productViewService } from "../../../redux/api/public/productService"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import ProductSlides from "./ProductSlides"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import ProductView from "../../admin/products/productView"
 import QuantityComponent from "../../../components/QuantityComponent"
-import { addCartServices } from "../../../redux/api/public/cartServices"
+import { addCartServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
+import { toast } from "react-toastify"
+import { errorAlert } from "../../../helpers/globalFunctions"
 
 
-const CartComponent = ({count = 1, product =null}) => {
+const CartComponent = ({ count = 1, product = null, finishApi }) => {
   const [quantity, setQuantity] = useState(count)
+
+  const token = localStorage.getItem('public_token') || null
+  const cart_id = localStorage.getItem('cart_id') || null
+
+  const dispatch = useDispatch()
+  const addToCart = async (type = "add") => {
+    const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
+    if (token) {
+      try {
+        const response = await dispatch(addCartServices({
+          product_id: product?.id,
+          quantity, 
+          type,
+        })).unwrap()
+        finishApi()
+
+        // setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
+        console.log(response, "addCartServices")
+        toast.success(message)
+      } catch (error) {
+        console.log(error, "error")
+        errorAlert(error?.error)
+      }
+    } else {
+      try {
+        const response = await dispatch(guestAddCartServices({
+          cart_id,
+          product_id: product?.id,
+          quantity,
+          type
+        })).unwrap()
+        finishApi()
+        // setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
+        console.log(response, "res")
+        if(response?.cartdetails){
+            localStorage.setItem('cart_id',response?.cartdetails.cart_id )
+        }
+        toast.success(message)
+      } catch (error) {
+        console.log(error, "error")
+        errorAlert(error?.error)
+      }
+    }
+  }
+
   return <>
     <CartComponentWrapper>
-      <QuantityComponent quantity={quantity} setQuantity={setQuantity} />
-      <AddToCart quantity={quantity} setQuantity={setQuantity} product={product} />
-      <BuyNow quantity={quantity} setQuantity={setQuantity} product={product} />
+      <QuantityComponent product={product} quantity={quantity} cartType="product" setQuantity={setQuantity} finishApi={finishApi} />
+      <AddToCart product={product} addToCart={addToCart} />
+      <BuyNow product={product} />
     </CartComponentWrapper>
     <Divider />
   </>
@@ -34,15 +81,19 @@ gap: 10px;
 const Product = () => {
   const dispatch = useDispatch()
   const { productSlug } = useParams()
+  const [productSingle, setProductSingle] = useState(null)
   const { data: productData } = useSelector((state) => state.product.productViewService)
-  const productSingle = productData?.product || null
-  // console.log(productSingle, "productSingle")
-  function fetchProduct(unique_label) {
-    dispatch(productViewService({
-      unique_label,
-    }))
+  // const productSingle = productData?.product || null
+  async function fetchProduct(unique_label) {
+    try {
+      const response = await dispatch(productViewService({
+        unique_label,
+      })).unwrap()
+      setProductSingle(response.product)
+    } catch (error) {
+      console.log(error, "error")
+    }
   }
-
   useEffect(() => {
     fetchProduct(productSlug)
   }, [productSlug])
@@ -57,7 +108,7 @@ const Product = () => {
           <ProductDetails >
             <VegetableCard product={productSingle} />
             <UpdatedComponent product={productSingle} />
-            <CartComponent product={productSingle} />
+            <CartComponent product={productSingle} finishApi={() => fetchProduct(productSlug)} />
           </ProductDetails>
         </ProductContainer>
 
@@ -101,7 +152,6 @@ justify-content: space-between;
 
 
 function VegetableCard({ product }) {
-  console.log(product, "product")
   return (
     <>
       <Card>
@@ -416,69 +466,15 @@ const Content = styled(Box)`
 `;
 
 
-// const QuantityComponent = () => {
-  
-//   return <QuantityComponentWrapper>
-//     <ADDMINUS>-</ADDMINUS>
-//     <Input>1</Input>
-//     <ADDMINUS>+</ADDMINUS>
-//   </QuantityComponentWrapper>
-// }
 
-const QuantityComponentWrapper = styled(Box)`
-display: flex;
-padding: 8px;
-justify-content: center;
-align-items: center;
-width: 108px;
-border-radius: 170px;
-border: 1px solid var(--gray-scale-gray-100, #E6E6E6);
-background: var(--gray-scale-white, #FFF);
-
-`
-
-const ADDMINUS = styled(Box)`
-  background: var(--gray-scale-gray-50, #F2F2F2); 
-  width: 34px;
-    height: 34px; 
-    border-radius: 170px;
-    display: flex;
-  align-items:  center;
-  justify-content: center;
-  cursor: pointer;
-`
-const Input = styled('p')`
-outline: none;
-border: none;
-display: flex;
-justify-content: center;
-background: transparent;
-width: 20px;
-
-`
-
-const AddToCart = ({quantity, product}) => {
-  const dispatch = useDispatch()
+const AddToCart = ({addToCart}) => {
+  const navigate = useNavigate()
 
 
-  const addToCart = async(e)=>{
-    e.preventDefault()
-    try {
-      const response = await dispatch(addCartServices({
-        product_id : product?.id,
-        //  product_id : 2,
-        quantity,
-      })).unnwrap()
-      console.log(response, "res")
-      if(response?.cartdetails){
-        localStorage.setItem('cart_id', response?.cartdetails.cart_id)
-      }
-    } catch (error) {
-        
-    }
-  }
-
-  return <AddToCartWrapper fullWidth variant="contained" onClick={addToCart}> Add to Cart</AddToCartWrapper>
+  return <AddToCartWrapper fullWidth variant="contained" onClick={() => {
+    addToCart('add')
+    // navigate('/cart')
+  }}> Add to Cart</AddToCartWrapper>
 }
 
 
@@ -495,24 +491,15 @@ const AddToCartWrapper = styled(Button)`
 
 
 
-const BuyNow = ({quantity, product}) => {
+const BuyNow = ({ quantity, product }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const BuyNow = async(e)=>{
-    e.preventDefault()
-    console.log(product?.id, quantity,"quantity")
-    try {
-      const response = await dispatch(addCartServices({
-        product_id : product?.id,
-        //  product_id : 2,
-        quantity,
-      })).unnwrap()
-      console.log(response, "res")
-    } catch (error) {
-      
-    }
+  async function BuyNowApi(e) {
+    navigate("/checkout")
   }
 
-  return <BuyNowWrapper fullWidth variant="contained" onClick={BuyNow}> BuyNow</BuyNowWrapper>
+  return <BuyNowWrapper fullWidth variant="contained" onClick={BuyNowApi}> BuyNow</BuyNowWrapper>
 }
 
 

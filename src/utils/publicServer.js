@@ -11,6 +11,7 @@ const TOKEN_PAYLOAD_KEY = "authorization";
 
 const PUBLICSERVER = axios.create({
   baseURL : "http://staggingapi.truevine.in/api",
+  // baseURL,
   timeout,
 });
 
@@ -32,6 +33,13 @@ PUBLICSERVER.interceptors.response.use(
         "Authentication Fail",
         "Authentication Fail you are need to verify your login"
       );
+      const path = String(window.location.href).split('/').slice(4).join("/")
+      const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login"
+      const url = new URL(domain)
+      url.searchParams.set('callBackUrl', `/${path}`)
+      setInterval(()=>{
+        window.location.href = url
+      },[1000])
       return Promise.reject(error.response.data);
     } else if (error.response) {
       return Promise.reject(error.response.data);

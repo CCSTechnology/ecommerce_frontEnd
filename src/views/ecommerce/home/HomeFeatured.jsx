@@ -3,6 +3,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ProductCard from "../../../components/ecommerce/ProductCard";
 import HomeTitle from "../../../components/ecommerce/HomeTitle";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
 
 
 
@@ -13,9 +15,20 @@ export default function HomeFeatured() {
 
   return <FeaturedProductWrapper>
     <HomeTitle featured={products} />
-    <HomeFeaturedList >
-      {productList?.slice(0,4).map((product) => {
-        return <ProductCard key={product.id} product={product} />
+    <HomeFeaturedList
+      spaceBetween={30}
+      slidesPerView={4}
+      autoplay={{
+        waitForTransition: 2000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      }}
+      loop
+      modules={[Autoplay]}>
+      {productList.map((product) => {
+        return <SwiperSlide key={product.id}>
+          <ProductCard product={product} />
+        </SwiperSlide>
       })}
     </HomeFeaturedList>
   </FeaturedProductWrapper>
@@ -23,7 +36,7 @@ export default function HomeFeatured() {
 
 
 const FeaturedProductWrapper = styled(Box)`
-padding-inline: 20px;
+        padding-inline: 20px;
         display: flex;
         flex-direction: column;
         gap: 32px;
@@ -34,10 +47,13 @@ padding-inline: 20px;
 
 
 
-const HomeFeaturedList = styled(Box)(({ }) => ({
-  display : "flex",
-  overflow : "auto",
-  // flexWrap : "wrap",
-  gap : "10px",
-  justifyContent : "space-around"
+const HomeFeaturedList = styled(Swiper)(({ }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "16px",
+  padding: "30px 20px",
+  width : "100vw"
 }))
+
