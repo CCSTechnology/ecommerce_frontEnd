@@ -11,7 +11,7 @@ import MobileField from '../../../components/reusableFormFields/TextField/mobile
 import { FormInputText } from '../../../components/formField/TextField';
 import { LoadingButton } from '@mui/lab';
 
-export default function AddressPopUp({ AddressForm, open, setOpen, handleSubmit }) {
+export default function AddressPopUp({ AddressForm, open, setOpen, submit }) {
     const { handleSubmit, reset, control, formState: { isSubmitting, errors } } = AddressForm
 
     const inputs = React.useMemo(() => {
@@ -81,7 +81,7 @@ export default function AddressPopUp({ AddressForm, open, setOpen, handleSubmit 
 
     return (
         <React.Fragment>
-            <Dialog open={open} onClose={handleClose} component={'form'} onSubmit={handleSubmit}>
+            <Dialog open={open} onClose={handleClose} component={'form'} onSubmit={handleSubmit(submit)}>
                 <DialogTitle>Please Fill Address</DialogTitle>
                 <DialogContent>
                     <Grid container spacing={3}>

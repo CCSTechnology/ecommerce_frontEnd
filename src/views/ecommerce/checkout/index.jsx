@@ -213,7 +213,7 @@ export default function GetLoginCheckout() {
                 </Grid>
             </Grid>
             {
-                addressPopUp && <AddressPopUp AddressForm={AddressForm} open={addressPopUp} setOpen={setAddressPopUp} handleSubmit={()=>{}} />
+                addressPopUp && <AddressPopUp AddressForm={AddressForm} open={addressPopUp} setOpen={setAddressPopUp} sumbit={()=>{}} />
             }
         </StyledContainer>
 
