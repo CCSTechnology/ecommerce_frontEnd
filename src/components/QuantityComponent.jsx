@@ -82,7 +82,6 @@ padding: 2px;
 border-radius: 170px;
 border: 1px solid var(--gray-scale-gray-100, #E6E6E6);
 background: var(--gray-scale-white, #FFF);
-flex: 1;
 
 `
 

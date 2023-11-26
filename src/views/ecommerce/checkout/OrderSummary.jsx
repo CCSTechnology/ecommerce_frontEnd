@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
+import { LoadingButton } from '@mui/lab'
 import { Box, Button, Typography } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function OrderSummary({ checkout , guest, handleCheckOutGuest , handleCheckOut, handleSubmit}) {
+export default function OrderSummary({ checkout , guest, handleCheckOutGuest , handleCheckOut, handleSubmit, loading, valid}) {
     const navigate = useNavigate()
     return (
         <OrderSummaryWrapper>
@@ -28,9 +29,9 @@ export default function OrderSummary({ checkout , guest, handleCheckOutGuest , h
             {
                         guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
 
-                            <Button type='submit' variant='contained' >
+                            <LoadingButton loading={loading} type='submit'   variant='contained'  >
                                 Guest Check out
-                            </Button>
+                            </LoadingButton>
                         </form> : <form onSubmit={handleSubmit(handleCheckOut)}>
 
                             <Button type='submit' variant='contained' >

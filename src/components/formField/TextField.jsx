@@ -26,6 +26,9 @@ export const FormInputText = ({ name, control, label, value, onChange, error }) 
                     fullWidth
                     label={label}
                     variant="outlined"
+                    InputLabelProps={{
+                        shrink : true
+                    }}
                 // inputRef={field.ref}
                 />
             )}

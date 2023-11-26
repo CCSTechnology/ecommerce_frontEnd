@@ -12,7 +12,30 @@ import StyledContainer from '../../../components/ecommerce/StyledContainer';
 import { publicGetMe } from '../../../redux/api/public/authService';
 import OrderSummary from './OrderSummary';
 import BillingAddressForm from './addressForm';
+import { toast } from 'react-toastify';
+import { errorAlert } from '../../../helpers/globalFunctions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup"
+const schema = yup.object().shape({
+    name : yup.string().required(),
+    cart_id : yup.string().required(),
 
+    phone_number : yup.string().required(),
+
+    same_address : yup.string().required(),
+
+    email : yup.string().email().required(),
+
+    country : yup.string().required(),
+
+    state : yup.string().required(),
+
+    city : yup.string().required(),
+    street_name :yup.string().required(),
+    line1 :yup.string().required(),
+    zipcode :yup.string().required(),
+    address :yup.string().required(),
+});
 
 export default function GetLoginCheckout() {
     const dispatch = useDispatch()
@@ -45,10 +68,11 @@ export default function GetLoginCheckout() {
         }
     })
 
-    const { ...AddressForm } = useForm({
+    const { ...formHook } = useForm({
         defaultValues: {
 
-        }
+        },
+        resolver : yupResolver(schema)
     })
 
 
@@ -83,7 +107,7 @@ export default function GetLoginCheckout() {
 
     async function handleCheckOutGuest(values) {
         try {
-            const { trigger, formState: { isValid } } = AddressForm
+            const { trigger, formState: { isValid } } = formHook
 
             if (isValid) {
                 const response = await dispatch(checkOutWithGuest({
@@ -96,12 +120,14 @@ export default function GetLoginCheckout() {
                 window.location.href = response.payment_details
             } else {
                 trigger()
+                toast.info("Please Add Address")
                 setAddressPopUp(true)
                 // setGuest(true)
             }
 
         } catch (error) {
             console.log(error, "error")
+            errorAlert(error?.error)
         }
     }
 
@@ -153,7 +179,7 @@ export default function GetLoginCheckout() {
             <CardTitle>Check Out</CardTitle>
             <Grid container spacing={2} >
                 <Grid item lg={6}>
-                    <BillingAddressForm formHook={AddressForm} user={user} setGuestAllow={setGuestAllow} />
+                    <BillingAddressForm formHook={formHook} user={user} setGuestAllow={setGuestAllow} />
                 </Grid>
                 <Grid item lg={6} sx={{
                     height: "100%",
@@ -161,7 +187,7 @@ export default function GetLoginCheckout() {
                     justifyContent: "space-between",
                     alignItems: 'flex-start'
                 }}>
-                    <OrderSummary checkout={cartData} guest={guest} handleSubmit={handleSubmit} handleCheckOut={handleCheckOut} handleCheckOutGuest={handleCheckOutGuest} />
+                    <OrderSummary loading={formHook.formState.isSubmitting} valid={formHook.formState.isValid} checkout={cartData} guest={guest} handleSubmit={handleSubmit} handleCheckOut={handleCheckOut} handleCheckOutGuest={handleCheckOutGuest} />
                 </Grid>
             </Grid>
             {

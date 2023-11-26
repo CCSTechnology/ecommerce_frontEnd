@@ -55,7 +55,7 @@ export default function BillingAddressForm({
                 name: "same_address",
                 label: "Same Address",
                 type: "switch",
-                show: true,
+                show: false,
             },
             {
                 name: "email",
@@ -70,7 +70,7 @@ export default function BillingAddressForm({
             },
             {
                 name: "state",
-                label: "state",
+                label: "State",
                 show: true,
             },
             {
@@ -260,9 +260,10 @@ export default function BillingAddressForm({
                                         </Grid>
                                     );
                                 default:
+                                    console.log(errors)
                                     return (
                                         <Grid item lg={6} key={index}>
-                                            <FormInputText control={control} name={name} label={label} />
+                                            <FormInputText control={control} name={name} label={label} error={formHook.formState.errors?.[name]?.message} />
                                         </Grid>
                                     );
                             }
