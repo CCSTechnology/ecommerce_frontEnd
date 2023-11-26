@@ -18,6 +18,7 @@ export const FormInputText = ({ name, control, label, value, onChange, error }) 
                     {...field}
                     helperText={error}
                     size="small"
+                    placeholder={label}
                     error={error}
                     // onChange={onChange}
                     // value={value}

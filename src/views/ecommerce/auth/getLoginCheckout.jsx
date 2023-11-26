@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
 import GuestLoginForm from './getLoginPopUp';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
 
 import { useForm } from 'react-hook-form';
-import { CheckOutProduct } from '../../../components/CheckoutProduct';
+// import { CheckOutProduct } from '../../../components/CheckoutProduct';
 import { publicGetMe } from '../../../redux/api/public/authService';
 import { useNavigate } from 'react-router-dom';
+import CartProductCard from '../cart/CartProductCard';
+import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
+import styled from '@emotion/styled';
 
 
 export default function GetLoginCheckout() {
@@ -135,30 +138,36 @@ export default function GetLoginCheckout() {
 
 
 	return (
-		<Grid container spacing={2} alignItems={'center'}>
-			<Grid item lg={6}>
-				<GuestLoginForm user={user} getMe={getMe} formHook={AddressForm} setGuestAllow={setGuestAllow} />
-			</Grid>
-			<Grid item lg={6}>
-				{
-					cartList?.map((cart, index) => {
-						return <CheckOutProduct product={cart} key={index} />
-					})
-				}
-				{
-					guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
+		<Box sx={{
+			padding : "0 0 40px 20px"
+		}}>
+			 <CustomBreadcrumbs />
+      			<CardTitle>Check Out</CardTitle>
+			<Grid container spacing={2} alignItems={'center'}>
+				{/* <Grid item lg={12}>
+				 <GuestLoginForm user={user} getMe={getMe} formHook={AddressForm} setGuestAllow={setGuestAllow} /> 
+			</Grid> */}
 
-						<Button type='submit' variant='contained' >
-							Guest Check out
-						</Button>
-					</form> : <form onSubmit={handleSubmit(handleCheckOut)}>
+				<Grid item lg={6}>
+					{
+						cartList?.map((cart, index) => {
+							return <CartProductCard product={cart} key={index} />
+						})
+					}
+					{
+						guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
 
-						<Button type='submit' variant='contained' >
-							Check out
-						</Button>
-					</form>
-				}
-				{/* <form onSubmit={handleSubmit(handleCheckOut)}>
+							<Button type='submit' variant='contained' >
+								Guest Check out
+							</Button>
+						</form> : <form onSubmit={handleSubmit(handleCheckOut)}>
+
+							<Button type='submit' variant='contained' >
+								Check out
+							</Button>
+						</form>
+					}
+					{/* <form onSubmit={handleSubmit(handleCheckOut)}>
 					
 					<Button type='submit' variant='contained' >
 						{
@@ -166,36 +175,51 @@ export default function GetLoginCheckout() {
 						}
 					</Button>
 				</form> */}
-				{
-					popUp ? <Dialog title='Please Login'   aria-labelledby="alert-dialog-title"
-					aria-describedby="alert-dialog-description" open={popUp}>
-						<DialogTitle id="alert-dialog-title">
-							{"Please Login"}
-						</DialogTitle>
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								You are not Logged In, Please Login!
-							</DialogContentText>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={() => {
-								const path = cartId ? `/login?callBackUrl=/checkout&cart_id=${cartId}` : "/login?callBackUrl=/checkout"
-								navigate(path)
-							}}>Login</Button>
-							<Button onClick={() => {
-								setPopup(false)
-								setGuest(true)
-								// setGuestAllow(true)
-								// navigate("/guest-login")
-							}}>Guest Login</Button>
-						</DialogActions>
+					{
+						popUp ? <Dialog title='Please Login' aria-labelledby="alert-dialog-title"
+							aria-describedby="alert-dialog-description" open={popUp}>
+							<DialogTitle id="alert-dialog-title">
+								{"Please Login"}
+							</DialogTitle>
+							<DialogContent>
+								<DialogContentText id="alert-dialog-description">
+									You are not Logged In, Please Login!
+								</DialogContentText>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={() => {
+									const path = cartId ? `/login?callBackUrl=/checkout&cart_id=${cartId}` : "/login?callBackUrl=/checkout"
+									navigate(path)
+								}}>Login</Button>
+								<Button onClick={() => {
+									setPopup(false)
+									setGuest(true)
+									// setGuestAllow(true)
+									// navigate("/guest-login")
+								}}>Guest Login</Button>
+							</DialogActions>
 
-					</Dialog>
-						: null
-				}
+						</Dialog>
+							: null
+					}
 
 
+				</Grid>
 			</Grid>
-		</Grid>
+		</Box>
+
 	)
 }
+
+
+const CardTitle = styled(Typography)`
+    color: var(--gray-scale-gray-900, #1A1A1A);
+text-align: center;
+
+/* Heading 05/Heading 05 — 600 */
+font-family: Poppins;
+font-size: 32px;
+font-style: normal;
+font-weight: 600;
+line-height: 120%; /* 38.4px */
+`

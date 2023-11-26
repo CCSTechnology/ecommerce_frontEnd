@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addCartServices, cartViewServices, checkOutWithGuest, checkOutWithUser, getAddressServices } from "../../api/public/cartServices";
+import { addCartServices, cartViewServices, checkOutWithGuest, checkOutWithUser, getAddressServices, guestAddCartServices, removeCartServices } from "../../api/public/cartServices";
 
 const cartCases = [{
     api: addCartServices,
@@ -16,6 +16,12 @@ const cartCases = [{
 }, {
     api: checkOutWithGuest,
     name: "checkOutWithGuest"
+},{
+    api : guestAddCartServices,
+    name : 'guestAddCartServices'
+},{
+    api : removeCartServices,
+    name : "removeCartServices"
 }]
 
 const initialState = {

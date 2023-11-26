@@ -1,5 +1,5 @@
 import { Box, Button, Typography, styled } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps'
 import CartProductCard from './CartProductCard'
 import StyledContainer from '../../../components/ecommerce/StyledContainer'
@@ -13,15 +13,22 @@ const YOUR_DOMAIN = "http://localhost:5173"
 const Cart = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [popUp, setPopup] = useState(false)
   const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
-  const cartList = cartData?.details || []
-  const carId = localStorage.getItem("cart_id") || ""
-  const listCartApi = (cart_id) => {
-    dispatch(cartViewServices({
-      cart_id
-    }))
-  }
+  const [cartList, setCartList] = useState([])
+  // const cartList = cartData?.details || []
+  const cart_id = localStorage.getItem("cart_id") || null
+  const listCartApi = useCallback(async() => {
+    try {
+      const response = await dispatch(cartViewServices({
+        cart_id
+      })).unwrap()
+      setCartList(response?.details)
+    } catch (error) {
+      console.log(error, "error")
+    }
+  }, [])
+
+
   const handlePayment = async () => {
     navigate('/checkout')
     // try {
@@ -53,15 +60,15 @@ const Cart = () => {
 
 
   useEffect(() => {
-    listCartApi(carId)
-  }, [carId])
+    listCartApi()
+  }, [cart_id])
   return (
     <Wrapper>
       <CustomBreadcrumbs />
       <CardTitle>My Cart</CardTitle>
       <ProductList>
         {cartList.map((product, index) => {
-          return <CartProductCard key={index} product={product} />
+          return <CartProductCard key={index} product={product} finishApi={listCartApi} />
         })}
       </ProductList>
       <ButtonWrapper>

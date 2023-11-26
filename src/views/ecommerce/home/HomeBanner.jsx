@@ -3,6 +3,8 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ImagePath } from '../../../utils/helpers';
+import { Autoplay } from 'swiper/modules';
+
 
 const HomeBanner = () => {
   const { data: BannerData } = useSelector((state) => state.home.homeDataService)
@@ -11,6 +13,14 @@ const HomeBanner = () => {
     <BannerWrapper>
       <Swiper
         slidesPerView={1}
+        autoplay={{
+          delay : 1000,
+          // waitForTransition : 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter : true
+      }}
+      loop
+      modules={[Autoplay]}
       // onSlideChange={() => console.log('slide change')}
       // onSwiper={(swiper) => console.log(swiper)}
       >

@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import QuantityComponent from "../../../components/QuantityComponent";
 import { Button } from "@mui/material";
 import { ImagePath } from "../../../utils/helpers";
+import { useDispatch } from "react-redux";
+import { errorAlert } from "../../../helpers/globalFunctions";
+import { removeCartServices } from "../../../redux/api/public/cartServices";
 
-export default function CartProductCard({product, quantityShow = true}) {
+export default function CartProductCard({product, quantityShow = true, finishApi}) {
+  const dispatch = useDispatch()
+  const count = product?.quantity || 1
+  const [quantity, setQuantity] = useState(count)
+  async function removeCart(id) {
+    try {
+      const response = await dispatch(removeCartServices(id)).unwrap()
+      console.log(response,"response")
+      await finishApi()
+    } catch (error) {
+      errorAlert(error?.error)
+    }
+  }
   return (
     <Container>
       <Image loading="lazy" srcSet={ImagePath + product.products.file_name} />
       <Title>{product.products.product_name}</Title>
       {
-        quantityShow &&  <QuantityComponent quantity={product.quantity} />
+        quantityShow &&  <QuantityComponent  product={product|| null} setQuantity={setQuantity} quantity={quantity}  finishApi={finishApi}/>
       }
      
       <PriceContainer>
@@ -19,7 +34,9 @@ export default function CartProductCard({product, quantityShow = true}) {
       </PriceContainer>
       <StockContainer>
         <StockStatus>In Stock</StockStatus>
-        <AddToCartButton variant="contained">
+        <AddToCartButton variant="contained" onClick={()=>{
+          removeCart(product.id)
+        }}>
             Remove
         </AddToCartButton>
       </StockContainer>

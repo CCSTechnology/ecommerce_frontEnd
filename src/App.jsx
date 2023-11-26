@@ -10,6 +10,7 @@ import PublicLayout from "./layouts/PublicLayout";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Check } from "@mui/icons-material";
 
 //Public
 // const Login = lazy(() => import("./views/public/login"));
@@ -75,9 +76,10 @@ function App() {
             ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/checkout" element={<GuestCheckOut />}></Route>
             <Route path="/register" element={<SignUp />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/checkout" element={<CheckOut />}></Route>
+
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
