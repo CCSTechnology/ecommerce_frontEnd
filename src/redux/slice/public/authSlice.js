@@ -1,58 +1,71 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {publicAuthLogin  } from "../../api/public/authServices";
-import { guestAddAddress, publicAddAddress } from "../../api/public/authService";
 
-const authCases = [{
-    api : addauthServices,
-    name : "addauthServices"
-},{
-    api : publicAddAddress,
-    name : "publicAddAddress"
-}, {
-    api : guestAddAddress,
-    name : "guestAddAddress"
-}, {
-    api : publicAuthLogin,
-    name : "publicAuthLogin"
-}]
+import {
+  guestAddAddress,
+  publicAddAddress,
+  publicAuthRegister,
+  publicAuthLogin,
+} from "../../api/public/authService";
+
+const authCases = [
+  //   {
+  //     api: addauthServices,
+  //     name: "addauthServices",
+  //   },
+  {
+    api: publicAddAddress,
+    name: "publicAddAddress",
+  },
+  {
+    api: guestAddAddress,
+    name: "guestAddAddress",
+  },
+  {
+    api: publicAuthLogin,
+    name: "publicAuthLogin",
+  },
+  {
+    api: publicAuthRegister,
+    name: "publicAuthRegister",
+  },
+];
 
 const initialState = {
-    authProducts : [] 
-}
+  authProducts: [],
+};
 
-authCases.forEach((cases)=>{
-    initialState[cases.name] ={
-        loading : false,
-        data : null,
-        error : null,
-    }
-})
+authCases.forEach((cases) => {
+  initialState[cases.name] = {
+    loading: false,
+    data: null,
+    error: null,
+  };
+});
 
 export const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    extraReducers: (builder) => {
-        authCases.forEach((cases)=>{
-            builder
-            .addCase(cases.api.fulfilled, (state, { payload }) => {
-              state[cases.name].loading = false;
-              state[cases.name].data = payload;
-              state[cases.name].error = null;
-            })
-            .addCase(cases.api.pending, (state) => {
-              state[cases.name].loading = true;
-              state[cases.name].error = null;
-              state[cases.name].data = null;
-            })
-            .addCase(cases.api.rejected, (state, { payload }) => {
-              state[cases.name].loading = false;
-              state[cases.name].error = payload;
-            });
+  name: "auth",
+  initialState,
+  extraReducers: (builder) => {
+    authCases.forEach((cases) => {
+      builder
+        .addCase(cases.api.fulfilled, (state, { payload }) => {
+          state[cases.name].loading = false;
+          state[cases.name].data = payload;
+          state[cases.name].error = null;
         })
-    },
+        .addCase(cases.api.pending, (state) => {
+          state[cases.name].loading = true;
+          state[cases.name].error = null;
+          state[cases.name].data = null;
+        })
+        .addCase(cases.api.rejected, (state, { payload }) => {
+          state[cases.name].loading = false;
+          state[cases.name].error = payload;
+        });
+    });
+  },
+});
 
-})
+export const { addauth } = authSlice.actions;
 
-export const {addauth} = authSlice.actions
-
-export default authSlice.reducer
+export default authSlice.reducer;

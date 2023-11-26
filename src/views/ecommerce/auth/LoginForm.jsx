@@ -13,12 +13,13 @@ import { LoadingButton } from "@mui/lab";
 import { publicAuthLogin } from "../../../redux/api/public/authService";
 import { errorAlert, successAlert } from "../../../helpers/globalFunctions";
 import { email, password } from "../../../helpers/constant";
+import ImageComponent from "../../../components/Images";
+import { logo } from "../../../helpers/images";
 
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams()
-  
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const schema = yup.object().shape({
@@ -45,20 +46,20 @@ function LoginForm() {
   };
 
   const handleLogin = async (values) => {
-    const cardId = searchParams.get("cart_id") || null
-    const path = searchParams.get("callBackUrl") || "/"
-    if(cardId){
-      values.cart_id = cardId
+    const cardId = searchParams.get("cart_id") || null;
+    const path = searchParams.get("callBackUrl") || "/";
+    if (cardId) {
+      values.cart_id = cardId;
     }
     const parameters = {
-    //   url: authEndPoints.user.userLogin,
+      //   url: authEndPoints.user.userLogin,
       data: values,
     };
     try {
       const response = await dispatch(publicAuthLogin(parameters)).unwrap();
       localStorage.setItem("public_token", response?.token);
-      if(cardId){
-        localStorage.removeItem("cart_id")
+      if (cardId) {
+        localStorage.removeItem("cart_id");
       }
       successAlert(response.message);
       navigate(path);
@@ -70,9 +71,17 @@ function LoginForm() {
   return (
     <Box>
       <Box className="text-center-cls">
-        <Typography className="welcomeHead">Welcome</Typography>
-        <Typography className="welcomeSubHead" sx={{ mt: 1 }}>
-          Log in to your Company{" "}
+        <ImageComponent
+          src={logo}
+          alt="logo"
+          width={"200px"}
+          height={"100px"}
+        />
+        <Typography
+          className=""
+          style={{ color: "#951e76", fontWeight: 600, fontSize: "30px" }}
+        >
+          Login
         </Typography>
       </Box>
       <Box sx={{ m: 5, mx: 15 }} className="formFullCtr">

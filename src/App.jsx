@@ -16,10 +16,12 @@ import "swiper/css/pagination";
 // const Home = lazy(() => import("./views/public/home"));
 // const Category = lazy(() => import("./views/public/category"));
 // const Product = lazy(() => import("./views/public/product"));
-const SuccessPage = lazy(() => import("./views/public/successpage"));
-const ErrorPage = lazy(() => import("./views/public/errorpage"));
-const EmailVerify = lazy(() => import("./views/public/emailverification"));
-const EmailVerifyFaliure = lazy(() => import("./views/public/emailfaliure"));
+const SuccessPage = lazy(() => import("./views/public/payment-success"));
+const ErrorPage = lazy(() => import("./views/public/payment-fail"));
+const EmailVerify = lazy(() => import("./views/public/email-verifysuccess"));
+const EmailVerifyFaliure = lazy(() =>
+  import("./views/public/email-verifyfail")
+);
 //Admin
 const AdminLogin = lazy(() => import("./views/admin/login"));
 const AdminDashboard = lazy(() => import("./views/admin/dashboard"));
@@ -64,8 +66,6 @@ function App() {
       />
       <Suspense fallback={<LoaderComponent isFetching={true} />}>
         <Routes>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<SignUp />}></Route>
           <Route path="/guest-login" element={<GuestCheckOut />}></Route>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
@@ -74,9 +74,10 @@ function App() {
               element={<Products />}
             ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
-
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/checkout" element={<GuestCheckOut />}></Route>
+            <Route path="/register" element={<SignUp />}></Route>
+            <Route path="/login" element={<Login />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
@@ -95,11 +96,14 @@ function App() {
           <Route element={<PlainLayout />}>
             <Route path="admin" element={<AdminLogin />}></Route>
             <Route path="admin/login" element={<AdminLogin />}></Route>
-            <Route path="/successpage" element={<SuccessPage />}></Route>
-            <Route path="/errorpage" element={<ErrorPage />}></Route>
-            <Route path="/emailverification" element={<EmailVerify />}></Route>
+            <Route path="/payment-success" element={<SuccessPage />}></Route>
+            <Route path="/payment-fail" element={<ErrorPage />}></Route>
             <Route
-              path="/emailfaliure"
+              path="/email-verifysuccess"
+              element={<EmailVerify />}
+            ></Route>
+            <Route
+              path="/email-verifyfail"
               element={<EmailVerifyFaliure />}
             ></Route>
           </Route>

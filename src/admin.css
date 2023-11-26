@@ -332,6 +332,11 @@
   background-color: #951e76 !important;
 }
 
+.signup-button:hover {
+  background-color: #951e76 !important;
+  color: white !important;
+}
+
 /* location lookup */
 .pac-container {
   z-index: 99999 !important;
@@ -557,9 +562,9 @@ ogo .backimg {
   background-size: cover;
 }
 
-.login-logo {
-  margin-top: -78px;
-}
+/* .login-logo {
+  margin-top: 60px;
+} */
 
 .css-788yu5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: #951e76 !important;

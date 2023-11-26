@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 
 import ImgEmail from "../../../assets/images/email.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EmailForm = ({ title, path, url }) => {
   return (
@@ -20,12 +20,14 @@ const EmailForm = ({ title, path, url }) => {
         <Typography className="welcomeHead">{title}</Typography>
         {url === "emailverification" ? (
           <Box sx={{ marginTop: 3 }}>
-            <Button
-              style={{ fontSize: "15px", fontWeight: 600, color: "#951e76" }}
-              className="email-verify"
-            >
-              Redirect to Home
-            </Button>
+            <Link to="/login" className="link">
+              <Button
+                style={{ fontSize: "15px", fontWeight: 600, color: "#951e76" }}
+                className="email-verify"
+              >
+                Redirect to Login
+              </Button>
+            </Link>
           </Box>
         ) : (
           <Box sx={{ marginTop: 3 }}>
