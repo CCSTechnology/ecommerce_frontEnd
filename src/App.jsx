@@ -18,6 +18,8 @@ import "swiper/css/pagination";
 // const Product = lazy(() => import("./views/public/product"));
 const SuccessPage = lazy(() => import("./views/public/successpage"));
 const ErrorPage = lazy(() => import("./views/public/errorpage"));
+const EmailVerify = lazy(() => import("./views/public/emailverification"));
+const EmailVerifyFaliure = lazy(() => import("./views/public/emailfaliure"));
 //Admin
 const AdminLogin = lazy(() => import("./views/admin/login"));
 const AdminDashboard = lazy(() => import("./views/admin/dashboard"));
@@ -39,10 +41,11 @@ const Home = lazy(() => import("./views/ecommerce/home"));
 const Products = lazy(() => import("./views/ecommerce/products"));
 const Product = lazy(() => import("./views/ecommerce/product"));
 const Cart = lazy(() => import("./views/ecommerce/cart"));
-const GuestCheckOut = lazy(() => import("./views/ecommerce/auth/getLoginCheckout"));
+const GuestCheckOut = lazy(() =>
+  import("./views/ecommerce/auth/getLoginCheckout")
+);
 
 const CheckOut = lazy(() => import("./views/ecommerce/checkout"));
-
 
 function App() {
   return (
@@ -63,7 +66,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<SignUp />}></Route>
-            <Route path="/guest-login" element={<GuestCheckOut />}></Route>
+          <Route path="/guest-login" element={<GuestCheckOut />}></Route>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
             <Route
@@ -74,7 +77,6 @@ function App() {
 
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/checkout" element={<GuestCheckOut />}></Route>
-
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
@@ -96,6 +98,11 @@ function App() {
             <Route path="admin/login" element={<AdminLogin />}></Route>
             <Route path="/successpage" element={<SuccessPage />}></Route>
             <Route path="/errorpage" element={<ErrorPage />}></Route>
+            <Route path="/emailverification" element={<EmailVerify />}></Route>
+            <Route
+              path="/emailfaliure"
+              element={<EmailVerifyFaliure />}
+            ></Route>
           </Route>
         </Routes>
       </Suspense>

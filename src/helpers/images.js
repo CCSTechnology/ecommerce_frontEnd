@@ -1,4 +1,5 @@
 export { default as logo } from "../assets/images/logo.png";
+
 export { default as Doorbell } from "../assets/icons/Doorbell.svg";
 export { default as Chat } from "../assets/icons/Chat.svg";
 export { default as Friends } from "../assets/icons/Friends.svg";

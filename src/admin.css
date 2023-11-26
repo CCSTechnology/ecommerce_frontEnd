@@ -13,8 +13,6 @@
   scrollbar-color: var(--gray) transparent;
 }
 
-
-
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -590,4 +588,9 @@ ogo .backimg {
 }
 .multiple-imageupload:active {
   background-color: #951e76 !important;
+}
+
+.email-verify:hover {
+  background-color: #951e76 !important;
+  color: white !important;
 }
