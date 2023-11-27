@@ -19,7 +19,7 @@ export default function PublicFooter(props) {
                 turpis dui, eget bibendum magna congue nec.
               </Div7>
               <Div8>
-                <Div9>(219) 555-0114</Div9>
+                <Div9>(+91) 93211 88645</Div9>
                 <Div10>or</Div10>
                 <Div11>Proxy@gmail.com</Div11>
               </Div8>
