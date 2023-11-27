@@ -41,7 +41,6 @@ export default function GetLoginCheckout() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [popUp, setPopup] = useState(false)
-    const [addressPopUp, setAddressPopUp] = useState(false)
     const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
     const [cartList, setCartList] = useState([])
     const [user, setUser] = useState(null)
@@ -94,7 +93,6 @@ export default function GetLoginCheckout() {
             }
             //Expries Token
             else {
-
                 setPopup(true)
                 // navigate('/login=callBackUrl=/checkout')
             }
@@ -121,8 +119,6 @@ export default function GetLoginCheckout() {
             } else {
                 trigger()
                 toast.info("Please Add Address")
-                setAddressPopUp(true)
-                // setGuest(true)
             }
 
         } catch (error) {

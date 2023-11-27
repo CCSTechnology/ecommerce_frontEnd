@@ -13,8 +13,8 @@ const YOUR_DOMAIN = "http://localhost:5173"
 const Cart = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
-  const [cartList, setCartList] = useState([])
+  const { data: cartData  } = useSelector((state) => state.cart.cartViewServices)
+  const [cartList, setCartList] = useState(cartData?.details || [])
   // const cartList = cartData?.details || []
   const cart_id = localStorage.getItem("cart_id") || null
   const listCartApi = useCallback(async() => {
@@ -67,7 +67,7 @@ const Cart = () => {
       <CustomBreadcrumbs />
       <CardTitle>My Cart</CardTitle>
       <ProductList>
-        {cartList.map((product, index) => {
+        {cartList?.map((product, index) => {
           return <CartProductCard key={index} product={product} finishApi={listCartApi} />
         })}
       </ProductList>

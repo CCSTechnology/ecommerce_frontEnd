@@ -8,7 +8,7 @@ import ProductSlides from "./ProductSlides"
 import { useNavigate, useParams } from "react-router-dom"
 import ProductView from "../../admin/products/productView"
 import QuantityComponent from "../../../components/QuantityComponent"
-import { addCartServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
+import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
 import { toast } from "react-toastify"
 import { errorAlert } from "../../../helpers/globalFunctions"
 
@@ -37,6 +37,10 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
       } catch (error) {
         console.log(error, "error")
         errorAlert(error?.error)
+      } finally {
+          dispatch(cartViewServices({
+            cart_id
+          }))
       }
     } else {
       try {
@@ -57,6 +61,11 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
         console.log(error, "error")
         errorAlert(error?.error)
       }
+      finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
+    }
     }
   }
 

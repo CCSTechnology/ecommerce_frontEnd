@@ -1,25 +1,38 @@
-import { Box, styled } from "@mui/material";
-import React, { useEffect } from "react";
+import { Badge, Box, styled } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { logo } from "../../helpers/images";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../redux/api/public/cartServices";
 
 function Navbar() {
-  const {data : carTData} = useSelector((state) => state.cart.cartViewServices)
-  const cartAmount = carTData?.grand_total || 0
+  const { data } = useSelector((state) => state.cart.cartViewServices)
+  const [cartData, setCartData] = useState(data)
+  const cartAmount = cartData?.grand_total || 0
+  const cartProductLength = cartData?.details.length || 0
   const dispatch = useDispatch()
   const cartId = localStorage.getItem("cart_id") || null
-  
-  function fetchCart(cart_id) {
-    dispatch(cartViewServices({
-      cart_id
-    }))
+
+  async function fetchCart(cart_id) {
+    try {
+      const response = await dispatch(cartViewServices({
+        cart_id
+      })).unwrap()
+      setCartData(response)
+    } catch (error) {
+      console.log(error,"fetchCart")
+    }
   }
 
   useEffect(() => {
     fetchCart(cartId)
   }, [cartId])
+
+  useEffect(()=>{
+    if(data){
+      setCartData(data)
+    }
+  }, [data])
 
   return (
     <NavbarWrapper to='/cart'>
@@ -31,7 +44,9 @@ function Navbar() {
         <SearchText>Search</SearchText>
       </SearchContainer>
       <CartContainer>
-        <CartIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3dacf0af-d9ab-4feb-9173-044d05adfe1e?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+        <Badge badgeContent={cartProductLength} color="primary">
+          <CartIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3dacf0af-d9ab-4feb-9173-044d05adfe1e?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+        </Badge>
         {/* <Divider /> */}
         <CartInfo>
           <CartTitle>Shopping cart:</CartTitle>

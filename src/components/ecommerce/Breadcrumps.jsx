@@ -17,7 +17,7 @@ const breadcrumbs = [
         underline="hover"
         key="2"
         color="inherit"
-        href="/material-ui/getting-started/installation/"
+        href="/"
     >
         Core
     </Link>,
@@ -27,7 +27,7 @@ const breadcrumbs = [
 ];
 
 export default function CustomBreadcrumbs() {
-
+    
 
     return (
         <CustomBreadcrumbsWrapper spacing={2} display={'flex'} alignItems={"start"} >

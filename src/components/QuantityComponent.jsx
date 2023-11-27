@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { addCartServices, guestAddCartServices } from "../redux/api/public/cartServices"
+import { addCartServices, cartViewServices, guestAddCartServices } from "../redux/api/public/cartServices"
 import { toast } from "react-toastify"
 import { errorAlert } from "../helpers/globalFunctions"
 
@@ -16,17 +16,21 @@ export default function QuantityComponent({ product = null, setQuantity, quantit
       try {
         const response = await dispatch(addCartServices({
           product_id: type === "add" ? product?.product_id : product?.id,
-          quantity: 1, 
+          quantity: 1,
           type,
         })).unwrap()
         finishApi()
 
-        setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
+        setQuantity((state) => type === "add" ? state + 1 : state - 1)
         console.log(response, "addCartServices")
         toast.success(message)
       } catch (error) {
         console.log(error, "error")
         errorAlert(error?.error)
+      } finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
       }
     } else {
       try {
@@ -37,24 +41,28 @@ export default function QuantityComponent({ product = null, setQuantity, quantit
           type
         })).unwrap()
         finishApi()
-        setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
+        setQuantity((state) => type === "add" ? state + 1 : state - 1)
         console.log(response, "res")
-        if(response?.cartdetails){
-            localStorage.setItem('cart_id',response?.cartdetails.cart_id )
+        if (response?.cartdetails) {
+          localStorage.setItem('cart_id', response?.cartdetails.cart_id)
         }
         toast.success(message)
       } catch (error) {
         console.log(error, "error")
         errorAlert(error?.error)
+      } finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
       }
     }
   }
   return <QuantityComponentWrapper>
     <ADDMINUS onClick={(e) => {
       e.preventDefault()
-      if(cartType === "product"){
-        setQuantity((state)=> state - 1)
-      }else{
+      if (cartType === "product") {
+        setQuantity((state) => state - 1)
+      } else {
         if (quantity > 1) {
           addToCart('minus')
         }
@@ -62,10 +70,10 @@ export default function QuantityComponent({ product = null, setQuantity, quantit
     }}>-</ADDMINUS>
     <Input>{quantity}</Input>
     <ADDMINUS onClick={(e) => {
-      if(cartType === "product"){
-        setQuantity((state)=> state + 1)
-      }else{
-          addToCart('add')
+      if (cartType === "product") {
+        setQuantity((state) => state + 1)
+      } else {
+        addToCart('add')
       }
     }}>+</ADDMINUS>
   </QuantityComponentWrapper>
