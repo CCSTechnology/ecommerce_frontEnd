@@ -599,3 +599,8 @@ ogo .backimg {
   background-color: #951e76 !important;
   color: white !important;
 }
+
+.Contactline {
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+  height: 162px !important;
+}

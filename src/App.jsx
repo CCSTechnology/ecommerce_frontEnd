@@ -23,6 +23,7 @@ const EmailVerify = lazy(() => import("./views/public/email-verifysuccess"));
 const EmailVerifyFaliure = lazy(() =>
   import("./views/public/email-verifyfail")
 );
+const ContactUs = lazy(() => import("./views/public/contact-us"));
 //Admin
 const AdminLogin = lazy(() => import("./views/admin/login"));
 const AdminDashboard = lazy(() => import("./views/admin/dashboard"));
@@ -79,7 +80,7 @@ function App() {
             <Route path="/register" element={<SignUp />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/checkout" element={<CheckOut />}></Route>
-
+            <Route path="/contact-us" element={<ContactUs />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>

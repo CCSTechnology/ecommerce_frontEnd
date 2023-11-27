@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import StyledContainer from "../../components/ecommerce/StyledContainer";
 import { logo } from "../../helpers/images";
+import { Link } from "react-router-dom";
 
 export default function PublicFooter(props) {
   return (
@@ -11,13 +12,11 @@ export default function PublicFooter(props) {
           <Div3>
             <Div4>
               <Div5>
-                <Img
-                  loading="lazy"
-                  src={logo}                />
+                <Img loading="lazy" src={logo} />
               </Div5>
               <Div7>
-                Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
-                dui, eget bibendum magna congue nec.
+                Morbi cursus porttitor enim lobortis molestie. Duis gravida
+                turpis dui, eget bibendum magna congue nec.
               </Div7>
               <Div8>
                 <Div9>(219) 555-0114</Div9>
@@ -34,7 +33,9 @@ export default function PublicFooter(props) {
             </Div12>
             <Div18>
               <Div19>Helps</Div19>
-              <Div20>Contact</Div20>
+              <Link to="/contact-us">
+                <Div20>Contact Us</Div20>
+              </Link>
               <Div21>Faqs</Div21>
               <Div22>Terms & Condition</Div22>
               <Div23>Privacy Policy</Div23>
@@ -551,5 +552,3 @@ const Div42 = styled.div`
   text-align: center;
   font: 600 12px/12px Poppins, sans-serif;
 `;
-
-
