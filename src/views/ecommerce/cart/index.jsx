@@ -93,6 +93,7 @@ const ProductList = styled(Box)`
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 15px;
 `
 
 const CardTitle = styled(Typography)`

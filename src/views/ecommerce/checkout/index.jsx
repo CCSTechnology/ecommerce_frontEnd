@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { errorAlert } from '../../../helpers/globalFunctions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup"
+
 const schema = yup.object().shape({
     name : yup.string().required(),
     cart_id : yup.string().required(),
@@ -213,9 +214,6 @@ export default function GetLoginCheckout() {
                 </Dialog>
                     : null
             }
-            {/* {
-                addressPopUp && <AddressPopUp AddressForm={AddressForm} open={addressPopUp} setOpen={setAddressPopUp} sumbit={()=>{}} />
-            } */}
         </StyledContainer>
 
     )

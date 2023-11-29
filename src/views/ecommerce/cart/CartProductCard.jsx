@@ -49,6 +49,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  padding: 5px;
 
   @media (max-width: 991px) {
     flex-wrap: wrap;
