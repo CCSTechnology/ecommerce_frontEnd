@@ -21,7 +21,7 @@ export default function PublicFooter(props) {
               <Div8>
                 <Div9>(+91) 93211 88645</Div9>
                 <Div10>or</Div10>
-                <Div11>Proxy@gmail.com</Div11>
+                <Div11> customercare@truevine.in</Div11>
               </Div8>
             </Div4>
             <Div12>

@@ -2,23 +2,35 @@ import React from "react";
 import SuccessError from "../../../components/reusableFormFields/success";
 import successImage from "../../../assets/images/payment-success.png";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import Location from "../../../assets/icons/location.webp";
-import Call from "../../../assets/icons/call.webp";
-import Email from "../../../assets/icons/mail.webp";
+import Location from "../../../assets/icons/location1.png";
+import Call from "../../../assets/icons/phone.png";
+import Email from "../../../assets/icons/email.png";
 import GoogleMap from "../../../components/GoogleMap";
 import Facebook from "../../../assets/icons/facebookicon.png";
 import Twitter from "../../../assets/icons/twicons.png";
 import LinkedIn from "../../../assets/icons/linkedlnicon.png";
 import Insta from "../../../assets/icons/instagramicons.png";
 import { Link } from "react-router-dom";
+import StyledContainer from "../../../components/ecommerce/StyledContainer";
 const ContactUs = ({ title }) => {
   return (
     <>
-      <Container>
-        <Box sx={{ mt: 10 }}>
+      <StyledContainer>
+        <Box sx={{}}>
           <Grid container>
-            <Grid item xs={12} textAlign={"center"}>
-              <Typography style={{ fontSize: "20px", fontWeight: 600 }}>
+            <Grid
+              item
+              xs={12}
+              className="contact-banner"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography
+                style={{ fontSize: "40px", fontWeight: 600, color: " white" }}
+              >
                 Contact Us
               </Typography>
             </Grid>
@@ -29,7 +41,7 @@ const ContactUs = ({ title }) => {
           <Grid container>
             <Grid item xs={4}>
               <Box textAlign={"center"} className="Contactline">
-                <img src={Location} />
+                <img src={Location} style={{ height: "70px" }} />
                 <Box>
                   <Typography sx={{ mt: 2, fontSize: "15px" }}>
                     TrueVine Foods Pvt Limited
@@ -46,7 +58,7 @@ const ContactUs = ({ title }) => {
             <Grid item xs={4}>
               <Box textAlign={"center"} className="Contactline">
                 <Link to="tel:+919321188645">
-                  <img src={Call} />
+                  <img src={Call} style={{ height: "70px" }} />
                 </Link>
 
                 <Link to="tel:+919321188645">
@@ -59,11 +71,11 @@ const ContactUs = ({ title }) => {
             <Grid item xs={4}>
               <Box textAlign={"center"}>
                 <Link to="mailto:info@truevinefoods.com">
-                  <img src={Email} />
+                  <img src={Email} style={{ height: "70px" }} />
                 </Link>
                 <Link to="mailto:info@truevinefoods.com">
                   <Typography sx={{ mt: 2, fontSize: "15px" }}>
-                    info@truevinefoods.com
+                    customercare@truevine.in
                   </Typography>
                 </Link>
 
@@ -90,12 +102,12 @@ const ContactUs = ({ title }) => {
             </Grid>
           </Grid>
         </Box>
-      </Container>
-      <Container>
+      </StyledContainer>
+      <StyledContainer>
         <Box sx={{ mt: 8 }}>
           <GoogleMap />
         </Box>
-      </Container>
+      </StyledContainer>
     </>
   );
 };

@@ -24,6 +24,7 @@ const EmailVerifyFaliure = lazy(() =>
   import("./views/public/email-verifyfail")
 );
 const ContactUs = lazy(() => import("./views/public/contact-us"));
+const AboutUs = lazy(() => import("./views/public/about-us"));
 //Admin
 const AdminLogin = lazy(() => import("./views/admin/login"));
 const AdminDashboard = lazy(() => import("./views/admin/dashboard"));
@@ -81,6 +82,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/checkout" element={<CheckOut />}></Route>
             <Route path="/contact-us" element={<ContactUs />}></Route>
+            <Route path="/about-us" element={<AboutUs />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
