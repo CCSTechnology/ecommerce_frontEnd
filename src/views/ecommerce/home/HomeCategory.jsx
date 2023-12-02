@@ -86,12 +86,6 @@ const CategoryList = styled(Swiper)`
 `
 
 
-
-
-
-
-
-
 const VegetableComponentWrapper = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",

@@ -14,7 +14,6 @@ export default function Home(){
     try {
      await dispatch(homeDataService()).unwrap()
     } catch (error) {
-      console.log("HomeApi", error)
     }
   }
   useEffect(() => {

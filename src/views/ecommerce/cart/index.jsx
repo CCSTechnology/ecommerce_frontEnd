@@ -3,59 +3,30 @@ import React, { useCallback, useEffect, useState } from 'react'
 import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps'
 import CartProductCard from './CartProductCard'
 import StyledContainer from '../../../components/ecommerce/StyledContainer'
-import Stripe from 'stripe'
 import { useDispatch, useSelector } from 'react-redux'
 import { cartViewServices } from '../../../redux/api/public/cartServices'
 import { useNavigate } from 'react-router-dom'
 
-const stripe = Stripe('sk_test_tR3PYbcVNZZ796tH88S4VQ2u');
-const YOUR_DOMAIN = "http://localhost:5173"
 const Cart = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { data: cartData  } = useSelector((state) => state.cart.cartViewServices)
+  const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
   const [cartList, setCartList] = useState(cartData?.details || [])
   // const cartList = cartData?.details || []
   const cart_id = localStorage.getItem("cart_id") || null
-  const listCartApi = useCallback(async() => {
+  const listCartApi = useCallback(async () => {
     try {
       const response = await dispatch(cartViewServices({
         cart_id
       })).unwrap()
       setCartList(response?.details)
     } catch (error) {
-      console.log(error, "error")
     }
   }, [])
 
 
   const handlePayment = async () => {
     navigate('/checkout')
-    // try {
-    //   const session = await stripe.checkout.sessions.create({
-    //     billing_address_collection: 'auto',
-    //     payment_method_types: ['card',],
-    //     'line_items': [{
-    //       'price_data': {
-    //         'currency': 'inr',
-    //         'unit_amount': 2000,
-    //         'product_data': {
-    //           'name': 'Stubborn Attachments',
-    //           'images': ["https://i.imgur.com/EHyR2nP.png"],
-    //         },
-    //       },
-    //       'quantity': 1,
-    //     }],
-    //     mode: 'payment',
-
-    //     success_url: `${YOUR_DOMAIN}/`,
-    //     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
-    //   });
-    //   window.location.href = session.url
-    // } catch (error) {
-    //   console.log(error, "err")
-    // }
-
   }
 
 

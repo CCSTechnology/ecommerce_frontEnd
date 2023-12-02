@@ -127,7 +127,6 @@ export default React.memo(function BillingAddressForm({
                 toast.success("Address Added")
             }
         } catch (error) {
-            console.log(error);
             errorAlert(error?.error)
         }
     }
@@ -138,7 +137,7 @@ export default React.memo(function BillingAddressForm({
 
     React.useEffect(() => {
         if (user) {
-           formHook.reset({
+            formHook.reset({
                 cart_id: localStorage.getItem("cart_id"),
                 ...user,
             });
@@ -148,8 +147,6 @@ export default React.memo(function BillingAddressForm({
             })
         }
     }, [user]);
-
-    console.log(formHook.formState.errors, "formHook.errors")
 
     return (
         <Box>
@@ -178,9 +175,6 @@ export default React.memo(function BillingAddressForm({
                                                     control={formHook.control}
                                                     label="Mobile"
                                                     error={formHook.errors?.phone_number?.message}
-                                                // InputProps={{
-                                                //     startAdornment: <InputAdornment position="start">+61</InputAdornment>,
-                                                // }}
                                                 />
                                             </Grid>
                                         );

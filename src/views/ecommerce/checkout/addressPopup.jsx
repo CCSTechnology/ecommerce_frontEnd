@@ -1,16 +1,14 @@
-import { useSelector } from 'react-redux'
-import * as React from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import { Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import { Divider } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 const AddressComponent = React.memo(function AddressMemoComponents({ address, user, setUser, setOpen }) {
   return <AddressWrapper onClick={(e)=>{
@@ -112,11 +110,6 @@ export default React.memo(function AddressPopup({ user, setUser }) {
             })
           }
         </DialogContentStyled>
-        {/* <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Choose changes
-          </Button>
-        </DialogActions> */}
       </BootstrapDialog>
     </React.Fragment>
   )

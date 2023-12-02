@@ -58,7 +58,6 @@ function LoginForm() {
       values.cart_id = cardId;
     }
     const parameters = {
-      //   url: authEndPoints.user.userLogin,
       data: values,
     };
     try {

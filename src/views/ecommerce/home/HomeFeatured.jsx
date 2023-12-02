@@ -32,7 +32,6 @@ export default function HomeFeatured() {
 
         toast.success(message)
       } catch (error) {
-        console.log(error, "error")
         errorAlert(error?.error)
       } finally {
         dispatch(cartViewServices({
@@ -47,7 +46,6 @@ export default function HomeFeatured() {
           quantity,
           type
         })).unwrap()
-        console.log(response, "res")
         if (response?.cartdetails) {
           localStorage.setItem('cart_id', response?.cartdetails.cart_id)
         }

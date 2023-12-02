@@ -1,23 +1,69 @@
 import { Box, styled } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps'
 import StyledContainer from '../../../components/ecommerce/StyledContainer'
 import { useDispatch, useSelector } from 'react-redux'
 import { productListService } from '../../../redux/api/public/productService'
 import ProductCard from './ProductsCard'
+import { addCartServices, cartViewServices, guestAddCartServices } from '../../../redux/api/public/cartServices'
+import { toast } from 'react-toastify'
+import { errorAlert } from '../../../helpers/globalFunctions'
 
 const Products = () => {
-    const dispatch  = useDispatch()
-    const {data : productData} = useSelector((state)=>state.product.productListService)
+    const dispatch = useDispatch()
+    const { data: productData } = useSelector((state) => state.product.productListService)
     const productsList = productData?.data || []
 
     function fetchProduct(params) {
         dispatch(productListService())
     }
+    const addToCart = useCallback(async (type = "add", product, quantity = 1) => {
+        const cart_id = localStorage.getItem("cart_id") || null
+        const token = localStorage.getItem("public_token") || null
 
-    useEffect(()=>{
+        const message = "Product added successfully"
+        if (token) {
+            try {
+                await dispatch(addCartServices({
+                    product_id: product?.id,
+                    quantity,
+                    type,
+                })).unwrap()
+
+                toast.success(message)
+            } catch (error) {
+                errorAlert(error?.error)
+            } finally {
+                dispatch(cartViewServices({
+                    cart_id
+                }))
+            }
+        } else {
+            try {
+                const response = await dispatch(guestAddCartServices({
+                    cart_id,
+                    product_id: product?.id,
+                    quantity,
+                    type
+                })).unwrap()
+                if (response?.cartdetails) {
+                    localStorage.setItem('cart_id', response?.cartdetails.cart_id)
+                }
+                toast.success(message)
+            } catch (error) {
+                errorAlert(error?.error)
+            }
+            finally {
+                dispatch(cartViewServices({
+                    cart_id
+                }))
+            }
+        }
+    }, [])
+
+    useEffect(() => {
         fetchProduct()
-    },[])
+    }, [])
     return (
         <StyledContainer>
             <ProductsWrapper>
@@ -25,8 +71,8 @@ const Products = () => {
                 <ProductsContainer>
                     <FilterComponent />
                     <ProdductList>
-                        {productsList.map((product)=>{
-                            return <ProductCard product={product} key={product.id} />
+                        {productsList.map((product) => {
+                            return <ProductCard product={product} key={product.id} addToCart={addToCart} />
                         })}
                     </ProdductList>
                 </ProductsContainer>
@@ -79,18 +125,18 @@ function FilterComponent(props) {
 const ProductsWrapper = styled(Box)(({ }) => ({
 }))
 
-const ProdductList = styled(Box)(({})=>({
-    display : 'flex',
-    padding : "20px 20px",
-    flexWrap : "wrap",
-    justifyContent : "center",
-    gap : "34px"
+const ProdductList = styled(Box)(({ }) => ({
+    display: 'flex',
+    padding: "20px 20px",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "34px"
 }))
 
 const ProductsContainer = styled(Box)(({ }) => ({
     width: "100%",
-    display : "flex",
-    flexDirection : "column",
+    display: "flex",
+    flexDirection: "column",
 
 }))
 

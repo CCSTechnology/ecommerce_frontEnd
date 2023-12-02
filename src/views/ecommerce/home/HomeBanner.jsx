@@ -15,14 +15,11 @@ const HomeBanner = () => {
         slidesPerView={1}
         autoplay={{
           delay : 1000,
-          // waitForTransition : 2000,
           disableOnInteraction: false,
           pauseOnMouseEnter : true
       }}
       loop
       modules={[Autoplay]}
-      // onSlideChange={() => console.log('slide change')}
-      // onSwiper={(swiper) => console.log(swiper)}
       >
         {
           banners.map((banner) => {

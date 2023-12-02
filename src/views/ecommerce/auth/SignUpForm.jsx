@@ -6,7 +6,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LoadingButton } from "@mui/lab";
@@ -15,7 +14,6 @@ import { errorAlert, successAlert } from "../../../helpers/globalFunctions";
 import { email, password } from "../../../helpers/constant";
 import { logo } from "../../../helpers/images";
 import ImageComponent from "../../../components/Images";
-import MobileField from "../../../components/reusableFormFields/TextField/mobileField";
 
 function SignUpForm() {
   const navigate = useNavigate();
@@ -59,8 +57,6 @@ function SignUpForm() {
   };
 
   const handleRegister = async (values) => {
-    console.log(values);
-
     try {
       const response = await dispatch(publicAuthRegister(values)).unwrap();
       successAlert(response.message);

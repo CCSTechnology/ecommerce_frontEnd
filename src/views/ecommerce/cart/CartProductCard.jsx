@@ -13,8 +13,7 @@ export default function CartProductCard({product, quantityShow = true, finishApi
   const [quantity, setQuantity] = useState(count)
   async function removeCart(id) {
     try {
-      const response = await dispatch(removeCartServices(id)).unwrap()
-      console.log(response,"response")
+      await dispatch(removeCartServices(id)).unwrap()
       await finishApi()
     } catch (error) {
       errorAlert(error?.error)

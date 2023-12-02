@@ -2,7 +2,6 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
-
 import { useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
@@ -34,11 +33,10 @@ export default memo(function GetLoginCheckout() {
     const navigate = useNavigate()
     const [popUp, setPopup] = useState(false)
     const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
-    const [cartList, setCartList] = useState([])
+    const [cartList, setCartList] = useState(null)
     const [user, setUser] = useState(null)
     const [guest, setGuest] = useState(null)
 
-    const [selectedAddress, setSelectedAddress] = useState(null)
 
     const cartId = localStorage.getItem('cart_id') || null
     const [guestAllow, setGuestAllow] = useState(null)
@@ -48,9 +46,9 @@ export default memo(function GetLoginCheckout() {
             const response = await dispatch(cartViewServices({
                 cart_id: cartId
             })).unwrap()
-            setCartList(response || [])
+            setCartList(response || null)
         } catch (error) {
-            setCartList([])
+            setCartList(null)
         }
 
     }
@@ -80,18 +78,16 @@ export default memo(function GetLoginCheckout() {
                     delivery_charges: 0,
                     cart_id: ""
                 })).unwrap()
-                console.log(response, "response")
                 window.location.href = response.payment_details
             }
             //Expries Token
             else {
                 setPopup(true)
-                // navigate('/login=callBackUrl=/checkout')
             }
 
 
         } catch (error) {
-            console.log(error, "error")
+            errorAlert(error?.error)
         }
     }
 
@@ -114,7 +110,6 @@ export default memo(function GetLoginCheckout() {
             }
 
         } catch (error) {
-            console.log(error, "error")
             errorAlert(error?.error)
         }
     }
@@ -149,7 +144,6 @@ export default memo(function GetLoginCheckout() {
             }
             setUser(dat)
         } catch (error) {
-            console.log(error, "error")
         }
     }
 
@@ -161,6 +155,12 @@ export default memo(function GetLoginCheckout() {
         getCartList()
     }, [user])
 
+
+    useEffect(() => {
+        if (cartData) {
+            setCartList(cartData)
+        }
+    }, [cartData])
 
 
     return (
@@ -209,8 +209,6 @@ export default memo(function GetLoginCheckout() {
                         <Button onClick={() => {
                             setPopup(false)
                             setGuest(true)
-                            // setGuestAllow(true)
-                            // navigate("/guest-login")
                         }}>Guest Login</Button>
                     </DialogActions>
 

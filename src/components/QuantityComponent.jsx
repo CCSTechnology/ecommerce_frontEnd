@@ -14,7 +14,7 @@ export default function QuantityComponent({ product = null, setQuantity, quantit
     const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
     if (token) {
       try {
-        const response = await dispatch(addCartServices({
+        await dispatch(addCartServices({
           product_id: type === "add" ? product?.product_id : product?.id,
           quantity: 1,
           type,
@@ -22,10 +22,8 @@ export default function QuantityComponent({ product = null, setQuantity, quantit
         finishApi()
 
         setQuantity((state) => type === "add" ? state + 1 : state - 1)
-        console.log(response, "addCartServices")
         toast.success(message)
       } catch (error) {
-        console.log(error, "error")
         errorAlert(error?.error)
       } finally {
         dispatch(cartViewServices({
@@ -42,13 +40,11 @@ export default function QuantityComponent({ product = null, setQuantity, quantit
         })).unwrap()
         finishApi()
         setQuantity((state) => type === "add" ? state + 1 : state - 1)
-        console.log(response, "res")
         if (response?.cartdetails) {
           localStorage.setItem('cart_id', response?.cartdetails.cart_id)
         }
         toast.success(message)
       } catch (error) {
-        console.log(error, "error")
         errorAlert(error?.error)
       } finally {
         dispatch(cartViewServices({
