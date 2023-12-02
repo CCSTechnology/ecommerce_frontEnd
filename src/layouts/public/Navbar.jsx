@@ -1,56 +1,60 @@
 import React from "react";
 import { Typography, styled, Box } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
+import { Link } from "react-router-dom";
+
 
 const menuList = [
-    {
-        label: "Home"
-    },
-    {
-        label: "Shop"
-    },
-    {
-        label: "Pages"
-    },
-    {
-        label: "Blog"
-    },
-    {
-        label: "About Us"
-    },
+  {
+    label: "Home",
+    link: '/'
+  },
+  {
+    label: "Shop",
+    link: '/category/all'
+  },
+  {
+    label: "Contact Us",
+    link: '/contact-us'
+  },
+  {
+    label: "About Us",
+    link: '/'
+  },
 ]
 
 const NavigationBar = () => {
-    return (
-        <NavbarWrapper>
-            <MenuContainer>
-                {
-                    menuList.map((menu) => (<MenuItem key={menu.label}>
-                        <p>{menu.label}</p>
-                        <Logo
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3219d72-674e-483c-88d3-f5377c377bb5?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                            alt="Logo"
-                        />
-                    </MenuItem>))
-                }
-            </MenuContainer>
-            <ContactContainer>
-                <ContactIcon
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/957d9cfb-7acb-407a-8f18-8586efde1b85?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                    alt="Contact Icon"
-                />
-                <ContactInfo>(219) 555-0114</ContactInfo>
-            </ContactContainer>
-        </NavbarWrapper>
-    );
+  return (
+    <NavbarWrapper>
+      <MenuContainer>
+        {
+          menuList.map((menu) => (<MenuItem key={menu.label}>
+            <Link to={menu.link}>{menu.label}</Link>
+            {/* <Logo
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3219d72-674e-483c-88d3-f5377c377bb5?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+                  alt="Logo"
+                  />
+             */}
+          </MenuItem>))
+        }
+      </MenuContainer>
+      <ContactContainer>
+        <ContactIcon
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/957d9cfb-7acb-407a-8f18-8586efde1b85?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          alt="Contact Icon"
+        />
+        <ContactInfo>(+91) 93211 88645</ContactInfo>
+      </ContactContainer>
+    </NavbarWrapper>
+  );
 };
 
 const NavbarWrapper = styled(Box)(({ theme }) => ({
-    background: theme.palette.grey[900],
-    display : "flex",
-    alignItems : "center",
-    justifyContent :"space-between",
-    padding : "10px 20px"
+  background: theme.palette.grey[900],
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "10px 20px"
 }))
 
 

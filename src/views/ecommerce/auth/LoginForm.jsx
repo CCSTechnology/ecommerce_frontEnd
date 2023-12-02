@@ -15,11 +15,12 @@ import { errorAlert, successAlert } from "../../../helpers/globalFunctions";
 import { email, password } from "../../../helpers/constant";
 import ImageComponent from "../../../components/Images";
 import { logo } from "../../../helpers/images";
+import { cartViewServices } from "../../../redux/api/public/cartServices";
 
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const schema = yup.object().shape({
@@ -48,6 +49,11 @@ function LoginForm() {
   const handleLogin = async (values) => {
     const cardId = searchParams.get("cart_id") || null;
     const path = searchParams.get("callBackUrl") || "/";
+    if (searchParams.get("callBackUrl")) {
+      dispatch(cartViewServices({
+        cart_id: cardId
+      }))
+    }
     if (cardId) {
       values.cart_id = cardId;
     }
@@ -61,6 +67,7 @@ function LoginForm() {
       if (cardId) {
         localStorage.removeItem("cart_id");
       }
+
       successAlert(response.message);
       navigate(path);
     } catch (error) {

@@ -12,15 +12,16 @@ import {
     guestAddAddress,
     publicAddAddress
 } from "../../../redux/api/public/authService";
+import AddressPopup from "./addressPopup";
 
-export default function BillingAddressForm({
+export default React.memo(function BillingAddressForm({
     user,
     getMe,
     formHook,
     setGuestAllow,
+    setUser
 }) {
     const dispatch = useDispatch();
-    const [popUp, setPopup] = React.useState(false);
     const [editAddress, setEditAddress] = React.useState(false)
 
     const inputs = React.useMemo(() => {
@@ -106,9 +107,8 @@ export default function BillingAddressForm({
             (values.type = "Shipping Address");
         try {
             if (user) {
-                const response = await dispatch(publicAddAddress(values)).unwrap();
+                await dispatch(publicAddAddress(values)).unwrap();
                 await getMe();
-                console.log(response, "res");
                 toast.success("Address Added")
             } else {
                 const details = {};
@@ -140,10 +140,6 @@ export default function BillingAddressForm({
         }
     }
 
-    function handleAddressPopup() {
-        setPopup((state) => !state)
-    }
-
     function handleEditAddress() {
         setEditAddress((state) => !state)
     }
@@ -167,7 +163,7 @@ export default function BillingAddressForm({
                 <Title>Billing Address</Title>
                 <AddressAction>
                     <Button onClick={handleEditAddress}>Edit</Button>
-                    <Button onClick={handleAddressPopup}>Choose Address</Button>
+                    <AddressPopup user={user} setUser={setUser} />
                 </AddressAction>
                 <form onSubmit={handleSubmit(AddAddress)}>
                     <Grid container spacing={3}>
@@ -227,7 +223,7 @@ export default function BillingAddressForm({
                                     sx={{ backgroundColor: "#951e76" }}
                                 >
                                     Add Address
-                                </LoadingButton> : "Not"
+                                </LoadingButton> : null
                         }
 
                     </Box>
@@ -235,7 +231,7 @@ export default function BillingAddressForm({
             </Box>
         </Box>
     );
-}
+})
 
 
 const Title = styled(Typography)`

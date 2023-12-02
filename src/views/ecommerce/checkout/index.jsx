@@ -1,10 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
 
 import { useForm } from 'react-hook-form';
-// import { CheckOutProduct } from '../../../components/CheckoutProduct';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
@@ -18,27 +17,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup"
 
 const schema = yup.object().shape({
-    name : yup.string().required(),
-    cart_id : yup.string().required(),
-
-    phone_number : yup.string().required(),
-
-    same_address : yup.string().required(),
-
-    email : yup.string().email().required(),
-
-    country : yup.string().required(),
-
-    state : yup.string().required(),
-
-    city : yup.string().required(),
-    street_name :yup.string().required(),
-    line1 :yup.string().required(),
-    zipcode :yup.string().required(),
-    address :yup.string().required(),
+    name: yup.string().required("Name is required"),
+    phone_number: yup.string().required("Phone number is required"),
+    email: yup.string().email().required("Emai is required"),
+    country: yup.string().required("Country is required"),
+    state: yup.string().required("State is required"),
+    city: yup.string().required("City is required"),
+    street_name: yup.string().required("Addres is required"),
+    line1: yup.string().required("Address is required"),
+    zipcode: yup.string().required("Pincode is required"),
+    address: yup.string().required(),
 });
 
-export default function GetLoginCheckout() {
+export default memo(function GetLoginCheckout() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [popUp, setPopup] = useState(false)
@@ -46,7 +37,9 @@ export default function GetLoginCheckout() {
     const [cartList, setCartList] = useState([])
     const [user, setUser] = useState(null)
     const [guest, setGuest] = useState(null)
-    // const cartList = cartData?.details || []
+
+    const [selectedAddress, setSelectedAddress] = useState(null)
+
     const cartId = localStorage.getItem('cart_id') || null
     const [guestAllow, setGuestAllow] = useState(null)
 
@@ -55,14 +48,14 @@ export default function GetLoginCheckout() {
             const response = await dispatch(cartViewServices({
                 cart_id: cartId
             })).unwrap()
-            setCartList(response?.details || [])
+            setCartList(response || [])
         } catch (error) {
             setCartList([])
         }
 
     }
 
-    const { reset, handleSubmit } = useForm({
+    const { handleSubmit } = useForm({
         defaultValues: {
 
         }
@@ -70,9 +63,8 @@ export default function GetLoginCheckout() {
 
     const { ...formHook } = useForm({
         defaultValues: {
-
         },
-        resolver : yupResolver(schema)
+        resolver: yupResolver(schema)
     })
 
 
@@ -82,7 +74,6 @@ export default function GetLoginCheckout() {
         try {
             //Valid User
             if (user) {
-                console.log(user, "user")
                 const response = await dispatch(checkOutWithUser({
                     billing_address_id: 1,
                     shipping_address_id: 1,
@@ -143,6 +134,7 @@ export default function GetLoginCheckout() {
                 }
             })
             const dat = {
+                id: address?.id || null,
                 name: first_name + last_name ? ` ${last_name}` : "",
                 phone_number: mobile,
                 same_address: 0,
@@ -156,17 +148,20 @@ export default function GetLoginCheckout() {
                 address: address?.address || "",
             }
             setUser(dat)
-            // reset(dat)
         } catch (error) {
-            // setGuest(true)
             console.log(error, "error")
         }
     }
 
     useEffect(() => {
         getMe()
-        getCartList()
     }, [])
+
+    useEffect(() => {
+        if (user) {
+            getCartList()
+        }
+    }, [user])
 
 
 
@@ -176,7 +171,11 @@ export default function GetLoginCheckout() {
             <CardTitle>Check Out</CardTitle>
             <Grid container spacing={2} >
                 <Grid item lg={6}>
-                    <BillingAddressForm formHook={formHook} user={user} setGuestAllow={setGuestAllow} />
+                    <BillingAddressForm
+                        formHook={formHook}
+                        user={user}
+                        setUser={setUser}
+                        setGuestAllow={setGuestAllow} />
                 </Grid>
                 <Grid item lg={6} sx={{
                     height: "100%",
@@ -184,7 +183,13 @@ export default function GetLoginCheckout() {
                     justifyContent: "space-between",
                     alignItems: 'flex-start'
                 }}>
-                    <OrderSummary loading={formHook.formState.isSubmitting} valid={formHook.formState.isValid} checkout={cartData} guest={guest} handleSubmit={handleSubmit} handleCheckOut={handleCheckOut} handleCheckOutGuest={handleCheckOutGuest} />
+                    <OrderSummary
+                        loading={formHook.formState.isSubmitting}
+                        valid={formHook.formState.isValid}
+                        checkout={cartList} guest={guest}
+                        handleSubmit={handleSubmit}
+                        handleCheckOut={handleCheckOut}
+                        handleCheckOutGuest={handleCheckOutGuest} />
                 </Grid>
             </Grid>
             {
@@ -217,7 +222,7 @@ export default function GetLoginCheckout() {
         </StyledContainer>
 
     )
-}
+})
 
 
 const CardTitle = styled(Typography)`
