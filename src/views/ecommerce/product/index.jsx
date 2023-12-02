@@ -11,6 +11,8 @@ import { addCartServices, cartViewServices, guestAddCartServices } from "../../.
 import { productViewService } from "../../../redux/api/public/productService"
 import ProductSlides from "./ProductSlides"
 import ProductDetailTab from "./ProductDetailsTab"
+import RelatedProduct from "./RelatedProduct"
+import { breadCrumbsCapitalize } from "../../../utils/helpers"
 
 
 const CartComponent = ({ count = 1, product = null, finishApi }) => {
@@ -24,7 +26,7 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
     const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
     if (token) {
       try {
-       await dispatch(addCartServices({
+        await dispatch(addCartServices({
           product_id: product?.id,
           quantity,
           type,
@@ -85,12 +87,25 @@ const Product = () => {
   const dispatch = useDispatch()
   const { productSlug } = useParams()
   const [productSingle, setProductSingle] = useState(null)
+  const [relatedProduct, setRelatedPodct] = useState([])
+  const breadcrumbs = [{
+    label: "Home",
+    link: '/',
+  }, {
+    label: productSingle?.categoryname || "Category",
+    link: "/category/" + productSingle?.categoryname || "all",
+
+  }, {
+    label: breadCrumbsCapitalize(productSlug)
+  }]
+
   async function fetchProduct(unique_label) {
     try {
       const response = await dispatch(productViewService({
         unique_label,
       })).unwrap()
-      setProductSingle(response.product)
+      setProductSingle(response?.product)
+      setRelatedPodct(response?.related_product)
     } catch (error) {
     }
   }
@@ -100,7 +115,7 @@ const Product = () => {
   return (
     <StyledContainer>
       <ProductWrapper>
-        <CustomBreadcrumbs />
+        <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
         <ProductContainer>
           <ProductSlider>
             <ProductSlides product={productSingle} />
@@ -112,6 +127,7 @@ const Product = () => {
           </ProductDetails>
         </ProductContainer>
         <ProductDetailTab />
+        <RelatedProduct relatedProduct={relatedProduct} />
       </ProductWrapper>
     </StyledContainer>
   )

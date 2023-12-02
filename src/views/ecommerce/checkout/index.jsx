@@ -36,7 +36,15 @@ export default memo(function GetLoginCheckout() {
     const [cartList, setCartList] = useState(null)
     const [user, setUser] = useState(null)
     const [guest, setGuest] = useState(null)
-
+    const breadcrumbs = [{
+        label: "Home",
+        link: '/',
+    }, {
+        label: "Cart",
+        link: "/cart"
+    }, {
+        label: "Checkout"
+    }]
 
     const cartId = localStorage.getItem('cart_id') || null
     const [guestAllow, setGuestAllow] = useState(null)
@@ -165,7 +173,7 @@ export default memo(function GetLoginCheckout() {
 
     return (
         <StyledContainer>
-            <CustomBreadcrumbs />
+            <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
             <CardTitle>Check Out</CardTitle>
             <Grid container spacing={2} >
                 <Grid item lg={6}>

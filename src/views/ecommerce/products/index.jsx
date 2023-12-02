@@ -13,7 +13,14 @@ const Products = () => {
     const dispatch = useDispatch()
     const { data: productData } = useSelector((state) => state.product.productListService)
     const productsList = productData?.data || []
+    const breadcrumbs = [{
+        label: "Home",
+        link: '/',
+    }, {
+        label: "Category",
+        link: "/category/" + "all",
 
+    }]
     function fetchProduct(params) {
         dispatch(productListService())
     }
@@ -67,9 +74,9 @@ const Products = () => {
     return (
         <StyledContainer>
             <ProductsWrapper>
-                <CustomBreadcrumbs />
+                <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
                 <ProductsContainer>
-                    <FilterComponent />
+                    <FilterComponent length={productsList?.length || 0} />
                     <ProdductList>
                         {productsList.map((product) => {
                             return <ProductCard product={product} key={product.id} addToCart={addToCart} />
@@ -86,7 +93,7 @@ export default Products
 
 
 
-function FilterComponent(props) {
+function FilterComponent({length}) {
     return (
         <Container>
             <FilterContainer>
@@ -108,7 +115,7 @@ function FilterComponent(props) {
             </SortContainer>
             <ResultText>
                 <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, color: "rgba(26,26,26,1)" }}>
-                    52
+                    {length}
                 </span>
                 <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: 400, color: "rgba(26,26,26,1)" }}>
                     {" "}

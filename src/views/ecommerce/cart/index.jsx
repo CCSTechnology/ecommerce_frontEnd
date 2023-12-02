@@ -12,8 +12,14 @@ const Cart = () => {
   const navigate = useNavigate()
   const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
   const [cartList, setCartList] = useState(cartData?.details || [])
-  // const cartList = cartData?.details || []
   const cart_id = localStorage.getItem("cart_id") || null
+  const breadcrumbs = [{
+    label: "Home",
+    link: '/',
+  }, {
+    label: "Cart",
+  }]
+
   const listCartApi = useCallback(async () => {
     try {
       const response = await dispatch(cartViewServices({
@@ -36,7 +42,7 @@ const Cart = () => {
   }, [cart_id])
   return (
     <Wrapper>
-      <CustomBreadcrumbs />
+      <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
       <CardTitle>My Cart</CardTitle>
       <ProductList>
         {cartList?.map((product, index) => {

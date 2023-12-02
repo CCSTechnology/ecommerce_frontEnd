@@ -1,21 +1,24 @@
 import { Box, styled } from "@mui/material";
 
-export default function HomeTitle({ featured }) {
-    return (
-      <HomeTitleWrapper>
-        <Title>{featured?.title}</Title>
-        <Content>
+export default function HomeTitle({ featured, link = true }) {
+  return (
+    <HomeTitleWrapper>
+      <Title>{featured?.title}</Title>
+      {
+        link && <Content>
           <ViewAll>View All</ViewAll>
           <Image loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cabddc-d124-4af6-8d00-44a0757bd526?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
         </Content>
-      </HomeTitleWrapper>
-    );
-  }
+      }
+
+    </HomeTitleWrapper>
+  );
+}
 
 
 
 
-  const HomeTitleWrapper = styled(Box)`
+const HomeTitleWrapper = styled(Box)`
   justify-content: space-between;
   display: flex;
   gap: 20px;
@@ -45,9 +48,9 @@ const Content = styled(Box)`
 
 
 
-const ViewAll = styled(Box)(({theme})=>({
+const ViewAll = styled(Box)(({ theme }) => ({
   // color: "var(--branding-success, #00b207)",
-  color : theme.palette.success.main,
+  color: theme.palette.success.main,
   font: "500 16px/24px Poppins, sans-serif",
   cursor: "pointer"
 }))

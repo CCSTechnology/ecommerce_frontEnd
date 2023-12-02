@@ -12,12 +12,11 @@ export default function Header() {
   const user = useSelector((state)=>state.publicAuth.publicGetMe.data)
   const navigate = useNavigate()
   const [cartData, setCartData] = useState(data)
-  const [userData, setUserData] = useState(user || null)
+  const [userData, setUserData] = useState(user)
   const cartAmount = cartData?.grand_total || 0
   const cartProductLength = cartData?.details.length || 0
   const dispatch = useDispatch()
   const cartId = localStorage.getItem("cart_id") || null
-  console.log(userData, "userData")
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -72,13 +71,13 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    if (data  !== undefined) {
+    if (data  !== null) {
       setCartData(data)
     }
   }, [data])
 
   useEffect(() => {
-    if (user  !== undefined) {
+    if (user  !== null) {
       setUserData(user)
     }
   }, [user])
