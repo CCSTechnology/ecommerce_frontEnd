@@ -73,8 +73,8 @@ export default memo(function GetLoginCheckout() {
             //Valid User
             if (user) {
                 const response = await dispatch(checkOutWithUser({
-                    billing_address_id: 1,
-                    shipping_address_id: 1,
+                    billing_address_id: user?.id,
+                    shipping_address_id: user?.id,
                     delivery_charges: 0,
                     cart_id: ""
                 })).unwrap()
