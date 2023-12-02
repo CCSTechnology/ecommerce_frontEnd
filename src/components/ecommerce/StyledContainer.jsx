@@ -12,4 +12,6 @@ const StyledContainer = ({children}) => {
 export default StyledContainer
 
 
-const MuiContainer = styled(Container)``
+const MuiContainer = styled(Container)`
+  overflow: hidden;
+`

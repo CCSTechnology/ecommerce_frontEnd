@@ -1,39 +1,3 @@
-// import { Container, Typography, styled } from '@mui/material'
-// import React from 'react'
-
-// const Topbar = ({ content = "Store Location: Lincoln- 344, Illinois, Chicago, USA" }) => {
-//     return (
-//         <TopbarContainer>
-//             <StyledContent component={'p'}  sx={{
-//                 textAlign: { xs: 'center', md: "start" }
-//             }}>{content}</StyledContent>
-//             <StyledContent component={'p'} sx={{
-//                 textAlign: { xs: 'center', md: "start" }
-//             }}>{content}</StyledContent>
-//         </TopbarContainer>
-//     )
-// }
-
-// export default Topbar
-
-// const TopbarContainer = styled('div')`
-//     min-height: 40px;
-//     display: flex;
-//     padding-inline: 20px;
-//     flex-wrap: wrap;
-//     justify-content: space-between;
-//     align-items: center;
-// `
-
-// const StyledContent = styled('p')`
-//     color: rgba(102, 102, 102, 1);
-//     font-family: Poppins;
-//     font-size: 12px;
-//     font-style: normal;
-//     font-weight: 400;
-//     line-height: 130%;
-// `
-
 import React from "react";
 import { styled } from "@mui/material";
 import { Box, Typography, Divider } from "@mui/material";

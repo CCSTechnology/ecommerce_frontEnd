@@ -30,11 +30,6 @@ const NavigationBar = () => {
         {
           menuList.map((menu) => (<MenuItem key={menu.label}>
             <Link to={menu.link}>{menu.label}</Link>
-            {/* <Logo
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/f3219d72-674e-483c-88d3-f5377c377bb5?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-                  alt="Logo"
-                  />
-             */}
           </MenuItem>))
         }
       </MenuContainer>
@@ -59,15 +54,6 @@ const NavbarWrapper = styled(Box)(({ theme }) => ({
 
 
 
-const Logo = styled("img")`
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 16px;
-  max-width: 100%;
-  margin: auto 0;
-`;
-
 const MenuContainer = styled(Box)`
   display: flex;
   gap: 20px;
@@ -90,12 +76,12 @@ const MenuItem = styled(Box)`
   cursor: pointer;
   align-items: center;
   font-family: Poppins, sans-serif;
-  p {
-    color: inherit;
+  a {
+    color: var(--gray-scale-white, #fff);
   }
   :hover {
-    p {
-      color: white;
+    a {
+      color: inherit;
     }
   }
 `;
@@ -105,7 +91,12 @@ const ContactContainer = styled(Box)`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: white;
+  color: var(--gray-scale-white, #fff);
+  :hover {
+    color: var(--gray-scale-white, gray);
+
+  }
+  cursor: pointer;
 `;
 
 const ContactIcon = styled(PhoneIcon)`
@@ -114,10 +105,10 @@ const ContactIcon = styled(PhoneIcon)`
   object-position: center;
   width: 28px;
   max-width: 100%;
-`;
+  
+  `;
 
 const ContactInfo = styled(Typography)`
-  color: var(--gray-scale-white, #fff);
   flex-grow: 1;
   white-space: nowrap;
   margin: auto 0;
@@ -125,6 +116,8 @@ const ContactInfo = styled(Typography)`
   font-size: 14px;
   line-height: 21px;
   font-family: Poppins, sans-serif;
+
+  
 
   @media (max-width: 991px) {
     white-space: initial;

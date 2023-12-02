@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import StyledContainer from '../../../components/ecommerce/StyledContainer';
 
 
 function CategoryThumb({ category }) {
@@ -33,26 +34,30 @@ const HomeCategory = () => {
     const category = HomeCategoryData?.category || null
     const categories = category?.category_list || []
     return (
-        <HomeCategoryWrapper>
-            <HomeTitle featured={category} />
-            <CategoryList
-                spaceBetween={30}
-                slidesPerView={3}
-                autoplay={{
-                    waitForTransition : 2000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter : true
-                }}
-                loop
-                modules={[Autoplay]}
-            >
-                {categories?.slice(0, 3).map((cat, index) => {
-                    return <SwiperSlide key={cat.id}>
-                        <CategoryThumb category={cat}  />
-                    </SwiperSlide>
-                })}
-            </CategoryList>
-        </HomeCategoryWrapper>
+        <StyledContainer>
+            <HomeCategoryWrapper>
+                <HomeTitle featured={category} />
+                <CategoryList
+                    spaceBetween={30}
+                    slidesPerView={3}
+                    autoplay={{
+                        waitForTransition: 2000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true
+                    }}
+                    loop
+                    modules={[Autoplay]}
+                >
+                    {categories?.map((cat) => {
+                        return <SwiperSlide key={cat.id}>
+                            <CategoryThumb category={cat} />
+                        </SwiperSlide>
+                    })}
+                    
+                </CategoryList>
+            </HomeCategoryWrapper>
+        </StyledContainer>
+
     )
 }
 

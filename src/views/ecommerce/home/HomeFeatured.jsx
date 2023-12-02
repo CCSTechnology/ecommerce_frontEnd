@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Container, styled } from "@mui/material";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../../../components/ecommerce/ProductCard";
@@ -74,11 +74,13 @@ export default function HomeFeatured() {
       }}
       loop
       modules={[Autoplay]}>
-      {productList.map((product) => {
-        return <SwiperSlide key={product.id}>
-          <ProductCard product={product} addToCart={addToCart} />
-        </SwiperSlide>
-      })}
+      <Container >
+        {productList.map((product) => {
+          return <SwiperSlide key={product.id}>
+            <ProductCard product={product} addToCart={addToCart} />
+          </SwiperSlide>
+        })}
+      </Container>
     </HomeFeaturedList>
   </FeaturedProductWrapper>
 }
@@ -103,6 +105,6 @@ const HomeFeaturedList = styled(Swiper)(({ }) => ({
   alignItems: "center",
   gap: "16px",
   padding: "30px 20px",
-  width: "100vw"
+  width: "100%"
 }))
 
