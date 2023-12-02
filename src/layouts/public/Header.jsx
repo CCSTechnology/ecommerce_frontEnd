@@ -5,18 +5,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../redux/api/public/cartServices";
 import { Logout, PersonAdd, } from "@mui/icons-material";
+import { publicGetMe } from "../../redux/api/public/authService";
 
 export default function Header() {
   const { data } = useSelector((state) => state.cart.cartViewServices)
   const user = useSelector((state)=>state.publicAuth.publicGetMe.data)
-  console.log(user, "user")
   const navigate = useNavigate()
   const [cartData, setCartData] = useState(data)
+  const [userData, setUserData] = useState(user || null)
   const cartAmount = cartData?.grand_total || 0
   const cartProductLength = cartData?.details.length || 0
   const dispatch = useDispatch()
   const cartId = localStorage.getItem("cart_id") || null
-
+  console.log(userData, "userData")
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -39,6 +40,15 @@ export default function Header() {
     }
   }
 
+  async function fetchUser(cart_id) {
+    try {
+      const response = await dispatch(publicGetMe()).unwrap()
+      setUserData(response)
+    } catch (error) {
+      setUserData(null)
+    }
+  }
+
   function handleLogout(e) {
     e.preventDefault()
     try {
@@ -58,10 +68,22 @@ export default function Header() {
   }, [cartId])
 
   useEffect(() => {
+    fetchUser()
+  }, [])
+
+  useEffect(() => {
     if (data  !== undefined) {
       setCartData(data)
     }
   }, [data])
+
+  useEffect(() => {
+    if (user  !== undefined) {
+      setUserData(user)
+    }
+  }, [user])
+
+  
 
   return (
     <NavbarWrapper to='/cart'>
@@ -81,7 +103,8 @@ export default function Header() {
           <CartTitle>Shopping cart:</CartTitle>
           <CartPrice>₹ {Number(cartAmount).toFixed(2)}</CartPrice>
         </CartInfo>
-        <ProfileContainer>
+        {
+          user && <ProfileContainer>
           <Tooltip title="Account" onClick={(e)=>e.preventDefault()}> 
             <IconButton
               onClick={handleClick}
@@ -91,7 +114,7 @@ export default function Header() {
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>{String(userData?.first_name[0]).toUpperCase()}</Avatar>
             </IconButton>
           </Tooltip>
           <Menu
@@ -148,6 +171,8 @@ export default function Header() {
             </MenuItem>
           </Menu>
         </ProfileContainer>
+        }
+        
       </CartContainer>
 
     </NavbarWrapper>

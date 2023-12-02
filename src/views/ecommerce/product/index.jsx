@@ -10,6 +10,7 @@ import { errorAlert } from "../../../helpers/globalFunctions"
 import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
 import { productViewService } from "../../../redux/api/public/productService"
 import ProductSlides from "./ProductSlides"
+import ProductDetailTab from "./ProductDetailsTab"
 
 
 const CartComponent = ({ count = 1, product = null, finishApi }) => {
@@ -23,7 +24,7 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
     const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
     if (token) {
       try {
-        const response = await dispatch(addCartServices({
+       await dispatch(addCartServices({
           product_id: product?.id,
           quantity,
           type,
@@ -110,7 +111,7 @@ const Product = () => {
             <CartComponent product={productSingle} finishApi={() => fetchProduct(productSlug)} />
           </ProductDetails>
         </ProductContainer>
-
+        <ProductDetailTab />
       </ProductWrapper>
     </StyledContainer>
   )

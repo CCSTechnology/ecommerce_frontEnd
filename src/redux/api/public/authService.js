@@ -13,7 +13,7 @@ export const publicAuthLogin = createAsyncThunk("authLogin", async (params, thun
 	} catch (error) {
 		return thunkApi.rejectWithValue(error);
 	}
-});
+}, );
 
 export const publicAuthRegister = createAsyncThunk("publicAuthRegister", async (data, thunkApi) => {
 	try {
