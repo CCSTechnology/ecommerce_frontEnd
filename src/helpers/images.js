@@ -31,3 +31,7 @@ export { default as AddIcon } from "../assets/icons/addmisc.png";
 
 export { default as Pagejob } from "../assets/icons/Pagejob.svg";
 export { default as Building } from "../assets/images/download.jpg";
+
+export { default as CartBag } from "../assets/images/Bag.png";
+
+

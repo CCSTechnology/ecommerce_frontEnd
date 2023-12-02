@@ -37,6 +37,7 @@ export const categorySlice = createSlice({
             .addCase(cases.api.rejected, (state, { payload }) => {
               state[cases.name].loading = false;
               state[cases.name].error = payload;
+              state[cases.name].data = null;
             });
         })
     },

@@ -36,7 +36,7 @@ export const homeSlice = createSlice({
             })
             .addCase(cases.api.rejected, (state, { payload }) => {
               state[cases.name].loading = false;
-              console.log(payload, "as")
+              state[cases.name].data = null;
               state[cases.name].error = payload;
             });
         })

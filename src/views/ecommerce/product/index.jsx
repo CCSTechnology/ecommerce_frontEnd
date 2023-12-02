@@ -1,16 +1,15 @@
-import { Box, Button, Typography, styled } from "@mui/material"
+import { Box, Button, styled } from "@mui/material"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
+import QuantityComponent from "../../../components/QuantityComponent"
 import CustomBreadcrumbs from "../../../components/ecommerce/Breadcrumps"
 import StyledContainer from "../../../components/ecommerce/StyledContainer"
-import { productViewService } from "../../../redux/api/public/productService"
-import { useDispatch, useSelector } from "react-redux"
-import { useCallback, useEffect, useState } from "react"
-import ProductSlides from "./ProductSlides"
-import { useNavigate, useParams } from "react-router-dom"
-import ProductView from "../../admin/products/productView"
-import QuantityComponent from "../../../components/QuantityComponent"
-import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
-import { toast } from "react-toastify"
 import { errorAlert } from "../../../helpers/globalFunctions"
+import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
+import { productViewService } from "../../../redux/api/public/productService"
+import ProductSlides from "./ProductSlides"
 
 
 const CartComponent = ({ count = 1, product = null, finishApi }) => {
@@ -31,8 +30,6 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
         })).unwrap()
         finishApi()
 
-        // setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
-        console.log(response, "addCartServices")
         toast.success(message)
       } catch (error) {
         console.log(error, "error")

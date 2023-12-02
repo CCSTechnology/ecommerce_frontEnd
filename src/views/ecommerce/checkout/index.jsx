@@ -26,7 +26,7 @@ const schema = yup.object().shape({
     street_name: yup.string().required("Addres is required"),
     line1: yup.string().required("Address is required"),
     zipcode: yup.string().required("Pincode is required"),
-    address: yup.string().required(),
+    address: yup.string(),
 });
 
 export default memo(function GetLoginCheckout() {
@@ -158,9 +158,7 @@ export default memo(function GetLoginCheckout() {
     }, [])
 
     useEffect(() => {
-        if (user) {
-            getCartList()
-        }
+        getCartList()
     }, [user])
 
 

@@ -1,10 +1,13 @@
 import { Box, styled } from "@mui/material";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../../../components/ecommerce/ProductCard";
 import HomeTitle from "../../../components/ecommerce/HomeTitle";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices";
+import { toast } from "react-toastify";
+import { errorAlert } from "../../../helpers/globalFunctions";
 
 
 
@@ -12,6 +15,54 @@ export default function HomeFeatured() {
   const { data: HomeFeaturedData } = useSelector((state) => state.home.homeDataService)
   const products = HomeFeaturedData?.products || null
   const productList = products?.product_details || []
+  const dispatch = useDispatch()
+
+  const addToCart = useCallback(async (type = "add", product, quantity = 1) => {
+    const cart_id = localStorage.getItem("cart_id") || null
+    const token = localStorage.getItem("public_token") || null
+
+    const message = "Product added successfully"
+    if (token) {
+      try {
+        await dispatch(addCartServices({
+          product_id: product?.id,
+          quantity,
+          type,
+        })).unwrap()
+
+        toast.success(message)
+      } catch (error) {
+        console.log(error, "error")
+        errorAlert(error?.error)
+      } finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
+      }
+    } else {
+      try {
+        const response = await dispatch(guestAddCartServices({
+          cart_id,
+          product_id: product?.id,
+          quantity,
+          type
+        })).unwrap()
+        console.log(response, "res")
+        if (response?.cartdetails) {
+          localStorage.setItem('cart_id', response?.cartdetails.cart_id)
+        }
+        toast.success(message)
+      } catch (error) {
+        errorAlert(error?.error)
+      }
+      finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
+      }
+    }
+  }, [])
+
 
   return <FeaturedProductWrapper>
     <HomeTitle featured={products} />
@@ -27,7 +78,7 @@ export default function HomeFeatured() {
       modules={[Autoplay]}>
       {productList.map((product) => {
         return <SwiperSlide key={product.id}>
-          <ProductCard product={product} />
+          <ProductCard product={product} addToCart={addToCart} />
         </SwiperSlide>
       })}
     </HomeFeaturedList>
@@ -54,6 +105,6 @@ const HomeFeaturedList = styled(Swiper)(({ }) => ({
   alignItems: "center",
   gap: "16px",
   padding: "30px 20px",
-  width : "100vw"
+  width: "100vw"
 }))
 

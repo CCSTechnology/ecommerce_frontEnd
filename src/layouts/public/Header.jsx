@@ -20,7 +20,7 @@ function Navbar() {
       })).unwrap()
       setCartData(response)
     } catch (error) {
-      console.log(error,"fetchCart")
+      setCartData(null)
     }
   }
 
