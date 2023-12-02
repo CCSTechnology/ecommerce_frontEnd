@@ -90,5 +90,6 @@ const RelatedProductWrapper = styled(Swiper)(({ }) => ({
     alignItems: "center",
     gap: "16px",
     padding: "30px 20px",
-    width: "100%"
+    width: "100%",
+    marginBottom: "20px"
 }))

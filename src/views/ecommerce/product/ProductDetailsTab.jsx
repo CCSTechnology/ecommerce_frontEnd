@@ -46,7 +46,7 @@ export default function ProductDetailTab() {
   };
 
   return (
-    <Box sx={{ width: '100%'}}>
+    <Box sx={{ width: '100%', marginBottom: "20px"}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }} display={'flex'} justifyContent={'center'}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered sx={{
             width : "100%"

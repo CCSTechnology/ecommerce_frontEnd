@@ -142,6 +142,7 @@ display: flex;
 padding: 20px;
 height: 600px;
 gap: 10px;
+margin-bottom: 20px;
  `
 
 const ProductWrapper = styled(Box)`

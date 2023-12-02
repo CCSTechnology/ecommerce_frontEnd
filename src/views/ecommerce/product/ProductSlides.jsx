@@ -59,6 +59,7 @@ export default function ProductSlides({product}) {
 
 
   const ProductSlidesWrapper = styled(Box)`
+  margin-bottom: 20px;
     .main-image  {
       img {
         height: 450px;
