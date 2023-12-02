@@ -58,7 +58,7 @@ export const guestAddAddress = createAsyncThunk('guestAddAddress', async(params,
 export const PublicAuthlogout = createAsyncThunk("PublicAuthlogout", async (params, thunkApi) => {
 	const { url } = params;
 	try {
-		const response = await PUBLICSERVER.post(url);
+		const response = await PUBLICSERVER.post("/logout");
 		return response.data;
 	} catch (error) {
 		return thunkApi.rejectWithValue(error);

@@ -12,7 +12,7 @@ const initialState = {
 categoryCases.forEach((cases)=>{
     initialState[cases.name] ={
         loading : false,
-        data : null,
+        data : undefined,
         error : null,
     }
 })
@@ -32,12 +32,12 @@ export const categorySlice = createSlice({
             .addCase(cases.api.pending, (state) => {
               state[cases.name].loading = true;
               state[cases.name].error = null;
-              state[cases.name].data = null;
+              state[cases.name].data = undefined;
             })
             .addCase(cases.api.rejected, (state, { payload }) => {
               state[cases.name].loading = false;
               state[cases.name].error = payload;
-              state[cases.name].data = null;
+              state[cases.name].data = undefined;
             });
         })
     },

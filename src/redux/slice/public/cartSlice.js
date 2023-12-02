@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addCartServices, cartViewServices, checkOutWithGuest, checkOutWithUser, getAddressServices, guestAddCartServices, removeCartServices } from "../../api/public/cartServices";
+import { addCartServices,
+     cartViewServices, checkOutWithGuest, checkOutWithUser, getAddressServices, guestAddCartServices, removeCartServices } from "../../api/public/cartServices";
+import { store } from "../../store";
 
 const cartCases = [{
     api: addCartServices,
@@ -31,7 +33,7 @@ const initialState = {
 cartCases.forEach((cases) => {
     initialState[cases.name] = {
         loading: false,
-        data: null,
+        data: undefined,
         error: null,
     }
 })
@@ -58,7 +60,7 @@ export const cartSlice = createSlice({
     extraReducers: (builder) => {
         cartCases.forEach((cases) => {
             builder
-                .addCase(cases.api.fulfilled, (state, { payload }) => {
+                .addCase(cases.api.fulfilled, (state, { payload }, others) => {
                     state[cases.name].loading = false;
                     state[cases.name].data = payload;
                     state[cases.name].error = null;

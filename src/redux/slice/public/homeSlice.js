@@ -12,7 +12,7 @@ const initialState = {
 homeCases.forEach((cases)=>{
     initialState[cases.name] ={
         loading : false,
-        data : null,
+        data : undefined,
         error : null,
     }
 })
@@ -32,11 +32,11 @@ export const homeSlice = createSlice({
             .addCase(cases.api.pending, (state) => {
               state[cases.name].loading = true;
               state[cases.name].error = null;
-              state[cases.name].data = null;
+              state[cases.name].data = undefined;
             })
             .addCase(cases.api.rejected, (state, { payload }) => {
               state[cases.name].loading = false;
-              state[cases.name].data = null;
+              state[cases.name].data = undefined;
               state[cases.name].error = payload;
             });
         })

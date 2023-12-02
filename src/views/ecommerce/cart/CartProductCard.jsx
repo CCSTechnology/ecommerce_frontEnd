@@ -16,6 +16,7 @@ export default function CartProductCard({product, quantityShow = true, finishApi
       await dispatch(removeCartServices(id)).unwrap()
       await finishApi()
     } catch (error) {
+      finishApi()
       errorAlert(error?.error)
     }
   }

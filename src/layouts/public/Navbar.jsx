@@ -81,7 +81,7 @@ const MenuItem = styled(Box)`
   }
   :hover {
     a {
-      color: inherit;
+      color: #00B207;
     }
   }
 `;
@@ -93,7 +93,7 @@ const ContactContainer = styled(Box)`
   gap: 8px;
   color: var(--gray-scale-white, #fff);
   :hover {
-    color: var(--gray-scale-white, gray);
+    color: var(--gray-scale-white, #00B207);
 
   }
   cursor: pointer;

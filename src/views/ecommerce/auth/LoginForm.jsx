@@ -63,6 +63,7 @@ function LoginForm() {
     try {
       const response = await dispatch(publicAuthLogin(parameters)).unwrap();
       localStorage.setItem("public_token", response?.token);
+      localStorage.removeItem('cart_id')
       if (cardId) {
         localStorage.removeItem("cart_id");
       }

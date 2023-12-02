@@ -21,6 +21,7 @@ const Cart = () => {
       })).unwrap()
       setCartList(response?.details)
     } catch (error) {
+      setCartList([])
     }
   }, [])
 
