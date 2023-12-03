@@ -42,7 +42,6 @@ const UserProfile = ({ title }) => {
             flexGrow: 1,
             bgcolor: "background.paper",
             display: "flex",
-            height: 224,
             marginTop: 4,
           }}
         >
@@ -69,10 +68,6 @@ const UserProfile = ({ title }) => {
             </Box>
             <TabPanel value="1">
               <MyProfile />
-            </TabPanel>
-            <TabPanel value="2"></TabPanel>
-            <TabPanel value="3">
-              <ChangePassword />
             </TabPanel>
             <TabPanel value="4">
               <MyAddress />
