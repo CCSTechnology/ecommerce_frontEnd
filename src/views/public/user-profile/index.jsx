@@ -42,7 +42,6 @@ const UserProfile = ({ title }) => {
             flexGrow: 1,
             bgcolor: "background.paper",
             display: "flex",
-            height: 224,
             marginTop: 4,
           }}
         >
@@ -58,21 +57,17 @@ const UserProfile = ({ title }) => {
                   value="1"
                   sx={{ color: "black", textAlign: "start" }}
                 />
-                <Tab label="My Orders" value="2" sx={{ color: "black" }} />
+                {/* <Tab label="My Orders" value="2" sx={{ color: "black" }} />
                 <Tab
                   label="Change Password"
                   value="3"
                   sx={{ color: "black" }}
-                />
+                /> */}
                 <Tab label="My Address" value="4" sx={{ color: "black" }} />
               </TabList>
             </Box>
             <TabPanel value="1">
               <MyProfile />
-            </TabPanel>
-            <TabPanel value="2"></TabPanel>
-            <TabPanel value="3">
-              <ChangePassword />
             </TabPanel>
             <TabPanel value="4">
               <MyAddress />
