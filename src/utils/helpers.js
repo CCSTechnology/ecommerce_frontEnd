@@ -8,8 +8,8 @@ export const restrictHeader = ['login', 'sign-up']
 
 export function restrictHeaderAndFooter() {
     const url = String(window.location.href).split('/').slice(3)
-    const path = restrictHeader.filter((restrict) => url.includes(restrict))
-    return path.length === 0 ? true : false
+    const path = url.filter((restrict) => restrictHeader.includes(restrict))
+    return path.length === 0 ? false : true
 }
 
 export function capitalize(s) {

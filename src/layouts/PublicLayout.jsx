@@ -10,17 +10,16 @@ import PublicFooter from './public/PublicFooter'
 import { restrictHeaderAndFooter } from '../utils/helpers'
 
 const PublicLayout = () => {
-  const {pathname} = useLocation()
-  const [show, setShow] = useState(false)
-
-  useEffect(()=>{
-      setShow(restrictHeaderAndFooter(pathname))
-  },[pathname])
+  const { pathname } = useLocation()
+  const [show, setShow] = useState(true)
+  useEffect(() => {
+    setShow(restrictHeaderAndFooter(pathname))
+  }, [pathname])
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {
-        !show ? <Box sx={{
+        show ? <Box sx={{
           height: "100vh",
           width: '100vw', background: "#fff"
         }}>
@@ -30,7 +29,8 @@ const PublicLayout = () => {
         </Box> : <Box sx={{
           height: "100vh",
           width: '100vw', background: "#fff"
-        }}>  <PublicHeader />
+        }}>
+          <PublicHeader />
           <PageWrapper>
             <Outlet />
           </PageWrapper>

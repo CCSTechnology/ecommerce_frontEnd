@@ -7,6 +7,7 @@ import LoginForm from "./LoginForm";
 import StyledContainer from "../../../components/ecommerce/StyledContainer";
 
 const Login = () => {
+  
   return (
     <StyledContainer>
       <Grid container spacing={2} alignItems={"center"}>

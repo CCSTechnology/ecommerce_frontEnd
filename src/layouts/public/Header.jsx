@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../redux/api/public/cartServices";
 import { Logout, PersonAdd, } from "@mui/icons-material";
 import { publicGetMe } from "../../redux/api/public/authService";
+import Asynchronous from "./AutoComplete";
+
 
 export default function Header() {
   const { data } = useSelector((state) => state.cart.cartViewServices)
@@ -90,8 +92,9 @@ export default function Header() {
         <Logo loading="lazy" src={logo} />
       </LogoContainer>
       <SearchContainer>
-        <SearchIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a878d6b6-f3e2-4273-8d96-7792848ff1af?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
-        <SearchText>Search</SearchText>
+        <Asynchronous />
+        {/* <SearchIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a878d6b6-f3e2-4273-8d96-7792848ff1af?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+        <SearchText>Searchhttp://localhost:5173/cart</SearchText> */}
       </SearchContainer>
       <CartContainer>
         <Badge badgeContent={cartProductLength} color="primary">
@@ -151,7 +154,11 @@ export default function Header() {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={(e)=>{
+              e.preventDefault()
+              navigate("/user-profile")
+              handleClose(e)
+            }}>
               <Avatar />&nbsp; Profile
             </MenuItem>
             <Divider />
