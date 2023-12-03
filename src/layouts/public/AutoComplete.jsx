@@ -85,7 +85,7 @@ export default function Asynchronous() {
     return (
         <Autocomplete
             id="asynchronous-demo"
-            sx={{ width: 300 }}
+            fullWidth
             open={open}
             onOpen={() => {
                 setOpen(true);

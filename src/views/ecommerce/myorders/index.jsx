@@ -1,10 +1,10 @@
-import { Box, Grid, Paper, Typography, styled } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Grid, Paper, Typography, styled } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import StyledContainer from '../../../components/ecommerce/StyledContainer'
-import Collapse from '@mui/material/Collapse';
 import { useDispatch, useSelector } from 'react-redux';
 import { MyOrdersApi } from '../../../redux/api/public/authService';
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import dayjs from 'dayjs';
 
 export default function MyOrders() {
   const dispatch = useDispatch()
@@ -33,34 +33,73 @@ export default function MyOrders() {
       <MyOrdersWrapper>
         <Title variant='h4'>My Orders</Title>
         <Box sx={{
-          width : "100%"
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          margin: "auto",
+          maxWidth: "70%"
         }}>
           {
             orderList?.map((order, index) => {
-              return index === 0 && <Paper key={index}>
-                <OrderId>{order?.order_no}</OrderId>
-                <Box>
+              return <Accordion key={index} elevation={4} defaultExpanded>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Box sx={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "center "
+                  }}>
+                    <OrderId>{order?.order_no}</OrderId>
+                    <span>{dayjs(order?.date).format("DD MMM YYYY")}</span>
+                    <span>{order.details?.length} Products</span>
+                  </Box>
+                </AccordionSummary>
+                <Divider />
+                <AccordionDetails>
                   {
                     order?.details?.map((detail, detailIndex) => {
-                      return <Grid container >
+                      return <Grid container justifyContent={'space-between'} key={detailIndex} >
                         <Grid item md={4} lg={4} sx={{
-                          padding : "10px",
-                          display : 'flex',
-                          alignItems :"center"
+                          padding: "10px",
+                          display: 'flex',
+                          alignItems: "center"
                         }}>
-                          Product Name : {detail.product_name}
+                          {detail.product_name}
                         </Grid>
-                        <Grid item md={4} lg={4}>
-                          Quantity : {detail.quantity}
+                        <Grid item md={4} lg={4} textAlign={'center'}>
+                          X{detail.quantity}
                         </Grid>
-                        <Grid item md={4} lg={4}>
-                          Amount : {detail.total_amount}
+                        <Grid item md={4} lg={4} textAlign={'center'}>
+                          ₹ {detail.total_amount}
                         </Grid>
                       </Grid>
                     })
                   }
-                </Box>
-              </Paper>
+                  <Divider />
+                  <Grid container>
+                    <Grid item md={4} lg={4} sx={{
+                      padding: "10px",
+                      display: 'flex',
+                      alignItems: "center"
+                    }}>Tax:</Grid>
+                    <Grid item md={4} lg={4}></Grid>
+                    <Grid item md={4} lg={4} textAlign={'center'} >₹{order?.total_tax}</Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item md={4} lg={4} sx={{
+                      padding: "10px",
+                      display: 'flex',
+                      alignItems: "center"
+                    }}>Total:</Grid>
+                    <Grid item md={4} lg={4}></Grid>
+                    <Grid item md={4} lg={4} textAlign={'center'} >₹{order?.grand_total}</Grid>
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
             })
           }
 
@@ -84,11 +123,10 @@ justify-content: center;
 const Title = styled(Typography)`
   text-align: center;
   font-weight: 500;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
 `
 
 const OrderId = styled(Typography)`
    text-align: center;
   font-weight: 500;
-  margin-bottom: 16px;
 `
