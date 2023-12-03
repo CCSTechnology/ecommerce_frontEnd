@@ -29,4 +29,31 @@ const categoryForm = yup.object().shape({
   //   .matches(/^[0-9]{0,9}$/, "Invalid Format"),
 });
 
-export { productForm, categoryForm };
+const profileForm = yup.object().shape({
+  first_name: yup
+    .string()
+    .required("First Name is required")
+    .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+  last_name: yup
+    .string()
+    .required("Last Name is required")
+    .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+  mobile: yup
+    .string()
+    .required("Mobile Number is required")
+    .matches(/^[0-9]{10}$/, "Invalid mobile number"),
+});
+
+const passwordForm = yup.object().shape({
+  password: yup.string().min(8, "Password is required").max(32),
+  new_password: yup.string().min(8, "New Password is required").max(32),
+  confirm_password: yup.string().min(8, "Comfirm Password is required").max(32),
+});
+
+const addressForm = yup.object().shape({
+  // password: yup.string().min(8, "Password is required").max(32),
+  // new_password: yup.string().min(8, "New Password is required").max(32),
+  // confirm_password: yup.string().min(8, "Comfirm Password is required").max(32),
+});
+
+export { productForm, categoryForm, profileForm, passwordForm, addressForm };

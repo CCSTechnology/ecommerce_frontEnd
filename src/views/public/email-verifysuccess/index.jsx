@@ -6,6 +6,8 @@ import EmailForm from "../../../components/reusableFormFields/EmailForm";
 import Img1 from "../../../assets/images/email.png";
 
 const Email = (props) => {
+  let { message } = useParams();
+  console.log(message);
   return (
     <Grid container spacing={2} alignItems={"center"}>
       <Grid
