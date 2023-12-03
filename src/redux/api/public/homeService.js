@@ -11,3 +11,15 @@ export const homeDataService = createAsyncThunk("homeDataService", async(params,
     return thunkApi.rejectWithValue(error);
   }  
 })
+
+
+export const headerSearch = createAsyncThunk("headerSearch", async(params, thunkApi)=>{
+  try {
+    const response = await PUBLICSERVER.get("/productsearch", {
+        params
+    })
+    return response.data
+  } catch (error) {
+    return thunkApi.rejectWithValue(error);
+  }  
+})

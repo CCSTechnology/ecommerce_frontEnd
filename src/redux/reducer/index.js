@@ -13,6 +13,7 @@ import categoryReducer from "../../redux/slice/public/categorySlice";
 import productReducer from "../../redux/slice/public/productSlice";
 import cartReducer from "../../redux/slice/public/cartSlice";
 import publicAuthReducer from "../../redux/slice/public/authSlice";
+import myProfileReducer from "../../redux/slice/public/profileSlice";
 
 export const rootReducer = combineReducers({
   adminAuth: adminAuthReducer,
@@ -26,4 +27,5 @@ export const rootReducer = combineReducers({
   product: productReducer,
   cart: cartReducer,
   publicAuth: publicAuthReducer,
+  myProfile: myProfileReducer,
 });

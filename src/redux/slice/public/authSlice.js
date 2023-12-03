@@ -5,6 +5,7 @@ import {
     publicAddAddress,
     publicAuthRegister,
     publicAuthLogin,
+    publicGetMe
 } from "../../api/public/authService";
 
 const authCases = [{
@@ -19,6 +20,10 @@ const authCases = [{
 }, {
     api: publicAuthRegister,
     name: "publicAuthRegister",
+},
+{
+    api: publicGetMe,
+    name: "publicGetMe",
 },]
 
 const initialState = {
@@ -28,13 +33,13 @@ const initialState = {
 authCases.forEach((cases) => {
     initialState[cases.name] = {
         loading: false,
-        data: null,
+        data: undefined,
         error: null,
     };
 });
 
 export const authSlice = createSlice({
-    name: "auth",
+    name: "publicAuth",
     initialState,
     extraReducers: (builder) => {
         authCases.forEach((cases) => {
@@ -52,11 +57,11 @@ export const authSlice = createSlice({
                 .addCase(cases.api.rejected, (state, { payload }) => {
                     state[cases.name].loading = false;
                     state[cases.name].error = payload;
+                    state[cases.name].data = null;
                 });
         });
     },
 });
 
-export const { addauth } = authSlice.actions;
 
 export default authSlice.reducer;

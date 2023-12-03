@@ -3,38 +3,79 @@ import { ImagePath } from "../../../utils/helpers";
 import { Box } from "@mui/material";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { CartBag } from "../../../helpers/images";
 
-export default function ProductCard({product}) {
+export default function ProductCard({ product, addToCart }) {
   return (
     <Card to={"/product/" + product.unique_label}>
       <ImageContainer>
         <LazyImage loading="lazy"
-      srcSet={ImagePath + product.file_name} />
+          srcSet={ImagePath + product.file_name} />
         <LazyImage2
           loading="lazy"
           src={ImagePath + product.file_name}
-        //   src="https://cdn.builder.io/api/v1/image/assets/TEMP/7d3b2298-eb66-4ccb-bc00-ae09e1990ca3?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
         />
       </ImageContainer>
-      <Title>{product.product_name}</Title>
-      <Price>₹ {Number(product.cost).toFixed(2)}</Price>
-      <LazyImage3
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/22d01039-76ca-4fc5-9922-6b85c686924f?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-      />
+      <PriceFooter>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: "column"
+        }}>
+          <Title>{product.product_name}</Title>
+          <Price>₹ {Number(product.cost).toFixed(2)}</Price>
+          <LazyImage3
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/22d01039-76ca-4fc5-9922-6b85c686924f?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
+        </Box>
+        <CartImgWrapper onClick={(e) => {
+          e.preventDefault()
+          addToCart('add', product, 1)
+        }}>
+          <img loading="lazy" srcSet={CartBag} />
+        </CartImgWrapper>
+      </PriceFooter>
     </Card>
   );
 }
 
-const Card = styled(Link)(({theme})=>({
+const Card = styled(Link)(({ theme }) => ({
   borderRadius: "8px",
-  border: `1px solid var(--branding-success-dark, ${theme.palette.primary.main[400]})`,
   // boxShadow: theme.shadow[0],
   backgroundColor: "var(--gray-scale-white, #fff)",
   display: "flex",
   width: "312px",
-  padding:" 0 5px",
+  padding: " 0 5px",
   flexDirection: "column",
+
+  border: `1px solid rgba(242, 242, 242, 1)`,
+  ":hover": {
+    border: `1px solid ${theme.palette.primary.main}`,
+  },
+}))
+
+const PriceFooter = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+}))
+
+
+const CartImgWrapper = styled(Link)(({ theme }) => ({
+  background: "rgba(242, 242, 242, 1)",
+  borderRadius: "50%",
+  height: "40px",
+  width: "40px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: `1px solid rgba(242, 242, 242, 1)`,
+  ":hover": {
+    border: `1px solid ${theme.palette.primary.main}`,
+  },
+  "img": {
+    objectFit: "contain",
+  }
 }))
 
 const ImageContainer = styled(Box)`
@@ -84,8 +125,8 @@ const Title = styled(Box)`
 
 const Price = styled(Box)`
   color: var(--gray-scale-gray-900, #1a1a1a);
-  align-self: center;
   white-space: nowrap;
+  text-align: start;
   font: 500 16px/24px Poppins, sans-serif;
 
   @media (max-width: 991px) {
@@ -102,7 +143,7 @@ const LazyImage3 = styled("img")`
   overflow: hidden;
   align-self: start;
   max-width: 100%;
-  margin: 6px 0 15px 16px;
+  margin: 6px 0 15px 0px;
 
   @media (max-width: 991px) {
     margin-left: 10px;

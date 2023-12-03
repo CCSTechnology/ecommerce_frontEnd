@@ -1,25 +1,90 @@
-import { Box, styled } from "@mui/material";
-import React, { useEffect } from "react";
+import { Avatar, Badge, Box, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, styled } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { logo } from "../../helpers/images";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../redux/api/public/cartServices";
+import { Logout, PersonAdd, } from "@mui/icons-material";
+import { publicGetMe } from "../../redux/api/public/authService";
+import Asynchronous from "./AutoComplete";
 
-function Navbar() {
-  const {data : carTData} = useSelector((state) => state.cart.cartViewServices)
-  const cartAmount = carTData?.grand_total || 0
+
+export default function Header() {
+  const { data } = useSelector((state) => state.cart.cartViewServices)
+  const user = useSelector((state)=>state.publicAuth.publicGetMe.data)
+  const navigate = useNavigate()
+  const [cartData, setCartData] = useState(data)
+  const [userData, setUserData] = useState(user)
+  const cartAmount = cartData?.grand_total || 0
+  const cartProductLength = cartData?.details.length || 0
   const dispatch = useDispatch()
   const cartId = localStorage.getItem("cart_id") || null
-  
-  function fetchCart(cart_id) {
-    dispatch(cartViewServices({
-      cart_id
-    }))
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    event.preventDefault()
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
+  async function fetchCart(cart_id) {
+    try {
+      const response = await dispatch(cartViewServices({
+        cart_id
+      })).unwrap()
+      setCartData(response)
+    } catch (error) {
+      setCartData(null)
+    }
+  }
+
+  async function fetchUser(cart_id) {
+    try {
+      const response = await dispatch(publicGetMe()).unwrap()
+      setUserData(response)
+    } catch (error) {
+      setUserData(null)
+    }
+  }
+
+  function handleLogout(e) {
+    e.preventDefault()
+    try {
+      localStorage.removeItem("public_token")
+      navigate('/login')
+      handleClose()
+      fetchCart()
+    } catch (error) {
+      fetchCart()
+      console.log(error, "ee")
+    }
+
   }
 
   useEffect(() => {
     fetchCart(cartId)
   }, [cartId])
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+  useEffect(() => {
+    if (data  !== null) {
+      setCartData(data)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (user  !== null) {
+      setUserData(user)
+    }
+  }, [user])
+
+  
 
   return (
     <NavbarWrapper to='/cart'>
@@ -27,17 +92,95 @@ function Navbar() {
         <Logo loading="lazy" src={logo} />
       </LogoContainer>
       <SearchContainer>
-        <SearchIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a878d6b6-f3e2-4273-8d96-7792848ff1af?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
-        <SearchText>Search</SearchText>
+        <Asynchronous />
+        {/* <SearchIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a878d6b6-f3e2-4273-8d96-7792848ff1af?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+        <SearchText>Searchhttp://localhost:5173/cart</SearchText> */}
       </SearchContainer>
       <CartContainer>
-        <CartIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3dacf0af-d9ab-4feb-9173-044d05adfe1e?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+        <Badge badgeContent={cartProductLength} color="primary">
+          <CartIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3dacf0af-d9ab-4feb-9173-044d05adfe1e?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+        </Badge>
         {/* <Divider /> */}
         <CartInfo>
           <CartTitle>Shopping cart:</CartTitle>
           <CartPrice>₹ {Number(cartAmount).toFixed(2)}</CartPrice>
         </CartInfo>
+        {
+          user && <ProfileContainer>
+          <Tooltip title="Account" onClick={(e)=>e.preventDefault()}> 
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? 'account-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+            >
+              <Avatar sx={{ width: 32, height: 32 }}>{String(userData?.first_name[0]).toUpperCase()}</Avatar>
+            </IconButton>
+          </Tooltip>
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            slotProps={{
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            <MenuItem onClick={(e)=>{
+              e.preventDefault()
+              navigate("/user-profile")
+              handleClose(e)
+            }}>
+              <Avatar />&nbsp; Profile
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <PersonAdd fontSize="small" />
+              </ListItemIcon>
+              My orders
+            </MenuItem>
+
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </Menu>
+        </ProfileContainer>
+        }
+        
       </CartContainer>
+
     </NavbarWrapper>
   );
 }
@@ -112,6 +255,11 @@ const CartContainer = styled(Box)`
   }
 `;
 
+
+const ProfileContainer = styled(Box)`
+
+`
+
 const CartIcon = styled('img')`
   aspect-ratio: 1;
   object-fit: contain;
@@ -157,50 +305,3 @@ const CartPrice = styled('p')`
   }
 `;
 
-export default Navbar;
-
-
-
-// import { Badge, Button, Container, styled } from '@mui/material'
-// import React from 'react'
-// import MailIcon from '@mui/icons-material/Mail';
-
-// const Header = () => {
-//   return (
-//       <HeaderWraper>
-//         <Logo>Logo</Logo>
-//         <SearchBar >
-//           <input></input>
-//           <SearchButton variant='contained'>Search</SearchButton>
-//         </SearchBar>
-//         <Profile>
-//           <Badge badgeContent={4} color="primary">
-//             <MailIcon color="action" />
-//           </Badge>
-//         </Profile>
-//       </HeaderWraper>
-//   )
-// }
-
-// export default Header
-
-// const HeaderWraper = styled('div')`
-// display: flex;
-// align-items: center;
-// justify-content: space-between;
-// height: 40px;
-// padding-inline: 20px;
-// `
-
-// const Logo = styled('p')``
-// const SearchBar = styled('div')`
-// display: flex;
-// `
-
-// const SearchButton = styled(Button)`
-// display: flex;
-// align-items: center;
-// color: white;
-// `
-
-// const Profile = styled('div')``

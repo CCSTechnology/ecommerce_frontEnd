@@ -10,7 +10,7 @@ const timeout = SECONDS * MILISECONDS;
 const TOKEN_PAYLOAD_KEY = "authorization";
 
 const PUBLICSERVER = axios.create({
-  baseURL : "http://staggingapi.truevine.in/api",
+  baseURL: "http://staggingapi.truevine.in/api",
   // baseURL,
   timeout,
 });
@@ -29,20 +29,23 @@ PUBLICSERVER.interceptors.response.use(
   },
   (error) => {
     if (error?.response?.status === 403) {
-      toast.error(
-        "Authentication Fail",
-        "Authentication Fail you are need to verify your login"
+      toast.info(
+        "Please login to continue",
       );
-      const path = String(window.location.href).split('/').slice(4).join("/")
+      const path = String(window.location.href).split('/').slice(3).join("/")
       const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login"
       const url = new URL(domain)
       url.searchParams.set('callBackUrl', `/${path}`)
-      setInterval(()=>{
+      setInterval(() => {
         window.location.href = url
-      },[1000])
+      }, [2000])
       return Promise.reject(error.response.data);
-    } else if (error.response) {
+    } else if (error?.response) {
       return Promise.reject(error.response.data);
+    } else {
+      return Promise.reject({
+        error: "Network Error"
+      });
     }
   }
 );

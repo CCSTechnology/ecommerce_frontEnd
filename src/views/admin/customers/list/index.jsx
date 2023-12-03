@@ -199,6 +199,7 @@ const Customers = () => {
     };
     try {
       const res = await dispatch(customerListData(parameter)).unwrap();
+      console.log(res);
       setCustomerData(res);
     } catch (errors) {
       errorAlert(errors?.error);

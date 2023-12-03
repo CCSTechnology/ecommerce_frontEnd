@@ -1,16 +1,18 @@
-import { Box, Button, Typography, styled } from "@mui/material"
+import { Box, Button, styled } from "@mui/material"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
+import QuantityComponent from "../../../components/QuantityComponent"
 import CustomBreadcrumbs from "../../../components/ecommerce/Breadcrumps"
 import StyledContainer from "../../../components/ecommerce/StyledContainer"
-import { productViewService } from "../../../redux/api/public/productService"
-import { useDispatch, useSelector } from "react-redux"
-import { useCallback, useEffect, useState } from "react"
-import ProductSlides from "./ProductSlides"
-import { useNavigate, useParams } from "react-router-dom"
-import ProductView from "../../admin/products/productView"
-import QuantityComponent from "../../../components/QuantityComponent"
-import { addCartServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
-import { toast } from "react-toastify"
 import { errorAlert } from "../../../helpers/globalFunctions"
+import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
+import { productViewService } from "../../../redux/api/public/productService"
+import ProductSlides from "./ProductSlides"
+import ProductDetailTab from "./ProductDetailsTab"
+import RelatedProduct from "./RelatedProduct"
+import { breadCrumbsCapitalize } from "../../../utils/helpers"
 
 
 const CartComponent = ({ count = 1, product = null, finishApi }) => {
@@ -24,19 +26,20 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
     const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
     if (token) {
       try {
-        const response = await dispatch(addCartServices({
+        await dispatch(addCartServices({
           product_id: product?.id,
-          quantity, 
+          quantity,
           type,
         })).unwrap()
         finishApi()
 
-        // setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
-        console.log(response, "addCartServices")
         toast.success(message)
       } catch (error) {
-        console.log(error, "error")
         errorAlert(error?.error)
+      } finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
       }
     } else {
       try {
@@ -47,15 +50,17 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
           type
         })).unwrap()
         finishApi()
-        // setQuantity((state)=> type === "add" ? state + 1 : state - 1) 
-        console.log(response, "res")
-        if(response?.cartdetails){
-            localStorage.setItem('cart_id',response?.cartdetails.cart_id )
+        if (response?.cartdetails) {
+          localStorage.setItem('cart_id', response?.cartdetails.cart_id)
         }
         toast.success(message)
       } catch (error) {
-        console.log(error, "error")
         errorAlert(error?.error)
+      }
+      finally {
+        dispatch(cartViewServices({
+          cart_id
+        }))
       }
     }
   }
@@ -82,16 +87,26 @@ const Product = () => {
   const dispatch = useDispatch()
   const { productSlug } = useParams()
   const [productSingle, setProductSingle] = useState(null)
-  const { data: productData } = useSelector((state) => state.product.productViewService)
-  // const productSingle = productData?.product || null
+  const [relatedProduct, setRelatedPodct] = useState([])
+  const breadcrumbs = [{
+    label: "Home",
+    link: '/',
+  }, {
+    label: productSingle?.categoryname || "Category",
+    link: "/category/" + productSingle?.categoryname || "all",
+
+  }, {
+    label: breadCrumbsCapitalize(productSlug)
+  }]
+
   async function fetchProduct(unique_label) {
     try {
       const response = await dispatch(productViewService({
         unique_label,
       })).unwrap()
-      setProductSingle(response.product)
+      setProductSingle(response?.product)
+      setRelatedPodct(response?.related_product)
     } catch (error) {
-      console.log(error, "error")
     }
   }
   useEffect(() => {
@@ -100,7 +115,7 @@ const Product = () => {
   return (
     <StyledContainer>
       <ProductWrapper>
-        <CustomBreadcrumbs />
+        <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
         <ProductContainer>
           <ProductSlider>
             <ProductSlides product={productSingle} />
@@ -111,7 +126,8 @@ const Product = () => {
             <CartComponent product={productSingle} finishApi={() => fetchProduct(productSlug)} />
           </ProductDetails>
         </ProductContainer>
-
+        <ProductDetailTab />
+        <RelatedProduct relatedProduct={relatedProduct} />
       </ProductWrapper>
     </StyledContainer>
   )
@@ -126,6 +142,7 @@ display: flex;
 padding: 20px;
 height: 600px;
 gap: 10px;
+margin-bottom: 20px;
  `
 
 const ProductWrapper = styled(Box)`
@@ -344,35 +361,7 @@ function UpdatedComponent({ product }) {
     <Container>
       <UpdatedComponentHeader>
         <Brand>Description: </Brand>
-        {/* <Brand>Sizes:</Brand> */}
-
-        {/* <BrandName>farmary</BrandName> */}
       </UpdatedComponentHeader>
-      {/* <ShareSection>
-        <ShareLabel>Share item:</ShareLabel>
-        <ShareIcons>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/73a243a3-a8c6-402b-9b36-0278f23163a0?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-            alt="Share Icon 1"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/10803ad7-f84b-4d73-8070-0a996990015b?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-            alt="Share Icon 2"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/73166ff8-9878-4e12-b8a9-9091e7995ece?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-            alt="Share Icon 3"
-          />
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b664306-d402-4105-bc67-a3b3117d24a6?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-            alt="Share Icon 4"
-          />
-        </ShareIcons>
-      </ShareSection> */}
       <Content>
         {product?.description}
       </Content>
@@ -403,57 +392,6 @@ const Brand = styled(Box)`
   font: 400 14px/21px Poppins, sans-serif;
 `;
 
-const Logo = styled(Box)`
-  border-radius: 4px;
-  border: 0.8px solid var(--gray-scale-gray-100, #e6e6e6);
-  background-color: var(--gray-scale-white, #fff);
-  align-self: stretch;
-  display: flex;
-  flex-grow: 1;
-  flex-basis: 0%;
-  flex-direction: column;
-  align-items: center;
-  padding: 14px 8px;
-`;
-
-const BrandName = styled(Box)`
-  color: #555;
-  align-self: stretch;
-  margin-top: 4px;
-  white-space: nowrap;
-  font: 700 13px/13px Dancing Script, -apple-system, Roboto, Helvetica,
-    sans-serif;
-
-  @media (max-width: 991px) {
-    white-space: initial;
-  }
-`;
-
-const ShareSection = styled(Box)`
-  align-items: center;
-  align-self: center;
-  display: flex;
-  gap: 10px;
-  margin: auto 0;
-  padding: 0 20px;
-`;
-
-const ShareLabel = styled(Box)`
-  color: var(--gray-scale-gray-900, #1a1a1a);
-  margin: auto 0;
-  font: 400 14px/21px Poppins, sans-serif;
-`;
-
-const ShareIcons = styled(Box)`
-  align-self: stretch;
-  display: flex;
-  gap: 5px;
-
-  @media (max-width: 991px) {
-    justify-content: center;
-  }
-`;
-
 const Content = styled(Box)`
   color: var(--gray-scale-gray-500, #808080);
   margin-top: 16px;
@@ -467,13 +405,9 @@ const Content = styled(Box)`
 
 
 
-const AddToCart = ({addToCart}) => {
-  const navigate = useNavigate()
-
-
+const AddToCart = ({ addToCart }) => {
   return <AddToCartWrapper fullWidth variant="contained" onClick={() => {
     addToCart('add')
-    // navigate('/cart')
   }}> Add to Cart</AddToCartWrapper>
 }
 
@@ -491,9 +425,8 @@ const AddToCartWrapper = styled(Button)`
 
 
 
-const BuyNow = ({ quantity, product }) => {
+const BuyNow = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   async function BuyNowApi(e) {
     navigate("/checkout")

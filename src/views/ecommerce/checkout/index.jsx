@@ -1,10 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
-
 import { useForm } from 'react-hook-form';
-// import { CheckOutProduct } from '../../../components/CheckoutProduct';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
@@ -12,18 +10,42 @@ import StyledContainer from '../../../components/ecommerce/StyledContainer';
 import { publicGetMe } from '../../../redux/api/public/authService';
 import OrderSummary from './OrderSummary';
 import BillingAddressForm from './addressForm';
+import { toast } from 'react-toastify';
+import { errorAlert } from '../../../helpers/globalFunctions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup"
 
+const schema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    phone_number: yup.string().required("Phone number is required"),
+    email: yup.string().email().required("Emai is required"),
+    country: yup.string().required("Country is required"),
+    state: yup.string().required("State is required"),
+    city: yup.string().required("City is required"),
+    street_name: yup.string().required("Addres is required"),
+    line1: yup.string().required("Address is required"),
+    zipcode: yup.string().required("Pincode is required"),
+    address: yup.string(),
+});
 
-export default function GetLoginCheckout() {
+export default memo(function GetLoginCheckout() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [popUp, setPopup] = useState(false)
-    const [addressPopUp, setAddressPopUp] = useState(false)
     const { data: cartData } = useSelector((state) => state.cart.cartViewServices)
-    const [cartList, setCartList] = useState([])
+    const [cartList, setCartList] = useState(null)
     const [user, setUser] = useState(null)
     const [guest, setGuest] = useState(null)
-    // const cartList = cartData?.details || []
+    const breadcrumbs = [{
+        label: "Home",
+        link: '/',
+    }, {
+        label: "Cart",
+        link: "/cart"
+    }, {
+        label: "Checkout"
+    }]
+
     const cartId = localStorage.getItem('cart_id') || null
     const [guestAllow, setGuestAllow] = useState(null)
 
@@ -32,23 +54,23 @@ export default function GetLoginCheckout() {
             const response = await dispatch(cartViewServices({
                 cart_id: cartId
             })).unwrap()
-            setCartList(response?.details || [])
+            setCartList(response || null)
         } catch (error) {
-            setCartList([])
+            setCartList(null)
         }
 
     }
 
-    const { reset, handleSubmit } = useForm({
+    const { handleSubmit } = useForm({
         defaultValues: {
 
         }
     })
 
-    const { ...AddressForm } = useForm({
+    const { ...formHook } = useForm({
         defaultValues: {
-
-        }
+        },
+        resolver: yupResolver(schema)
     })
 
 
@@ -58,32 +80,28 @@ export default function GetLoginCheckout() {
         try {
             //Valid User
             if (user) {
-                console.log(user, "user")
                 const response = await dispatch(checkOutWithUser({
-                    billing_address_id: 1,
-                    shipping_address_id: 1,
+                    billing_address_id: user?.id,
+                    shipping_address_id: user?.id,
                     delivery_charges: 0,
                     cart_id: ""
                 })).unwrap()
-                console.log(response, "response")
                 window.location.href = response.payment_details
             }
             //Expries Token
             else {
-
                 setPopup(true)
-                // navigate('/login=callBackUrl=/checkout')
             }
 
 
         } catch (error) {
-            console.log(error, "error")
+            errorAlert(error?.error)
         }
     }
 
     async function handleCheckOutGuest(values) {
         try {
-            const { trigger, formState: { isValid } } = AddressForm
+            const { trigger, formState: { isValid } } = formHook
 
             if (isValid) {
                 const response = await dispatch(checkOutWithGuest({
@@ -96,12 +114,11 @@ export default function GetLoginCheckout() {
                 window.location.href = response.payment_details
             } else {
                 trigger()
-                setAddressPopUp(true)
-                // setGuest(true)
+                toast.info("Please Add Address")
             }
 
         } catch (error) {
-            console.log(error, "error")
+            errorAlert(error?.error)
         }
     }
 
@@ -120,6 +137,7 @@ export default function GetLoginCheckout() {
                 }
             })
             const dat = {
+                id: address?.id || null,
                 name: first_name + last_name ? ` ${last_name}` : "",
                 phone_number: mobile,
                 same_address: 0,
@@ -133,27 +151,37 @@ export default function GetLoginCheckout() {
                 address: address?.address || "",
             }
             setUser(dat)
-            // reset(dat)
         } catch (error) {
-            // setGuest(true)
-            console.log(error, "error")
         }
     }
 
     useEffect(() => {
         getMe()
-        getCartList()
     }, [])
 
+    useEffect(() => {
+        getCartList()
+    }, [user])
+
+
+    useEffect(() => {
+        if (cartData) {
+            setCartList(cartData)
+        }
+    }, [cartData])
 
 
     return (
         <StyledContainer>
-            <CustomBreadcrumbs />
+            <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
             <CardTitle>Check Out</CardTitle>
             <Grid container spacing={2} >
                 <Grid item lg={6}>
-                    <BillingAddressForm formHook={AddressForm} user={user} setGuestAllow={setGuestAllow} />
+                    <BillingAddressForm
+                        formHook={formHook}
+                        user={user}
+                        setUser={setUser}
+                        setGuestAllow={setGuestAllow} />
                 </Grid>
                 <Grid item lg={6} sx={{
                     height: "100%",
@@ -161,7 +189,13 @@ export default function GetLoginCheckout() {
                     justifyContent: "space-between",
                     alignItems: 'flex-start'
                 }}>
-                    <OrderSummary checkout={cartData} guest={guest} handleSubmit={handleSubmit} handleCheckOut={handleCheckOut} handleCheckOutGuest={handleCheckOutGuest} />
+                    <OrderSummary
+                        loading={formHook.formState.isSubmitting}
+                        valid={formHook.formState.isValid}
+                        checkout={cartList} guest={guest}
+                        handleSubmit={handleSubmit}
+                        handleCheckOut={handleCheckOut}
+                        handleCheckOutGuest={handleCheckOutGuest} />
                 </Grid>
             </Grid>
             {
@@ -183,21 +217,16 @@ export default function GetLoginCheckout() {
                         <Button onClick={() => {
                             setPopup(false)
                             setGuest(true)
-                            // setGuestAllow(true)
-                            // navigate("/guest-login")
                         }}>Guest Login</Button>
                     </DialogActions>
 
                 </Dialog>
                     : null
             }
-            {/* {
-                addressPopUp && <AddressPopUp AddressForm={AddressForm} open={addressPopUp} setOpen={setAddressPopUp} sumbit={()=>{}} />
-            } */}
         </StyledContainer>
 
     )
-}
+})
 
 
 const CardTitle = styled(Typography)`

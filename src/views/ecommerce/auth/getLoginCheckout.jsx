@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
-import GuestLoginForm from './getLoginPopUp';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
 
 import { useForm } from 'react-hook-form';
 // import { CheckOutProduct } from '../../../components/CheckoutProduct';
-import { publicGetMe } from '../../../redux/api/public/authService';
-import { useNavigate } from 'react-router-dom';
-import CartProductCard from '../cart/CartProductCard';
-import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+import CustomBreadcrumbs from '../../../components/ecommerce/Breadcrumps';
+import { errorAlert } from '../../../helpers/globalFunctions';
+import { publicGetMe } from '../../../redux/api/public/authService';
+import CartProductCard from '../cart/CartProductCard';
 
 
 export default function CheckOutAddressForm() {
@@ -30,7 +30,7 @@ export default function CheckOutAddressForm() {
 		}))
 	}
 
-	const { reset, handleSubmit } = useForm({
+	const {  handleSubmit } = useForm({
 		defaultValues: {
 
 		}
@@ -49,26 +49,22 @@ export default function CheckOutAddressForm() {
 		try {
 			//Valid User
 			if (user) {
-				console.log(user, "user")
 				const response = await dispatch(checkOutWithUser({
 					billing_address_id: 1,
 					shipping_address_id: 1,
 					delivery_charges: 0,
 					cart_id: ""
 				})).unwrap()
-				console.log(response, "response")
 				window.location.href = response.payment_details
 			}
 			//Expries Token
 			else {
-
 				setPopup(true)
-				// navigate('/login=callBackUrl=/checkout')
 			}
 
 
 		} catch (error) {
-			console.log(error, "error")
+			errorAlert(error?.error)
 		}
 	}
 
@@ -87,11 +83,10 @@ export default function CheckOutAddressForm() {
 				window.location.href = response.payment_details
 			} else {
 				trigger()
-				// setGuest(true)
 			}
 
 		} catch (error) {
-			console.log(error, "error")
+			errorAlert(error?.error)
 		}
 	}
 
@@ -123,10 +118,8 @@ export default function CheckOutAddressForm() {
 				address: address?.address || "",
 			}
 			setUser(dat)
-			// reset(dat)
 		} catch (error) {
-			// setGuest(true)
-			console.log(error, "error")
+			errorAlert(error?.error)
 		}
 	}
 
@@ -144,10 +137,6 @@ export default function CheckOutAddressForm() {
 			 <CustomBreadcrumbs />
       			<CardTitle>Check Out</CardTitle>
 			<Grid container spacing={2} alignItems={'center'}>
-				{/* <Grid item lg={12}>
-				 <GuestLoginForm user={user} getMe={getMe} formHook={AddressForm} setGuestAllow={setGuestAllow} /> 
-			</Grid> */}
-
 				<Grid item lg={6}>
 					{
 						cartList?.map((cart, index) => {
@@ -167,14 +156,6 @@ export default function CheckOutAddressForm() {
 							</Button>
 						</form>
 					}
-					{/* <form onSubmit={handleSubmit(handleCheckOut)}>
-					
-					<Button type='submit' variant='contained' >
-						{
-							!guest ? "Check Out" : "Guest Check Out"
-						}
-					</Button>
-				</form> */}
 					{
 						popUp ? <Dialog title='Please Login' aria-labelledby="alert-dialog-title"
 							aria-describedby="alert-dialog-description" open={popUp}>
@@ -194,8 +175,6 @@ export default function CheckOutAddressForm() {
 								<Button onClick={() => {
 									setPopup(false)
 									setGuest(true)
-									// setGuestAllow(true)
-									// navigate("/guest-login")
 								}}>Guest Login</Button>
 							</DialogActions>
 

@@ -1,16 +1,73 @@
-import styled from '@emotion/styled'
-import { Box, Button, Typography } from '@mui/material'
-import React from 'react'
+import * as  React from 'react'
+import { LoadingButton } from '@mui/lab'
+import { Box, Button, Divider, Grid, Typography, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { ImagePath } from '../../../utils/helpers'
 
-export default function OrderSummary({ checkout , guest, handleCheckOutGuest , handleCheckOut, handleSubmit}) {
+const OrderedProduct = React.memo(function Product({ product = null }) {
+    return <OrderedProductsWrapper container justifyContent={'space-between'}>
+        <Grid item md={4}>
+            <Box sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px"
+            }}>
+                <Image loading="lazy" srcSet={ImagePath + product.products.file_name} />
+                <Title>{product?.products?.product_name}</Title>
+            </Box>
+        </Grid>
+        <OrderedProductsItem item md={4}>
+            <Quantity>{product.quantity}</Quantity>
+        </OrderedProductsItem>
+        <OrderedProductsItem item md={4}>
+            <Price>₹ {product.amount}</Price>
+        </OrderedProductsItem>
+
+    </OrderedProductsWrapper>
+})
+
+const Image = styled('img')`
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+`
+
+const OrderedProductsWrapper = styled(Grid)`
+
+margin-block: 10px;
+`
+
+const OrderedProductsItem = styled(Grid)`
+    display: flex;
+    align-items: center;
+    justify-content  :end ;
+`
+
+const Title = styled('p')``
+const Quantity = styled('span')`
+
+`
+const Price = styled('span')`
+
+`
+
+
+export default React.memo(function OrderSummary({ checkout, guest, handleCheckOutGuest, handleCheckOut, handleSubmit, loading, valid }) {
+    const products = checkout?.details || []
     const navigate = useNavigate()
     return (
         <OrderSummaryWrapper>
             <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
             <Box sx={{
-                
             }}>
+                {
+                    products.map(product => {
+                        return <OrderedProduct product={product} />
+                    })
+                }
+            </Box>
+            <Divider />
+            <Box>
                 <OrderAmountWrapper>
                     <Typography>Subtotal:</Typography>
                     <span>₹ {Number(checkout?.total_amount || 0).toFixed(2)}</span>
@@ -25,30 +82,28 @@ export default function OrderSummary({ checkout , guest, handleCheckOutGuest , h
                 </OrderAmountWrapper>
             </Box>
             <ButtonWrapper>
-            {
-                        guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
+                {
+                    guest === true ? <form onSubmit={handleSubmit(handleCheckOutGuest)}>
 
-                            <Button type='submit' variant='contained' >
-                                Guest Check out
-                            </Button>
-                        </form> : <form onSubmit={handleSubmit(handleCheckOut)}>
+                        <LoadingButton loading={loading} type='submit' variant='contained'  >
+                            Guest Check out
+                        </LoadingButton>
+                    </form> : <form onSubmit={handleSubmit(handleCheckOut)}>
 
-                            <Button type='submit' variant='contained' >
-                                Check out
-                            </Button>
-                        </form>
-                    }
-                <Button variant='contained' onClick={()=>{
+                        <Button type='submit' variant='contained' >
+                            Check out
+                        </Button>
+                    </form>
+                }
+                <Button variant='contained' onClick={() => {
                     navigate("/")
                 }}>
                     Continue Shopping
                 </Button>
             </ButtonWrapper>
-
-            
         </OrderSummaryWrapper>
     )
-}
+})
 
 
 const OrderSummaryWrapper = styled('section')(() => ({

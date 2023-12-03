@@ -2,15 +2,32 @@ import { Box, styled } from "@mui/material";
 import React from "react";
 import { ImagePath } from "../../utils/helpers";
 import { Link } from "react-router-dom";
+import { CartBag } from "../../helpers/images";
 
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
+
+
   return (
     <ProductCardWrapper to={"/product/" + product.unique_label}>
       <ProductImage srcSet={ImagePath + product.file_name} />
-      <ProductName>{String(product.product_name)}</ProductName>
-      <ProductPrice>₹ {Number(product.cost).toFixed(2)}</ProductPrice>
-      {/* <LazyImage loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fff469ad-32cf-4db1-abf5-2751b2e40a7f?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" /> */}
+      <ProductFooter>
+        <Box sx={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1
+        }}>
+          <ProductName>{String(product.product_name)}</ProductName>
+
+          <ProductPrice>₹ {Number(product.cost).toFixed(2)}</ProductPrice>
+        </Box>
+        <CartImgWrapper onClick={(e) => {
+          e.preventDefault()
+          addToCart('add', product, 1)
+        }}>
+          <img loading="lazy" srcSet={CartBag} />
+        </CartImgWrapper>
+      </ProductFooter>
     </ProductCardWrapper>
   );
 }
@@ -25,20 +42,20 @@ const Card = styled(Box)`
 `;
 
 
-const ProductCardWrapper = styled(Link)(({theme})=>({
-  border : `1px solid ${theme.palette.grey[100]}`,
+const ProductCardWrapper = styled(Link)(({ theme }) => ({
+  border: `1px solid ${theme.palette.grey[100]}`,
   display: "flex",
-  flexDirection : "column",
-  borderRadius : "5px",
-  width : "264px",
-  padding : "5px",
-  cursor : "pointer",
-  ":hover" :{
-    boxShadow :theme.shadows[0],
-    border : `1px solid ${theme.palette.primary.main}`,
-    " p" :{
-      fontWeight :"600",
-      color : theme.palette.primary.main 
+  flexDirection: "column",
+  borderRadius: "5px",
+  width: "264px",
+  padding: "5px",
+  cursor: "pointer",
+  ":hover": {
+    boxShadow: theme.shadows[0],
+    border: `1px solid ${theme.palette.primary.main}`,
+    " p": {
+      fontWeight: "600",
+      color: theme.palette.primary.main
     }
   }
 
@@ -72,5 +89,30 @@ const ProductPrice = styled('span')`
     white-space: initial;
   }
 `;
+
+
+const ProductFooter = styled(Box)`
+    display: flex;
+    align-items: center;  
+    justify-content: space-between;
+    `
+
+const CartImgWrapper = styled(Link)(({ theme }) => ({
+  background: "rgba(242, 242, 242, 1)",
+  borderRadius: "50%",
+  height: "40px",
+  width: "40px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: `1px solid rgba(242, 242, 242, 1)`,
+  ":hover": {
+    border: `1px solid ${theme.palette.primary.main}`,
+  },
+  "img": {
+    objectFit: "contain",
+  }
+}))
+
 
 export default ProductCard;
