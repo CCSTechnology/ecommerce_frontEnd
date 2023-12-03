@@ -4,6 +4,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import { headerSearch } from '../../redux/api/public/homeService';
+import SearchIcon from '@mui/icons-material/Search';
+import { Box, IconButton } from '@mui/material';
 
 
 const topFilms = [
@@ -64,10 +66,10 @@ export default function Asynchronous() {
     const loading = useSelector((state) => state.home.headerSearch.loading)
     async function getGlobalSearch(text) {
         try {
-           await dispatch(headerSearch({
-                search : text,
+            await dispatch(headerSearch({
+                search: text,
             })).unwrap()
-            const file = topFilms.filter((films)=>{
+            const file = topFilms.filter((films) => {
                 return String(films.title).toLowerCase().match(String(search).toLowerCase())
             })
             setOptions(file)
@@ -104,13 +106,21 @@ export default function Asynchronous() {
                     onChange={(e) => {
                         setSearch(e.target.value)
                     }}
+                    placeholder='Search'
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
-                            <React.Fragment>
+                            <Box sx={{
+                                ".MuiInputBase-root" : {
+                                    paddingRight : "0px"
+                                }
+                            }}>
                                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                <IconButton>
+                                    <SearchIcon />
+                                </IconButton>
                                 {params.InputProps.endAdornment}
-                            </React.Fragment>
+                            </Box>
                         ),
                     }}
                 />
