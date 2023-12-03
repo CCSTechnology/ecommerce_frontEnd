@@ -8,8 +8,8 @@ const timeout = SECONDS * MILISECONDS;
 const TOKEN_PAYLOAD_KEY = "authorization";
 
 const ADMINSERVER = axios.create({
-  baseURL : "http://staggingapi.truevine.in/api",
-  // baseURL,
+  // baseURL : "http://staggingapi.truevine.in/api",
+  baseURL,
     timeout,
 });
 

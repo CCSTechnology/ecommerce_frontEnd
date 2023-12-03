@@ -1,10 +1,10 @@
 import React from "react";
 import SuccessError from "../../../components/reusableFormFields/success";
 import successImage from "../../../assets/images/payment-success.png";
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { paymentSuccessMessage } from "../../../redux/api/public/profileService";
 import { useDispatch } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const Success = ({ title }) => {
@@ -43,6 +43,23 @@ const Success = ({ title }) => {
           title={"Payment Successfully Completed"}
           path={successImage}
         />
+        <Box
+          sx={{
+            marginTop: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Link to="/login" className="link">
+            <Button
+              style={{ fontSize: "15px", fontWeight: 600, color: "#951e76" }}
+              className="email-verify"
+            >
+              Redirect to Login
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Container>
   );

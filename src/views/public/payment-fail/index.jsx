@@ -1,7 +1,8 @@
 import React from "react";
 import SuccessError from "../../../components/reusableFormFields/success";
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import Faliure from "../../../assets/images/failure.png";
+import { Link } from "react-router-dom";
 
 const Error = ({ title }) => {
   return (
@@ -14,6 +15,23 @@ const Error = ({ title }) => {
     >
       <Box>
         <SuccessError title={"Faliure Payment"} path={Faliure} />
+        <Box
+          sx={{
+            marginTop: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Link to="/login" className="link">
+            <Button
+              style={{ fontSize: "15px", fontWeight: 600, color: "#951e76" }}
+              className="email-verify"
+            >
+              Redirect to Login
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Container>
   );
