@@ -11,7 +11,7 @@ import Asynchronous from "./AutoComplete";
 
 export default function Header() {
   const { data } = useSelector((state) => state.cart.cartViewServices)
-  const user = useSelector((state)=>state.publicAuth.publicGetMe.data)
+  const user = useSelector((state) => state.publicAuth.publicGetMe.data)
   const navigate = useNavigate()
   const [cartData, setCartData] = useState(data)
   const [userData, setUserData] = useState(user)
@@ -25,7 +25,8 @@ export default function Header() {
     event.preventDefault()
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.preventDefault()
     setAnchorEl(null);
   };
 
@@ -73,18 +74,18 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    if (data  !== null) {
+    if (data !== null) {
       setCartData(data)
     }
   }, [data])
 
   useEffect(() => {
-    if (user  !== null) {
+    if (user !== null) {
       setUserData(user)
     }
   }, [user])
 
-  
+
 
   return (
     <NavbarWrapper to='/cart'>
@@ -107,78 +108,89 @@ export default function Header() {
         </CartInfo>
         {
           user && <ProfileContainer>
-          <Tooltip title="Account" onClick={(e)=>e.preventDefault()}> 
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
+            <Tooltip title="Account" onClick={(e) => e.preventDefault()}>
+              <IconButton
+                onClick={handleClick}
+                size="small"
+                sx={{ ml: 2 }}
+                aria-controls={open ? 'account-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+              >
+                <Avatar sx={{ width: 32, height: 32 }}>{String(userData?.first_name[0]).toUpperCase()}</Avatar>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              slotProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>{String(userData?.first_name[0]).toUpperCase()}</Avatar>
-            </IconButton>
-          </Tooltip>
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleClose}
-            onClick={handleClose}
-            slotProps={{
-              elevation: 0,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                mt: 1.5,
-                '& .MuiAvatar-root': {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem onClick={(e)=>{
-              e.preventDefault()
-              navigate("/user-profile")
-              handleClose(e)
-            }}>
-              <Avatar />&nbsp; Profile
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon>
-              My orders
-            </MenuItem>
-
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
-        </ProfileContainer>
+              <MenuItem onClick={(e) => {
+                e.preventDefault()
+                navigate("/user-profile")
+                handleClose(e)
+              }}>
+                <Avatar />&nbsp; Profile
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={(e)=>{
+                e.preventDefault()
+                navigate('/user/my-orders')
+              }}>
+                <ListItemIcon>
+                  <PersonAdd fontSize="small" />
+                </ListItemIcon>
+                My orders
+              </MenuItem>
+              <MenuItem onClick={(e)=>{
+                e.preventDefault()
+                navigate("/user/change-password")
+              }}>
+                <ListItemIcon>
+                  <PersonAdd fontSize="small" />
+                </ListItemIcon>
+                Change Password
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
+          </ProfileContainer>
         }
-        
+
       </CartContainer>
 
     </NavbarWrapper>
