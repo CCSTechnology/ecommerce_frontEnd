@@ -65,3 +65,13 @@ export const PublicAuthlogout = createAsyncThunk("PublicAuthlogout", async (para
 	}
 });
 
+
+
+export const MyOrdersApi = createAsyncThunk("MyOrdersApi", async (params, thunkApi) => {
+	try {
+		const response = await PUBLICSERVER.get("/customer/order/view");
+		return response.data;
+	} catch (error) {
+		return thunkApi.rejectWithValue(error);
+	}
+});
