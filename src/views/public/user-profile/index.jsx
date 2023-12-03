@@ -57,12 +57,12 @@ const UserProfile = ({ title }) => {
                   value="1"
                   sx={{ color: "black", textAlign: "start" }}
                 />
-                <Tab label="My Orders" value="2" sx={{ color: "black" }} />
+                {/* <Tab label="My Orders" value="2" sx={{ color: "black" }} />
                 <Tab
                   label="Change Password"
                   value="3"
                   sx={{ color: "black" }}
-                />
+                /> */}
                 <Tab label="My Address" value="4" sx={{ color: "black" }} />
               </TabList>
             </Box>
