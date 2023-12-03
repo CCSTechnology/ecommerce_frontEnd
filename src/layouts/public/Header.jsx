@@ -4,11 +4,11 @@ import { logo } from "../../helpers/images";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../redux/api/public/cartServices";
-import { Logout, PersonAdd, } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { publicGetMe } from "../../redux/api/public/authService";
 import Asynchronous from "./AutoComplete";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-
+import KeyIcon from '@mui/icons-material/Key';
 
 
 export default function Header() {
@@ -186,7 +186,7 @@ export default function Header() {
                 handleClose(e)
               }}>
                 <ListItemIcon>
-                  <PersonAdd fontSize="small" />
+                  <KeyIcon fontSize="small" />
                 </ListItemIcon>
                 Change Password
               </MenuItem>
