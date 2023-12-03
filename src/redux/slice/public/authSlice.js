@@ -5,7 +5,8 @@ import {
     publicAddAddress,
     publicAuthRegister,
     publicAuthLogin,
-    publicGetMe
+    publicGetMe,
+    MyOrdersApi
 } from "../../api/public/authService";
 
 const authCases = [{
@@ -24,7 +25,10 @@ const authCases = [{
 {
     api: publicGetMe,
     name: "publicGetMe",
-},]
+}, {
+    api: MyOrdersApi,
+    name: "MyOrdersApi"
+}]
 
 const initialState = {
     authProducts: [],

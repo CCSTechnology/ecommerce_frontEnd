@@ -88,7 +88,7 @@ export default function Header() {
 
 
   return (
-    <NavbarWrapper to='/cart'>
+    <NavbarWrapper>
       <LogoContainer to="/">
         <Logo loading="lazy" src={logo} />
       </LogoContainer>
@@ -106,7 +106,9 @@ export default function Header() {
           <CartTitle>Shopping cart:</CartTitle>
           <CartPrice>₹ {Number(cartAmount).toFixed(2)}</CartPrice>
         </CartInfo>
-        {
+
+      </CartContainer>
+      {
           user && <ProfileContainer>
             <Tooltip title="Account" onClick={(e) => e.preventDefault()}>
               <IconButton
@@ -164,8 +166,9 @@ export default function Header() {
               </MenuItem>
               <Divider />
               <MenuItem onClick={(e)=>{
-                e.preventDefault()
-                navigate('/user/my-orders')
+                // e.preventDefault()
+                handleClose(e)
+                navigate('/user/myorders')
               }}>
                 <ListItemIcon>
                   <PersonAdd fontSize="small" />
@@ -173,7 +176,8 @@ export default function Header() {
                 My orders
               </MenuItem>
               <MenuItem onClick={(e)=>{
-                e.preventDefault()
+                // e.preventDefault()h
+                handleClose(e)
                 navigate("/user/change-password")
               }}>
                 <ListItemIcon>
@@ -191,13 +195,11 @@ export default function Header() {
           </ProfileContainer>
         }
 
-      </CartContainer>
-
     </NavbarWrapper>
   );
 }
 
-const NavbarWrapper = styled(Link)`
+const NavbarWrapper = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
