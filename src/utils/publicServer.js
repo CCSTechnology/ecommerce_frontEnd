@@ -36,9 +36,9 @@ PUBLICSERVER.interceptors.response.use(
       const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login"
       const url = new URL(domain)
       url.searchParams.set('callBackUrl', `/${path}`)
-      setInterval(() => {
-        window.location.href = url
-      }, [2000])
+      // setInterval(() => {
+      //   window.location.href = url
+      // }, [2000])
       return Promise.reject(error.response.data);
     } else if (error?.response) {
       return Promise.reject(error.response.data);
