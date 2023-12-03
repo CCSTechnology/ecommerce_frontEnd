@@ -29,9 +29,9 @@ PUBLICSERVER.interceptors.response.use(
   },
   (error) => {
     if (error?.response?.status === 403) {
-      toast.info(
-        "Please login to continue",
-      );
+      // toast.info(
+      //   "Please login to continue",
+      // );
       const path = String(window.location.href).split('/').slice(3).join("/")
       const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login"
       const url = new URL(domain)
