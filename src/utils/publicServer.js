@@ -29,20 +29,20 @@ PUBLICSERVER.interceptors.response.use(
   },
   (error) => {
     if (error?.response?.status === 403) {
-      const path = String(window.location.href).split('/').slice(3).join("/")
-      const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login"
-      const url = new URL(domain)
-      url.searchParams.set('callBackUrl', `/${path}`)
-      
+      const path = String(window.location.href).split("/").slice(3).join("/");
+      const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login";
+      const url = new URL(domain);
+      url.searchParams.set("callBackUrl", `/${path}`);
+
       setInterval(() => {
-        window.location.href = url
-      }, [2000])
+        window.location.href = url;
+      }, [2000]);
       return Promise.reject(error.response.data);
     } else if (error?.response) {
       return Promise.reject(error.response.data);
     } else {
       return Promise.reject({
-        error: "Network Error"
+        error: "Network Error",
       });
     }
   }
