@@ -23,12 +23,12 @@ const Error = ({ title }) => {
             justifyContent: "center",
           }}
         >
-          <Link to="/login" className="link">
+          <Link to="/" className="link">
             <Button
               style={{ fontSize: "15px", fontWeight: 600, color: "#951e76" }}
               className="email-verify"
             >
-              Redirect to Login
+              Redirect to Home
             </Button>
           </Link>
         </Box>
