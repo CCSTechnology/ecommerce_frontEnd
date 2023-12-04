@@ -15,7 +15,7 @@ export const homeDataService = createAsyncThunk("homeDataService", async(params,
 
 export const headerSearch = createAsyncThunk("headerSearch", async(params, thunkApi)=>{
   try {
-    const response = await PUBLICSERVER.get("/productsearch", {
+    const response = await PUBLICSERVER.get("/producthomesearch", {
         params
     })
     return response.data
