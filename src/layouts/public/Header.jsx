@@ -4,9 +4,11 @@ import { logo } from "../../helpers/images";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../redux/api/public/cartServices";
-import { Logout, PersonAdd, } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { publicGetMe } from "../../redux/api/public/authService";
 import Asynchronous from "./AutoComplete";
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import KeyIcon from '@mui/icons-material/Key';
 
 
 export default function Header() {
@@ -29,7 +31,6 @@ export default function Header() {
     e.preventDefault()
     setAnchorEl(null);
   };
-
 
   async function fetchCart(cart_id) {
     try {
@@ -56,7 +57,7 @@ export default function Header() {
     try {
       localStorage.removeItem("public_token")
       navigate('/login')
-      handleClose()
+      handleClose(e)
       fetchCart()
     } catch (error) {
       fetchCart()
@@ -97,7 +98,11 @@ export default function Header() {
         {/* <SearchIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a878d6b6-f3e2-4273-8d96-7792848ff1af?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
         <SearchText>Searchhttp://localhost:5173/cart</SearchText> */}
       </SearchContainer>
-      <CartContainer>
+      <Box display={'flex'}>
+      <CartContainer onClick={(e)=>{
+          e.preventDefault()
+          navigate('/cart')
+      }}>
         <Badge badgeContent={cartProductLength} color="primary">
           <CartIcon loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3dacf0af-d9ab-4feb-9173-044d05adfe1e?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
         </Badge>
@@ -109,7 +114,7 @@ export default function Header() {
 
       </CartContainer>
       {
-          user && <ProfileContainer>
+          user ? <ProfileContainer>
             <Tooltip title="Account" onClick={(e) => e.preventDefault()}>
               <IconButton
                 onClick={handleClick}
@@ -122,7 +127,8 @@ export default function Header() {
                 <Avatar sx={{ width: 32, height: 32 }}>{String(userData?.first_name[0]).toUpperCase()}</Avatar>
               </IconButton>
             </Tooltip>
-            <Menu
+            {
+              open && <Menu
               anchorEl={anchorEl}
               id="account-menu"
               open={open}
@@ -164,24 +170,23 @@ export default function Header() {
               }}>
                 <Avatar />&nbsp; Profile
               </MenuItem>
-              <Divider />
               <MenuItem onClick={(e)=>{
-                // e.preventDefault()
-                handleClose(e)
+                e.preventDefault()
                 navigate('/user/myorders')
+                handleClose(e)
               }}>
                 <ListItemIcon>
-                  <PersonAdd fontSize="small" />
+                  <ShoppingBagIcon fontSize="small" />
                 </ListItemIcon>
                 My orders
               </MenuItem>
               <MenuItem onClick={(e)=>{
-                // e.preventDefault()h
-                handleClose(e)
+                e.preventDefault()
                 navigate("/user/change-password")
+                handleClose(e)
               }}>
                 <ListItemIcon>
-                  <PersonAdd fontSize="small" />
+                  <KeyIcon fontSize="small" />
                 </ListItemIcon>
                 Change Password
               </MenuItem>
@@ -192,8 +197,21 @@ export default function Header() {
                 Logout
               </MenuItem>
             </Menu>
-          </ProfileContainer>
+            }
+            
+          </ProfileContainer> : <Box sx={{
+            display :"flex",
+            gap :'10px',
+            alignItems : "center"
+          }}>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+
+          </Box>
         }
+      </Box>
+     
+     
 
     </NavbarWrapper>
   );
@@ -235,7 +253,8 @@ const Logo = styled('img')`
 const SearchContainer = styled(Box)`
   display: flex;
   gap: 8px;
-  margin: auto 0;
+  width : 70%;
+  justify-content: center;
 `;
 
 const SearchIcon = styled('img')`
@@ -261,6 +280,7 @@ const CartContainer = styled(Box)`
   justify-content: space-between;
   gap: 0px;
   height: 100%;
+  margin-right: 10px;
   /* height: 40px; */
 
   @media (max-width: 991px) {

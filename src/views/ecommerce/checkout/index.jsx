@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Typography } from '@mui/material';
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import { errorAlert } from '../../../helpers/globalFunctions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup"
-
+import CloseIcon from "@mui/icons-material/Close"
 const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     phone_number: yup.string().required("Phone number is required"),
@@ -200,10 +200,25 @@ export default memo(function GetLoginCheckout() {
             </Grid>
             {
                 popUp ? <Dialog title='Please Login' aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description" open={popUp}>
+                    aria-describedby="alert-dialog-description" open={popUp}  >
                     <DialogTitle id="alert-dialog-title">
                         {"Please Login"}
                     </DialogTitle>
+                    <IconButton
+                        aria-label="close"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            setPopup(false)
+                        }}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             You are not Logged In, Please Login!

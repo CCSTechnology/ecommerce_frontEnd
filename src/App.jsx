@@ -73,6 +73,8 @@ function App() {
       <Suspense fallback={<LoaderComponent isFetching={true} />}>
         <Routes>
           <Route path="/guest-login" element={<GuestCheckOut />}></Route>
+          <Route path="/register" element={<SignUp />}></Route>
+            <Route path="/login" element={<Login />}></Route>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
             <Route
@@ -81,8 +83,7 @@ function App() {
             ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/register" element={<SignUp />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            
             <Route path="/checkout" element={<CheckOut />}></Route>
             <Route path="/contact-us" element={<ContactUs />}></Route>
             <Route path="/about-us" element={<AboutUs />}></Route>
