@@ -69,7 +69,7 @@ const CartComponent = ({ count = 1, product = null, finishApi }) => {
     <CartComponentWrapper>
       <QuantityComponent product={product} quantity={quantity} cartType="product" setQuantity={setQuantity} finishApi={finishApi} />
       <AddToCart product={product} addToCart={addToCart} />
-      <BuyNow product={product} />
+      <BuyNow product={product} addToCart={addToCart} quantity={quantity} />
     </CartComponentWrapper>
     <Divider />
   </>
@@ -425,10 +425,11 @@ const AddToCartWrapper = styled(Button)`
 
 
 
-const BuyNow = () => {
+const BuyNow = ({addToCart, product}) => {
   const navigate = useNavigate()
 
   async function BuyNowApi(e) {
+   await addToCart('add')
     navigate("/checkout")
   }
 

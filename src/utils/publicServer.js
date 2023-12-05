@@ -33,7 +33,7 @@ PUBLICSERVER.interceptors.response.use(
       const domain = import.meta.env.VITE_APP_DOMAIN_URL + "login";
       const url = new URL(domain);
       url.searchParams.set("callBackUrl", `/${path}`);
-
+      localStorage.removeItem('public_token')
       setInterval(() => {
         window.location.href = url;
       }, [2000]);

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { headerSearch } from '../../redux/api/public/homeService';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 const topFilms = [
@@ -62,17 +63,15 @@ export default function Asynchronous() {
     const [open, setOpen] = React.useState(false);
     const [search, setSearch] = React.useState(null)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [options, setOptions] = React.useState([]);
     const loading = useSelector((state) => state.home.headerSearch.loading)
     async function getGlobalSearch(text) {
         try {
-            await dispatch(headerSearch({
+           const response = await dispatch(headerSearch({
                 search: text,
             })).unwrap()
-            const file = topFilms.filter((films) => {
-                return String(films.title).toLowerCase().match(String(search).toLowerCase())
-            })
-            setOptions(file)
+            setOptions(response)
         } catch (error) {
             console.log(error, "getGlobalSearch")
         }
@@ -95,8 +94,8 @@ export default function Asynchronous() {
             onClose={() => {
                 setOpen(false);
             }}
-            isOptionEqualToValue={(option, value) => option.title === value.title}
-            getOptionLabel={(option) => option.title}
+            isOptionEqualToValue={(option, value) => option.label === value.label}
+            getOptionLabel={(option) => option.label}
             options={options}
             loading={loading}
             renderInput={(params) => (
@@ -116,7 +115,10 @@ export default function Asynchronous() {
                                 }
                             }}>
                                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                <IconButton>
+                                <IconButton onClick={(e)=>{
+                                    e.preventDefault()
+                                    navigate('/product/'+ search)
+                                }}>
                                     <SearchIcon />
                                 </IconButton>
                                 {params.InputProps.endAdornment}

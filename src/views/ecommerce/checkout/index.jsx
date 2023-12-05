@@ -181,6 +181,7 @@ export default memo(function GetLoginCheckout() {
                         formHook={formHook}
                         user={user}
                         setUser={setUser}
+                        getMe={getMe}
                         setGuestAllow={setGuestAllow} />
                 </Grid>
                 <Grid item lg={6} sx={{
@@ -246,12 +247,12 @@ export default memo(function GetLoginCheckout() {
 
 const CardTitle = styled(Typography)`
     color: var(--gray-scale-gray-900, #1A1A1A);
-text-align: center;
+    text-align: center;
 
 /* Heading 05/Heading 05 — 600 */
-font-family: Poppins;
-font-size: 32px;
-font-style: normal;
-font-weight: 600;
-line-height: 120%; /* 38.4px */
+    font-family: Poppins;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 38.4px */
 `

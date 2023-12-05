@@ -19,7 +19,7 @@ export default React.memo(function BillingAddressForm({
     getMe,
     formHook,
     setGuestAllow,
-    setUser
+    setUser,
 }) {
     const dispatch = useDispatch();
     const [editAddress, setEditAddress] = React.useState(!user ? true : false)
