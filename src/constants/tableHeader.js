@@ -94,7 +94,7 @@ export const ORDER_HEADER = [
   { label: " Total Tax", align: "left", id: "total_tax" },
   { label: "Shipping Cost", align: "left", id: "shipping_cost" },
   { label: "Grand Total", align: "left", id: "grand_total" },
-  { label: "status", align: "left", id: "status" },
+  { label: "Order status", align: "left", id: "status" },
   { label: "Payment Status", align: "left", id: "payment_status" },
   { label: "Actions", align: "left", id: "actions" },
 ];

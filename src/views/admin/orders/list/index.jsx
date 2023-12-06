@@ -12,6 +12,7 @@ import {
   Dialog,
   IconButton,
   Typography,
+  Badge,
 } from "@mui/material";
 import TableRowsLoader from "../../../../components/TableLoader";
 import TableHeader from "./tableHeader";
@@ -30,11 +31,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
 import TopBreaccrumb from "../../../../components/TopBreadcrumb";
-
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import {
   deleteProductData,
   productListData,
 } from "../../../../redux/api/admin/productService";
+import {
+  downLoadOrderData,
+  orderListData,
+} from "../../../../redux/api/admin/orderService";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -50,14 +55,16 @@ function OrdersList() {
   const [singleData, setSingleData] = useState(null);
   const [addType, setAddType] = useState(null);
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state?.adminProduct?.listProduct);
+  const orderList = useSelector((state) => state?.adminOrder?.listOrder);
   const [directoryPage, setDirectoryPage] = useState("admin");
-
+  console.log(orderList);
   const stateValues = useSelector((state) => {
     return {
       deleteLoading: state.adminProduct?.listProduct?.loading,
     };
   });
+
+  const apiUrl = import.meta.env.VITE_APP_MAIN_URL;
 
   // cancel search
   const cancelSearch = () => {
@@ -70,12 +77,25 @@ function OrdersList() {
   };
 
   //list api
-  const productsListApi = async () => {
+  const orderListApi = async () => {
     const parameters = {
-      url: `${authEndPoints.product.list}?Perpage=10&page=${page}`,
+      url: `${authEndPoints.order.list}`,
     };
     try {
-      const res = await dispatch(productListData(parameters)).unwrap();
+      const res = await dispatch(orderListData(parameters)).unwrap();
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
+
+  const downloadPdfApi = async () => {
+    const parameters = {
+      url: `${authEndPoints.order.download}`,
+    };
+    try {
+      const res = await dispatch(downLoadOrderData(parameters)).unwrap();
+      console.log(res);
+      window.open(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -133,14 +153,23 @@ function OrdersList() {
     setDirectoryPage(event.target.value);
   };
 
+  const handleDownloadClick = (id) => {
+    // Construct the URL
+    const url = apiUrl + `/createpdf/${id}`;
+
+    // Open a new tab or window with the URL
+    window.open(url, "_blank");
+  };
+
   useEffect(() => {
-    productsListApi();
-  }, [page, searchValue]);
+    orderListApi();
+    downloadPdfApi();
+  }, []);
 
   return (
     <Box>
       <Box className="indexBox">
-        <TopBreaccrumb title={"Products"} to={`/admin/dashboard`} />
+        <TopBreaccrumb title={"Orders"} to={`/admin/dashboard`} />
         <Box sx={{ my: 3 }}>
           <Stack
             direction={{ lg: "row", sm: "column" }}
@@ -167,9 +196,6 @@ function OrdersList() {
                 onChange={(e) => onSearch(e)}
                 cancelSearch={cancelSearch}
               />
-              <Button className="AddBtn" onClick={handleClickOpen}>
-                Add
-              </Button>
             </Stack>
             {/* <FormControl size="small" className="directorySelect">
                                 <Select
@@ -188,16 +214,46 @@ function OrdersList() {
           <Table>
             <TableHeader />
             <TableBody>
-              {productList?.loading ? (
+              {orderList?.loading ? (
                 <TableRowsLoader rowsNum={10} colsNum={9} />
               ) : (
-                productList?.data?.data?.data?.map((row, i) => (
+                orderList?.data?.data?.data?.map((row, i) => (
                   <TableRow key={row.id}>
                     <TableCell>{i + 1}</TableCell>
-                    <TableCell>{row.product_name}</TableCell>
-                    <TableCell>{row.categoryname}</TableCell>
-                    <TableCell>{row.cost}</TableCell>
-                    <TableCell>{row.description}</TableCell>
+                    <TableCell>{row?.date}</TableCell>
+                    <TableCell>{row?.order_no}</TableCell>
+                    <TableCell>{row?.invoice_no}</TableCell>
+                    <TableCell>{row?.customer?.first_name}</TableCell>
+                    <TableCell>{row?.amount}</TableCell>
+                    <TableCell>{row?.total_tax}</TableCell>
+                    <TableCell>{row?.shipping_cost}</TableCell>
+                    <TableCell>{row?.grand_total}</TableCell>
+                    <TableCell>
+                      <Badge
+                        className={
+                          row.status == "Pending"
+                            ? "pending"
+                            : row.status == "Completed"
+                            ? "completed"
+                            : "cancelled "
+                        }
+                      >
+                        {row?.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        className={
+                          row.paid_status == "Unpaid"
+                            ? "cancelled"
+                            : row.paid_status == "Paid"
+                            ? "completed"
+                            : "pending"
+                        }
+                      >
+                        {row?.paid_status}
+                      </Badge>
+                    </TableCell>
                     <TableCell align="center">
                       <Stack direction={"row"} gap={2}>
                         <Link to={`/admin/products/${row.unique_label}`}>
@@ -206,10 +262,9 @@ function OrdersList() {
                             sx={{ color: "black" }}
                           />
                         </Link>
-
-                        <EditIcon
+                        <FileDownloadIcon
                           className="table-icons"
-                          onClick={() => editDirectory(row.unique_label)}
+                          onClick={() => handleDownloadClick(row.id)}
                         />
                         <DeleteIcon
                           className="table-icons"
@@ -223,7 +278,7 @@ function OrdersList() {
             </TableBody>
           </Table>
         </TableContainer>
-        {productList?.data?.data?.data?.length === 0 ? (
+        {/* {productList?.data?.data?.data?.length === 0 ? (
           <Box sx={{ my: 2 }}>
             <Typography>No Data Found</Typography>
           </Box>
@@ -233,7 +288,7 @@ function OrdersList() {
             handlePageChanges={handlePageChanges}
             page={page}
           />
-        )}
+        )} */}
         {deleteModalOpen && (
           <DeleteModal
             open={deleteModalOpen}

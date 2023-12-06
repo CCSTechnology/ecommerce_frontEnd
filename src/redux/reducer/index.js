@@ -6,7 +6,7 @@ import adminProductReducer from "../../redux/slice/admin/productSlice";
 import adminAuthReducer from "../../redux/slice/admin/authSlice";
 import dashboardReducer from "../../redux/slice/admin/dashboardSlice";
 import adminSettingReducer from "../../redux/slice/admin/settingSlice";
-
+import adminOrderReducer from "../../redux/slice/admin/orderSlice";
 // Public
 import homeReducer from "../../redux/slice/public/homeSlice";
 import categoryReducer from "../../redux/slice/public/categorySlice";
@@ -28,4 +28,5 @@ export const rootReducer = combineReducers({
   cart: cartReducer,
   publicAuth: publicAuthReducer,
   myProfile: myProfileReducer,
+  adminOrder: adminOrderReducer,
 });
