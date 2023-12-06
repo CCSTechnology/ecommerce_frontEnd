@@ -199,7 +199,14 @@ export default function MyProfile(props) {
     //   }}
     // >
     <>
-      <Box sx={{ fontSize: "20px", fontWeight: 600 }}>My Profile Update</Box>
+      <Box
+        sx={{
+          fontSize: "20px",
+          fontWeight: 600,
+        }}
+      >
+        My Profile Update
+      </Box>
       <form onSubmit={handleSubmit(handleAddProduct)}>
         <Grid container spacing={3} mt={1}>
           <Grid item xs={12} md={6}>
