@@ -13,5 +13,5 @@ export default StyledContainer
 
 
 const MuiContainer = styled(Container)`
-  overflow: hidden;
+  /* overflow: hidden; */
 `

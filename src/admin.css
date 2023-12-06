@@ -619,3 +619,39 @@ ogo .backimg {
   height: 364px;
   background-repeat: no-repeat;
 }
+
+.pending {
+  border-radius: 10px;
+  padding: 6px;
+  font-size: 10px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: #ffd66e;
+}
+
+.completed {
+  border-radius: 10px;
+  padding: 6px;
+  font-size: 10px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: #93e088;
+}
+
+.cancelled {
+  border-radius: 10px;
+  padding: 6px;
+  font-size: 10px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: #fb6f6f;
+}

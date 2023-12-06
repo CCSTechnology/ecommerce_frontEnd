@@ -46,6 +46,11 @@ export const authEndPoints = {
     dashboardData: `/dashboard`,
   },
 
+  order: {
+    list: "order/list",
+    download: "createpdf/71",
+  },
+
   setting: {
     imageSetting: "/viewimageforflyer",
     imageSettingAdd: "/addbannerimage",

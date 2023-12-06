@@ -97,7 +97,7 @@ const ProductFooter = styled(Box)`
     justify-content: space-between;
     `
 
-const CartImgWrapper = styled(Link)(({ theme }) => ({
+const CartImgWrapper = styled(Box)(({ theme }) => ({
   background: "rgba(242, 242, 242, 1)",
   borderRadius: "50%",
   height: "40px",

@@ -22,12 +22,12 @@ export default function Home(){
 
   return (
     <StyledContainer>
-      <HomeWrapper>
+       <HomeWrapper>
         <HomeBanner />
         <HomeDelivery />
         <HomeCategory />
         <HomeFeatured />
-      </HomeWrapper>
+      </HomeWrapper> 
     </StyledContainer>
   )
 }
