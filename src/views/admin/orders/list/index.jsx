@@ -184,19 +184,6 @@ function OrdersList() {
     }
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleButtonClick = async () => {
-    handleClose(); // Call handleClose to close the form
-    await productsListApi(); // Call handleAddDirectory to add directory data
-  };
-
-  const handleChange = (event) => {
-    setDirectoryPage(event.target.value);
-  };
-
   // const handleDownloadClick = (id) => {
   //   // Construct the URL
   //   const url = apiUrl + `/createpdf/${id}`;
