@@ -73,6 +73,7 @@ export const downLoadOrderData = createAsyncThunk(
         url,
         params: others,
         method: "GET",
+        responseType: "blob", // Set responseType to "blob"
       });
       return response.data;
     } catch (error) {

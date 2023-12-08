@@ -45,6 +45,44 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+// export const handlePdfDownload = (blob, filename, type) => {
+//   const url = window.URL.createObjectURL(blob);
+//   if (type === "download") {
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = filename; // Specify the filename here
+//     document.body.appendChild(a);
+//     a.click();
+//     window.URL.revokeObjectURL(url);
+//     console.log("Success");
+//   } else {
+//     // const url = window.URL.createObjectURL(blob);
+
+//     window.open(url, "_blank");
+
+//     window.URL.revokeObjectURL(url);
+//   }
+// };
+
+export const handlePdfDownload = (blob, filename) => {
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename; // Specify the filename here
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  console.log("Success");
+};
+
+export const handleViewDownload = (blob, filename) => {
+  const url = window.URL.createObjectURL(blob);
+
+  window.open(url, "_blank");
+
+  window.URL.revokeObjectURL(url);
+};
+
 function OrdersList() {
   const [open, setOpen] = React.useState(false);
   const [delid, setDelId] = useState(null);
@@ -88,14 +126,20 @@ function OrdersList() {
     }
   };
 
-  const downloadPdfApi = async () => {
+  const downloadPdfApi = async (type) => {
+    console.log(type);
     const parameters = {
       url: `${authEndPoints.order.download}`,
     };
     try {
-      const res = await dispatch(downLoadOrderData(parameters)).unwrap();
-      console.log(res);
-      window.open(res);
+      const blob = await dispatch(downLoadOrderData(parameters)).unwrap();
+      console.log(blob);
+      if (type === "download") {
+        handlePdfDownload(blob, "Invoice.pdf");
+      } else {
+        handleViewDownload(blob, "Invoice.pdf");
+      }
+      // handleViewDownload(blob, "Invoice.pdf");
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -140,30 +184,16 @@ function OrdersList() {
     }
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleDownloadClick = (id) => {
+  //   // Construct the URL
+  //   const url = apiUrl + `/createpdf/${id}`;
 
-  const handleButtonClick = async () => {
-    handleClose(); // Call handleClose to close the form
-    await productsListApi(); // Call handleAddDirectory to add directory data
-  };
-
-  const handleChange = (event) => {
-    setDirectoryPage(event.target.value);
-  };
-
-  const handleDownloadClick = (id) => {
-    // Construct the URL
-    const url = apiUrl + `/createpdf/${id}`;
-
-    // Open a new tab or window with the URL
-    window.open(url, "_blank");
-  };
+  //   // Open a new tab or window with the URL
+  //   window.open(url, "_blank");
+  // };
 
   useEffect(() => {
     orderListApi();
-    downloadPdfApi();
   }, []);
 
   return (
@@ -197,17 +227,6 @@ function OrdersList() {
                 cancelSearch={cancelSearch}
               />
             </Stack>
-            {/* <FormControl size="small" className="directorySelect">
-                                <Select
-                                    labelId="demo-select-small-label"
-                                    id="demo-select-small"
-                                    value={directoryPage}
-                                    onChange={handleChange}
-                                >
-                                    <MenuItem value={'admin'}>Admin</MenuItem>
-                                    <MenuItem value={'employee'}>Employee</MenuItem>
-                                </Select>
-                            </FormControl> */}
           </Stack>
         </Box>
         <TableContainer className="rolesPageTable">
@@ -256,19 +275,19 @@ function OrdersList() {
                     </TableCell>
                     <TableCell align="center">
                       <Stack direction={"row"} gap={2}>
-                        <Link to={`/admin/products/${row.unique_label}`}>
-                          <VisibilityIcon
-                            className="table-icons"
-                            sx={{ color: "black" }}
-                          />
-                        </Link>
+                        <VisibilityIcon
+                          className="table-icons"
+                          sx={{ color: "black" }}
+                          onClick={() => downloadPdfApi("view")}
+                        />
+
                         <FileDownloadIcon
                           className="table-icons"
-                          onClick={() => handleDownloadClick(row.id)}
+                          onClick={() => downloadPdfApi("download")}
                         />
                         <DeleteIcon
                           className="table-icons"
-                          onClick={() => deleteDirectory(row.id)}
+                          // onClick={() => deleteDirectory(row.id)}
                         />
                       </Stack>
                     </TableCell>
@@ -289,7 +308,7 @@ function OrdersList() {
             page={page}
           />
         )} */}
-        {deleteModalOpen && (
+        {/* {deleteModalOpen && (
           <DeleteModal
             open={deleteModalOpen}
             close={() => deleteDirectoryModalClose()}
@@ -298,38 +317,7 @@ function OrdersList() {
             submit={delteApiFn}
             loading={stateValues.deleteLoading}
           />
-        )}
-
-        {open === true ? (
-          <Dialog
-            fullWidth={true}
-            maxWidth={"sm"}
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle>
-              <Stack
-                direction={"row"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-              >
-                <Box> {singleData ? "Edit Product" : "Add Product"}</Box>
-                <IconButton onClick={handleClose}>
-                  <CloseIcon />
-                </IconButton>
-              </Stack>
-            </DialogTitle>
-
-            {/* <AddProductForm
-              onClick={handleButtonClick}
-              initialData={singleData}
-              type={addType}
-            /> */}
-          </Dialog>
-        ) : null}
+        )} */}
       </Box>
     </Box>
   );

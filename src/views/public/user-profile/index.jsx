@@ -1,7 +1,7 @@
 import React from "react";
 
 import successImage from "../../../assets/images/payment-success.png";
-import { Box, Container, Tab } from "@mui/material";
+import { Box, Container, Grid, Tab } from "@mui/material";
 import SuccessError from "../../../components/reusableFormFields/success";
 import StyledContainer from "../../../components/ecommerce/StyledContainer";
 import AdminSidebar from "../../../layouts/utils/AdminSidebar";
@@ -36,44 +36,15 @@ const UserProfile = ({ title }) => {
   return (
     // <Container>
     <StyledContainer>
-      <Box>
-        <Box
-          sx={{
-            flexGrow: 1,
-            bgcolor: "background.paper",
-            display: "flex",
-            marginTop: 4,
-          }}
-        >
-          <TabContext value={valueData}>
-            <Box sx={{ borderColor: "divider" }}>
-              <TabList
-                onChange={handleChange}
-                aria-label="lab API tabs example"
-                orientation="vertical"
-              >
-                <Tab
-                  label="My Profile"
-                  value="1"
-                  sx={{ color: "black", textAlign: "start" }}
-                />
-                {/* <Tab label="My Orders" value="2" sx={{ color: "black" }} />
-                <Tab
-                  label="Change Password"
-                  value="3"
-                  sx={{ color: "black" }}
-                /> */}
-                <Tab label="My Address" value="4" sx={{ color: "black" }} />
-              </TabList>
-            </Box>
-            <TabPanel value="1">
-              <MyProfile />
-            </TabPanel>
-            <TabPanel value="4">
-              <MyAddress />
-            </TabPanel>
-          </TabContext>
-        </Box>
+      <Box sx={{ gap: 4 }}>
+        <Grid container>
+          <Grid item xs={6}>
+            <MyProfile />
+          </Grid>
+          <Grid item xs={6}>
+            <MyAddress />
+          </Grid>
+        </Grid>
       </Box>
     </StyledContainer>
 
