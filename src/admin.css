@@ -655,3 +655,17 @@ ogo .backimg {
   font-weight: 600;
   background-color: #fb6f6f;
 }
+
+.table-icons {
+  border: 1px solid #93939347;
+  padding: 10px;
+  font-size: 20px !important;
+  cursor: pointer;
+}
+
+.addresss-box {
+  border: 1px solid #951e76;
+  padding: 10px;
+  width: 300px;
+  border-radius: 10px;
+}

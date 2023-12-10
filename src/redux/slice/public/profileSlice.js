@@ -4,6 +4,8 @@ import {
   paymentSuccessMessage,
   customerPasswordChange,
   addCustomerAddress,
+  getCustomerAddress,
+  deleteCustomerAddress,
 } from "../../api/public/profileService";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -27,6 +29,14 @@ const myProfileCases = [
   {
     api: addCustomerAddress,
     name: "addCustomerAddress",
+  },
+  {
+    api: getCustomerAddress,
+    name: "getCustomerAddress",
+  },
+  {
+    api: deleteCustomerAddress,
+    name: "deleteCustomerAddress",
   },
 ];
 
