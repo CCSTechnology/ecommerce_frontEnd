@@ -9,6 +9,8 @@ import { Password } from "@mui/icons-material";
 import PasswordField from "../reusableFormFields/TextField/passwordField";
 import { Controller, get, useFieldArray, useForm } from "react-hook-form";
 import {
+  Card,
+  CardContent,
   FormControlLabel,
   Grid,
   IconButton,
@@ -153,7 +155,7 @@ export default function ChangePassword(props) {
     try {
       const res = await dispatch(customerPasswordChange(data1)).unwrap();
       successAlert(res.message);
-      reset1();
+      reset();
     } catch (error) {
       errorAlert(error.error);
     }
@@ -199,60 +201,68 @@ export default function ChangePassword(props) {
     //   }}
     // >
     <>
-      <Box sx={{ fontSize: "20px", fontWeight: 600 }}>Change Password</Box>
-      <form onSubmit={handleSubmit(handlePasswordChange)}>
-        <Box>
-          <Grid container>
-            <Grid item xs={12}>
-              <PasswordField
-                name="password"
-                control={control}
-                Controller={Controller}
-                error={errors?.password?.message}
-                label="Password"
-                type="password"
-              />
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={12} pt={2}>
-              <PasswordField
-                name="new_password"
-                control={control}
-                Controller={Controller}
-                error={errors?.new_password?.message}
-                label="New Password"
-                type="password"
-              />
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={12} pt={2}>
-              <PasswordField
-                name="confirm_password"
-                control={control}
-                Controller={Controller}
-                error={errors?.confirm_password?.message}
-                label="Confirm Password"
-                type="password"
-              />
-            </Grid>
-          </Grid>
-        </Box>
+      <Box sx={{ fontSize: "20px", fontWeight: 600, mb: 3 }}>
+        Change Password
+      </Box>
+      <Box>
+        <Card>
+          <CardContent>
+            <form onSubmit={handleSubmit(handlePasswordChange)}>
+              <Box>
+                <Grid container>
+                  <Grid item xs={12} sx={{ mb: 3 }}>
+                    <PasswordField
+                      name="password"
+                      control={control}
+                      Controller={Controller}
+                      error={errors?.password?.message}
+                      label="Password"
+                      type="password"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} pt={2} sx={{ mb: 3 }}>
+                    <PasswordField
+                      name="new_password"
+                      control={control}
+                      Controller={Controller}
+                      error={errors?.new_password?.message}
+                      label="New Password"
+                      type="password"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} pt={2} sx={{ mb: 3 }}>
+                    <PasswordField
+                      name="confirm_password"
+                      control={control}
+                      Controller={Controller}
+                      error={errors?.confirm_password?.message}
+                      label="Confirm Password"
+                      type="password"
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
 
-        <Box className="text-center-cls" sx={{ pt: 4 }}>
-          <LoadingButton
-            loadingPosition="center"
-            loading={isSubmitting}
-            variant="contained"
-            type="submit"
-            className="signup-button"
-            style={{ backgroundColor: "white", color: "#951e76" }}
-          >
-            Change Password
-          </LoadingButton>
-        </Box>
-      </form>
+              <Box className="text-center-cls" sx={{ pt: 4 }}>
+                <LoadingButton
+                  loadingPosition="center"
+                  loading={isSubmitting}
+                  variant="contained"
+                  type="submit"
+                  className="signup-button"
+                  style={{ backgroundColor: "white", color: "#951e76" }}
+                >
+                  Change Password
+                </LoadingButton>
+              </Box>
+            </form>
+          </CardContent>
+        </Card>
+      </Box>
     </>
     // </Box>
   );

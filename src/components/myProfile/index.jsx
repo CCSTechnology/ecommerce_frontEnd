@@ -9,6 +9,9 @@ import { Password } from "@mui/icons-material";
 import PasswordField from "../reusableFormFields/TextField/passwordField";
 import { Controller, get, useFieldArray, useForm } from "react-hook-form";
 import {
+  Card,
+  CardContent,
+  Container,
   FormControlLabel,
   Grid,
   IconButton,
@@ -199,73 +202,80 @@ export default function MyProfile(props) {
     //   }}
     // >
     <>
-      <Box
-        sx={{
-          fontSize: "20px",
-          fontWeight: 600,
-        }}
-      >
-        My Profile Update
-      </Box>
-      <form onSubmit={handleSubmit(handleAddProduct)}>
-        <Grid container spacing={3} mt={1}>
-          <Grid item xs={12} md={6}>
-            <TextFormField
-              name="first_name"
-              control={control}
-              Controller={Controller}
-              label="First Name"
-              error={errors?.first_name?.message}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextFormField
-              name="last_name"
-              control={control}
-              Controller={Controller}
-              label="Last Name"
-              error={errors?.last_name?.message}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={3} mt={1}>
-          <Grid item xs={12} md={6}>
-            <TextFormField
-              name="email"
-              control={control}
-              Controller={Controller}
-              label="Email"
-              error={errors?.email?.message}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <MobileField
-              name="mobile"
-              control={control}
-              Controller={Controller}
-              label="Mobile"
-              error={errors?.mobile?.message}
-              // InputProps={{
-              //   startAdornment: (
-              //     <InputAdornment position="start">+61</InputAdornment>
-              //   ),
-              // }}
-            />
-          </Grid>
-        </Grid>
-        <Box className="text-center-cls" sx={{ my: 4 }}>
-          <LoadingButton
-            loadingPosition="center"
-            loading={isSubmitting}
-            variant="contained"
-            type="submit"
-            className="signup-button"
-            style={{ backgroundColor: "white", color: "#951e76" }}
-          >
-            Update
-          </LoadingButton>
+      <Container sx={{ maxWidth: "700px!important" }}>
+        <Box
+          sx={{
+            fontSize: "20px",
+            fontWeight: 600,
+            mb: 5,
+          }}
+        >
+          My Profile Update
         </Box>
-      </form>
+        <Card>
+          <CardContent>
+            <form onSubmit={handleSubmit(handleAddProduct)}>
+              <Grid container spacing={3} mt={1}>
+                <Grid item xs={12} md={6}>
+                  <TextFormField
+                    name="first_name"
+                    control={control}
+                    Controller={Controller}
+                    label="First Name"
+                    error={errors?.first_name?.message}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextFormField
+                    name="last_name"
+                    control={control}
+                    Controller={Controller}
+                    label="Last Name"
+                    error={errors?.last_name?.message}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={3} mt={1}>
+                <Grid item xs={12} md={6}>
+                  <TextFormField
+                    name="email"
+                    control={control}
+                    Controller={Controller}
+                    label="Email"
+                    error={errors?.email?.message}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <MobileField
+                    name="mobile"
+                    control={control}
+                    Controller={Controller}
+                    label="Mobile"
+                    error={errors?.mobile?.message}
+                    // InputProps={{
+                    //   startAdornment: (
+                    //     <InputAdornment position="start">+61</InputAdornment>
+                    //   ),
+                    // }}
+                  />
+                </Grid>
+              </Grid>
+              <Box className="text-center-cls" sx={{ my: 4 }}>
+                <LoadingButton
+                  loadingPosition="center"
+                  loading={isSubmitting}
+                  variant="contained"
+                  type="submit"
+                  className="signup-button"
+                  style={{ backgroundColor: "white", color: "#951e76" }}
+                >
+                  Update
+                </LoadingButton>
+              </Box>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
     </>
 
     // </Box>

@@ -80,3 +80,29 @@ export const addCustomerAddress = createAsyncThunk(
     }
   }
 );
+
+export const getCustomerAddress = createAsyncThunk(
+  "getCustomerAddress",
+  async (params, thunkApi) => {
+    try {
+      const response = await PUBLICSERVER.get(`/customer/getaddress`, {
+        params,
+      });
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteCustomerAddress = createAsyncThunk(
+  "deleteCustomerAddress",
+  async (id = "", thunkApi) => {
+    try {
+      const response = await PUBLICSERVER.delete(`/customer/address/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
