@@ -125,6 +125,12 @@ const AdminSidebar = () => {
         >
           Settings
         </MenuItem>
+        <MenuItem
+          component={<Link to="admin/promotions" className="link" />}
+          icon={<IconComponent src={GoogleForms} />}
+        >
+          Promotions
+        </MenuItem>
       </Menu>
     </Sidebar>
   );
