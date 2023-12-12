@@ -145,46 +145,6 @@ export default function MyProfile(props) {
     }
   };
 
-  const handlePasswordChange = async (values) => {
-    console.log(values);
-    const { password, new_password, confirm_password } = values;
-    const data1 = {
-      password: password,
-      new_password: new_password,
-      confirm_password: confirm_password,
-    };
-    try {
-      const res = await dispatch(customerPasswordChange(data1)).unwrap();
-      successAlert(res.message);
-      reset1();
-    } catch (error) {
-      errorAlert(error.error);
-    }
-  };
-  const handleCheck = (value) => {
-    // Handle the switch change
-    console.log(value);
-    // setValue("is_default", e.target.checked);
-  };
-
-  const handleAddAddress = async (values) => {
-    console.log(values);
-    // const { street_name, city, address, state, line1, zipcode, country } =
-    //   values;
-    const data1 = {
-      ...values,
-      type: 1,
-    };
-    console.log(data1);
-    try {
-      const res = await dispatch(addCustomerAddress(data1)).unwrap();
-      successAlert(res.message);
-      // reset();
-    } catch (error) {
-      errorAlert(error.error);
-    }
-  };
-
   useEffect(() => {
     if (initialvalue) {
       reset(initialvalue);

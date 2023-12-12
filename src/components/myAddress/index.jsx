@@ -42,6 +42,7 @@ import {
   customerPasswordChange,
   deleteCustomerAddress,
   getCustomerAddress,
+  getPrimaryAddress,
   myProfileUpdate,
 } from "../../redux/api/public/profileService";
 
@@ -57,6 +58,7 @@ import AddAddressForm from "./addressForm";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import DeleteModal from "../deleteModal";
+const label = { inputProps: { "aria-label": "Color switch demo" } };
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
@@ -136,7 +138,10 @@ export default function MyAddress(props) {
   //   resolver: yupResolver(addressForm),
   //   mode: "onChange",
   // });
-
+  const handleButtonClick = async () => {
+    handleClose(); // Call handleClose to close the form
+    await listCustomerAddress();
+  };
   const handleClickOpen = () => {
     // setSingleData(null);
     setOpen(true);
@@ -194,6 +199,20 @@ export default function MyAddress(props) {
       const res = await dispatch(deleteCustomerAddress(delid)).unwrap();
       successAlert(res.message);
       listCustomerAddress();
+      // reset();
+    } catch (error) {
+      errorAlert(error.error);
+    }
+  };
+
+  const handleSwitchChange = async (item) => {
+    const { id, is_default, ...values } = item;
+    try {
+      const res = await dispatch(getPrimaryAddress(id)).unwrap();
+      listCustomerAddress();
+      successAlert(res.message);
+      console.log(res);
+
       // reset();
     } catch (error) {
       errorAlert(error.error);
@@ -341,41 +360,61 @@ export default function MyAddress(props) {
                       gap: "10px",
                       alignItems: "center ",
                       fontSize: "20px",
-                      fontWeight: 600,
+                      fontWeight: 400,
                     }}
                   >
-                    {item.type}
-                  </Box>
-                </AccordionSummary>
-                <Divider />
-                <AccordionDetails>
-                  <Grid
-                    container
-                    justifyContent={"space-between"}
-                    // key={detailIndex}
-                  >
-                    <Grid
-                      item
-                      md={12}
-                      lg={12}
-                      sx={
-                        {
+                    <Grid container>
+                      <Grid
+                        item
+                        md={8}
+                        lg={8}
+                        sx={{
+                          width: "600px",
                           // display: "flex",
                           // alignItems: "center",
-                        }
-                      }
-                    >
-                      {item.address}
+                        }}
+                      >
+                        {item.address}
+                      </Grid>
+                      <Grid
+                        item
+                        md={4}
+                        lg={4}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "end",
+                        }}
+                      >
+                        <Switch
+                          {...label}
+                          color="secondary"
+                          checked={item.is_default}
+                          onChange={() => handleSwitchChange(item)}
+                        />
+                      </Grid>
                     </Grid>
+
                     <Grid item md={12} lg={12}>
                       {item.zipcode}
                     </Grid>
                     <Grid item md={12} lg={2}>
                       {/* {address.state} */}
                     </Grid>
+                  </Box>
+                </AccordionSummary>
+                <Divider />
+                <AccordionDetails>
+                  {/* <Grid container justifyContent={"space-between"}>
+                    <Grid item md={12} lg={12}>
+                      {item.address}
+                    </Grid>
+                    <Grid item md={12} lg={12}>
+                      {item.zipcode}
+                    </Grid>
+                    <Grid item md={12} lg={2}></Grid>
                   </Grid>
 
-                  <Divider />
+                  <Divider /> */}
                   <Grid container>
                     <Grid
                       item
@@ -465,8 +504,8 @@ export default function MyAddress(props) {
           </DialogTitle>
 
           <AddAddressForm
-            // onClick={handleButtonClick}
-            // initialData={singleData}
+            onClick={handleButtonClick}
+            initialData={addressCustomer}
             type={addType}
           />
         </Dialog>

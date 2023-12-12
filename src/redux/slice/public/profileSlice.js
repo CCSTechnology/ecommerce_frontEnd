@@ -6,6 +6,7 @@ import {
   addCustomerAddress,
   getCustomerAddress,
   deleteCustomerAddress,
+  getPrimaryAddress,
 } from "../../api/public/profileService";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -37,6 +38,11 @@ const myProfileCases = [
   {
     api: deleteCustomerAddress,
     name: "deleteCustomerAddress",
+  },
+
+  {
+    api: getPrimaryAddress,
+    name: "getPrimaryAddress",
   },
 ];
 

@@ -106,3 +106,15 @@ export const deleteCustomerAddress = createAsyncThunk(
     }
   }
 );
+
+export const getPrimaryAddress = createAsyncThunk(
+  "getPrimaryAddress",
+  async (id, thunkApi) => {
+    try {
+      const response = await PUBLICSERVER.patch(`/customer/address/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);

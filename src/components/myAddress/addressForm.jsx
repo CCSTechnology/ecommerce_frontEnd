@@ -26,7 +26,23 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import TextFormField from "../reusableFormFields/TextField";
 import FormLoader from "../formLoader";
-
+import { alpha, styled } from "@mui/material/styles";
+import { pink } from "@mui/material/colors";
+import Switch from "@mui/material/Switch";
+import { addCustomerAddress } from "../../redux/api/public/profileService";
+import { errorAlert, successAlert } from "../../helpers/globalFunctions";
+const PinkSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: pink[600],
+    "&:hover": {
+      backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
+    },
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: pink[600],
+  },
+}));
+const label = { inputProps: { "aria-label": "Color switch demo" } };
 const AddAddressForm = (props, disabled) => {
   const { onClick, initialData = null, type } = props;
 
@@ -34,11 +50,13 @@ const AddAddressForm = (props, disabled) => {
   const [adminsrole, setadminsRole] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState("");
+  const [pinkSwitchChecked, setPinkSwitchChecked] = useState(false);
+  console.log(pinkSwitchChecked);
   const dispatch = useDispatch();
   const initialvalue = useSelector(
-    (state) => state?.adminProduct?.viewProduct?.data?.data?.product
+    (state) => state?.myProfile?.getCustomerAddress?.data
   );
-
+  console.log(initialvalue);
   const formLoading = useSelector(
     (state) => state?.adminProduct?.viewProduct?.loading
   );
@@ -60,6 +78,9 @@ const AddAddressForm = (props, disabled) => {
     resolver: yupResolver(),
     mode: "onChange",
   });
+  const handlePinkSwitchChange = () => {
+    setPinkSwitchChecked(!pinkSwitchChecked === false ? "0" : "1");
+  };
 
   // const viewDirectory = async () => {
   // 	const parameters = {
@@ -74,19 +95,19 @@ const AddAddressForm = (props, disabled) => {
 
   // Add Directory Api
   const handleAddProduct = async (values) => {
-    // console.log(values);
-    // const parameters = {
-    //   url: `${authEndPoints.product.productAdd}`,
-    //   data: values,
-    // };
-    // try {
-    //   const response = await dispatch(addProductData(parameters)).unwrap();
-    //   onClick();
-    //   successAlert(response.message);
-    // } catch (error) {
-    //   errorAlert(error.error);
-    //   console.log(errors);
-    // }
+    console.log(values);
+    const parameters = {
+      ...values,
+      type: "Shipping Address",
+    };
+    try {
+      const response = await dispatch(addCustomerAddress(parameters)).unwrap();
+      onClick();
+      successAlert(response.message);
+    } catch (error) {
+      errorAlert(error.error);
+      console.log(errors);
+    }
   };
 
   const handleEditProduct = async (values) => {
@@ -141,35 +162,23 @@ const AddAddressForm = (props, disabled) => {
     setImages(null);
   };
 
-  //   useEffect(() => {
-  //     essentialListApi();
-  //   }, []);
+  useEffect(() => {
+    if (type === "edit") {
+      // viewProduct();
+    }
+  }, [type]);
 
-  //   useEffect(() => {
-  //     if (initialData) {
-  //       const Img = initialData.image ? initialData.image : "";
-  //       setImages(Img);
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     if (type === "edit") {
-  //       viewProduct();
-  //     }
-  //   }, [type]);
-
-  //   useEffect(() => {
-  //     if (type !== "add") {
-  //       if (initialvalue) {
-
-  //         reset(initialvalue);
-  //       } else {
-  //         reset();
-  //       }
-  //     } else {
-  //       reset();
-  //     }
-  //   }, [initialvalue]);
+  useEffect(() => {
+    if (type !== "add") {
+      if (initialvalue) {
+        reset(initialvalue);
+      } else {
+        reset();
+      }
+    } else {
+      reset();
+    }
+  }, [initialvalue]);
 
   return (
     <Box sx={{ mx: 2 }}>
@@ -254,12 +263,28 @@ const AddAddressForm = (props, disabled) => {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextFormField
-                name="zipcode"
+              {/* <PinkSwitch
+                {...label}
+                // defaultChecked
+                // checked={pinkSwitchState === 1}
+                onChange={handlePinkSwitchChange}
+              /> */}
+              <Controller
+                name="is_default"
                 control={control}
-                Controller={Controller}
-                label="Zipcode"
-                error={errors?.zipcode?.message}
+                defaultValue={false} // Set your initial value
+                render={({ field }) => (
+                  <PinkSwitch
+                    {...label}
+                    {...field}
+                    checked={pinkSwitchChecked} // Use the field value for the checked prop
+                    onChange={(e) => {
+                      field.onChange(e.target.checked);
+                      setPinkSwitchChecked(e.target.checked);
+                    }} // Update the field value on change
+                    // onChange={handlePinkSwitchChange}
+                  />
+                )}
               />
             </Grid>
           </Grid>
