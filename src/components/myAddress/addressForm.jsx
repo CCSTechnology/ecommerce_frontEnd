@@ -29,7 +29,11 @@ import FormLoader from "../formLoader";
 import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
-import { addCustomerAddress } from "../../redux/api/public/profileService";
+import {
+  addCustomerAddress,
+  editCustomerAddress,
+  viewCustomerAddress,
+} from "../../redux/api/public/profileService";
 import { errorAlert, successAlert } from "../../helpers/globalFunctions";
 const PinkSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -43,20 +47,31 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 const label = { inputProps: { "aria-label": "Color switch demo" } };
+const schema = yup.object().shape({
+  // name: yup.string().required("Name is required"),
+  // phone_number: yup.string().required("Phone number is required"),
+  // email: yup.string().email().required("Emai is required"),
+  country: yup.string().required("Country is required"),
+  state: yup.string().required("State is required"),
+  city: yup.string().required("City is required"),
+  street_name: yup.string().required("Addres is required"),
+  line1: yup.string().required("Address is required"),
+  zipcode: yup.string().required("Pincode is required"),
+  address: yup.string(),
+});
+
 const AddAddressForm = (props, disabled) => {
-  const { onClick, initialData = null, type } = props;
+  const { onClick, initialData, type, item } = props;
 
   const [showPassword, setShowPassword] = useState(false);
   const [adminsrole, setadminsRole] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState("");
   const [pinkSwitchChecked, setPinkSwitchChecked] = useState(false);
-  console.log(pinkSwitchChecked);
+  const [adds, setAdds] = useState(null);
+  console.log(adds);
   const dispatch = useDispatch();
-  const initialvalue = useSelector(
-    (state) => state?.myProfile?.getCustomerAddress?.data
-  );
-  console.log(initialvalue);
+
   const formLoading = useSelector(
     (state) => state?.adminProduct?.viewProduct?.loading
   );
@@ -74,24 +89,22 @@ const AddAddressForm = (props, disabled) => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: type === "add" ? {} : initialvalue,
-    resolver: yupResolver(),
+    defaultValues: type === "add" ? {} : adds,
+    resolver: yupResolver(schema),
     mode: "onChange",
   });
   const handlePinkSwitchChange = () => {
     setPinkSwitchChecked(!pinkSwitchChecked === false ? "0" : "1");
   };
 
-  // const viewDirectory = async () => {
-  // 	const parameters = {
-  // 		url: `${authEndPoints.directory.viewDirectory(initialData?.id)}`,
-  // 	};
-  // 	try {
-  // 		await dispatch(viewDirectoryData(parameters)).unwrap();
-  // 	} catch (errors) {
-  // 		errorAlert(errors?.error);
-  // 	}
-  // };
+  const viewAddressCustomer = async () => {
+    try {
+      const res = await dispatch(viewCustomerAddress(initialData)).unwrap();
+      setAdds(res);
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
 
   // Add Directory Api
   const handleAddProduct = async (values) => {
@@ -111,47 +124,24 @@ const AddAddressForm = (props, disabled) => {
   };
 
   const handleEditProduct = async (values) => {
-    // const parameters = {
-    //   url: `${authEndPoints.product.editProduct(initialvalue?.id)}`,
-    //   data: values,
-    // };
-    // try {
-    //   const response = await dispatch(editProductData(parameters)).unwrap();
-    //   onClick();
-    //   successAlert(response.message);
-    // } catch (error) {
-    //   errorAlert(error.error);
-    //   console.log(errors);
-    // }
+    console.log(values);
+    const { id, ...remvalues } = values;
+    console.log(id);
+    const parameters = {
+      ...values,
+    };
+    try {
+      const response = await dispatch(
+        editCustomerAddress({ id, data: remvalues })
+      ).unwrap();
+      onClick();
+      successAlert(response.message);
+    } catch (error) {
+      errorAlert(error.error);
+      console.log(errors);
+    }
   };
 
-  // view product
-  //   const viewProduct = async () => {
-  //     const parameters = {
-  //       url: `${authEndPoints.product.productView(initialData)}`,
-  //     };
-  //     try {
-  //       const res = await dispatch(viewProductData(parameters)).unwrap();
-  //     } catch (errors) {
-  //       errorAlert(errors?.error);
-  //     }
-  //   };
-
-  //Essential Api
-  //   const essentialListApi = async () => {
-  //     const value = "category";
-  //     const parameters = {
-  //       url: `${authEndPoints.product.listCommon(value)}`,
-  //     };
-  //     try {
-  //       const response = await dispatch(commonListData(parameters)).unwrap();
-  //       setEssential(response.data);
-  //     } catch (errors) {
-  //       errorAlert(errors?.error);
-  //     }
-  //   };
-
-  // visibility
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -164,21 +154,21 @@ const AddAddressForm = (props, disabled) => {
 
   useEffect(() => {
     if (type === "edit") {
-      // viewProduct();
+      viewAddressCustomer();
     }
   }, [type]);
 
   useEffect(() => {
     if (type !== "add") {
-      if (initialvalue) {
-        reset(initialvalue);
+      if (adds) {
+        reset(adds);
       } else {
         reset();
       }
     } else {
       reset();
     }
-  }, [initialvalue]);
+  }, [adds]);
 
   return (
     <Box sx={{ mx: 2 }}>
@@ -272,7 +262,9 @@ const AddAddressForm = (props, disabled) => {
               <Controller
                 name="is_default"
                 control={control}
-                defaultValue={false} // Set your initial value
+                defaultValue={
+                  type === "add" ? false : adds?.is_default || false
+                }
                 render={({ field }) => (
                   <PinkSwitch
                     {...label}

@@ -20,6 +20,13 @@ const productForm = yup.object().shape({
     .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
 });
 
+const promotionForm = yup.object().shape({
+  name: yup
+    .string()
+    .required("Name is required")
+    .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+});
+
 const categoryForm = yup.object().shape({
   label: yup.string().required("Label is required"),
   // .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
@@ -56,4 +63,11 @@ const addressForm = yup.object().shape({
   // confirm_password: yup.string().min(8, "Comfirm Password is required").max(32),
 });
 
-export { productForm, categoryForm, profileForm, passwordForm, addressForm };
+export {
+  productForm,
+  categoryForm,
+  profileForm,
+  passwordForm,
+  addressForm,
+  promotionForm,
+};

@@ -81,6 +81,18 @@ export const addCustomerAddress = createAsyncThunk(
   }
 );
 
+export const editCustomerAddress = createAsyncThunk(
+  "editCustomerAddress",
+  async ({ data, id }, thunkApi) => {
+    try {
+      const response = await PUBLICSERVER.put(`/customer/address/${id}`, data);
+      return response;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
 export const getCustomerAddress = createAsyncThunk(
   "getCustomerAddress",
   async (params, thunkApi) => {
@@ -112,6 +124,19 @@ export const getPrimaryAddress = createAsyncThunk(
   async (id, thunkApi) => {
     try {
       const response = await PUBLICSERVER.patch(`/customer/address/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const viewCustomerAddress = createAsyncThunk(
+  "viewCustomerAddress",
+  async (add_id, thunkApi) => {
+    try {
+      const response = await PUBLICSERVER.get(`/customer/getaddress/${add_id}`);
+
       return response.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);

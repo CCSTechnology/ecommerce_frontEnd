@@ -25,6 +25,11 @@ export const authEndPoints = {
     editProduct: (id) => `/product/${id}`,
     listCommon: (name) => `/commonlist?required=${name}`,
   },
+
+  promotion: {
+    list: "/promotion",
+    promotionAdd: "/promotion",
+  },
   customer: {
     customerList: "customer/list",
     deleteCustomerList: (id) => `/customer/${id}/1`,

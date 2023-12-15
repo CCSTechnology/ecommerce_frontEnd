@@ -1,9 +1,9 @@
 import {
   addPromotion,
-  UpdatePromotion,
-  viewPromotion,
+  // UpdatePromotion,
+  // viewPromotion,
   listPromotion,
-  deletePromotion,
+  // deletePromotion,
 } from "../../api/admin/promotionService";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -12,22 +12,22 @@ const myPromotionCases = [
     api: addPromotion,
     name: "addPromotion",
   },
-  {
-    api: UpdatePromotion,
-    name: "UpdatePromotion",
-  },
-  {
-    api: viewPromotion,
-    name: "viewPromotion",
-  },
+  // {
+  //   api: UpdatePromotion,
+  //   name: "UpdatePromotion",
+  // },
+  // {
+  //   api: viewPromotion,
+  //   name: "viewPromotion",
+  // },
   {
     api: listPromotion,
     name: "listPromotion",
   },
-  {
-    api: deletePromotion,
-    name: "deletePromotion",
-  },
+  // {
+  //   api: deletePromotion,
+  //   name: "deletePromotion",
+  // },
 ];
 
 const initialState = {};

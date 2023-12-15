@@ -31,7 +31,7 @@ import { LoadingButton } from "@mui/lab";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextFormField from "../../../../components/reusableFormFields/TextField";
-import { productForm } from "../../../../helpers/validate";
+import { productForm, promotionForm } from "../../../../helpers/validate";
 import SelectField from "../../../../components/reusableFormFields/selectField";
 import ImageUploadComponent from "../../../../components/reusableFormFields/ImageUpload";
 import FormLoader from "../../../../components/formLoader";
@@ -42,8 +42,10 @@ import {
   editProductData,
   viewProductData,
 } from "../../../../redux/api/admin/productService";
+import DatePickerComponent from "../../../../components/reusableFormFields/datePicker";
+import { addPromotion } from "../../../../redux/api/admin/promotionService";
 
-const AddProductForm = (props, disabled) => {
+const AddPromotionForm = (props, disabled) => {
   const { onClick, initialData = null, type } = props;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -73,10 +75,10 @@ const AddProductForm = (props, disabled) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: type === "add" ? {} : initialvalue,
-    resolver: yupResolver(productForm),
+    resolver: yupResolver(promotionForm),
     mode: "onChange",
   });
-
+  console.log(errors);
   // const viewDirectory = async () => {
   // 	const parameters = {
   // 		url: `${authEndPoints.directory.viewDirectory(initialData?.id)}`,
@@ -91,13 +93,14 @@ const AddProductForm = (props, disabled) => {
   // Add Directory Api
   const handleAddProduct = async (values) => {
     console.log(values);
-
+    values.customer_type = "customer";
     const parameters = {
-      url: `${authEndPoints.product.productAdd}`,
+      url: `${authEndPoints.promotion.promotionAdd}`,
       data: values,
     };
+    console.log(parameters);
     try {
-      const response = await dispatch(addProductData(parameters)).unwrap();
+      const response = await dispatch(addPromotion(parameters)).unwrap();
       onClick();
       successAlert(response.message);
     } catch (error) {
@@ -209,14 +212,14 @@ const AddProductForm = (props, disabled) => {
           <Grid container spacing={5} sx={{ mb: 2 }}>
             <Grid item xs={6} direction={"column"}>
               <TextFormField
-                name="product_name"
+                name="name"
                 control={control}
                 Controller={Controller}
                 label="Name"
-                error={errors?.product_name?.message}
+                error={errors?.name?.message}
               />
             </Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               {essential?.category && (
                 <SelectField
                   name="category"
@@ -228,32 +231,31 @@ const AddProductForm = (props, disabled) => {
                   // disabled={type === "edit" && true}
                 />
               )}
-            </Grid>
+            </Grid> */}
           </Grid>
 
           <Grid container spacing={5} sx={{ mb: 2 }}>
             <Grid item xs={6} direction={"column"}>
-              <TextFormField
-                name="cost"
+              <DatePickerComponent
                 control={control}
+                label={"Start Date"}
+                name="start_date"
                 Controller={Controller}
-                label="Cost"
-                error={errors?.cost?.message}
+                error={errors?.start_date?.message}
               />
             </Grid>
             <Grid item xs={6}>
-              <ImageUploadComponent
+              <DatePickerComponent
                 control={control}
                 Controller={Controller}
-                name="file_name"
-                label=" Image"
-                watch={watch}
-                setValue={setValue}
+                label={"End Date"}
+                name="end_date"
+                error={errors?.end_date?.message}
               />
             </Grid>
           </Grid>
 
-          <Grid container spacing={5} sx={{ mb: 2 }}>
+          {/* <Grid container spacing={5} sx={{ mb: 2 }}>
             <Grid item xs={12}>
               <TextMultiField
                 control={control}
@@ -263,7 +265,7 @@ const AddProductForm = (props, disabled) => {
                 error={errors?.description?.message}
               />
             </Grid>
-          </Grid>
+          </Grid> */}
           <Stack
             direction={"row"}
             alignItems={"center"}
@@ -287,4 +289,4 @@ const AddProductForm = (props, disabled) => {
   );
 };
 
-export default AddProductForm;
+export default AddPromotionForm;

@@ -119,6 +119,7 @@ export default function MyAddress(props) {
   const [addType, setAddType] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [delid, setDelId] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const addressCustomer = useSelector(
     (state) => state?.myProfile.getCustomerAddress?.data
@@ -151,8 +152,10 @@ export default function MyAddress(props) {
     setOpen(false);
   };
 
-  const editDirectory = (row) => {
+  const editDirectory = (id) => {
     // setSingleData(row);
+    setEditId(id);
+    console.log(id);
     setOpen(true);
     setAddType("edit");
   };
@@ -376,6 +379,7 @@ export default function MyAddress(props) {
                       >
                         {item.address}
                       </Grid>
+
                       <Grid
                         item
                         md={4}
@@ -429,7 +433,7 @@ export default function MyAddress(props) {
                     >
                       <EditIcon
                         className="table-icons1"
-                        onClick={() => editDirectory()}
+                        onClick={() => editDirectory(item.id)}
                         style={{ color: "#951e76", cursor: "pointer" }}
                       />
                     </Grid>
@@ -505,7 +509,7 @@ export default function MyAddress(props) {
 
           <AddAddressForm
             onClick={handleButtonClick}
-            initialData={addressCustomer}
+            initialData={editId}
             type={addType}
           />
         </Dialog>

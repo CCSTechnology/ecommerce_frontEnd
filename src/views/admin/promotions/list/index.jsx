@@ -35,6 +35,8 @@ import {
   deleteProductData,
   productListData,
 } from "../../../../redux/api/admin/productService";
+import { listPromotion } from "../../../../redux/api/admin/promotionService";
+import AddPromotionForm from "../addPromotionform";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -70,12 +72,13 @@ function ProductList() {
   };
 
   //list api
-  const productsListApi = async () => {
+  const promotionListApi = async () => {
     const parameters = {
-      url: `${authEndPoints.product.list}?Perpage=10&page=${page}&search=${searchKey}`,
+      url: `${authEndPoints.promotion.list}?Perpage=10&page=${page}&search=${searchKey}`,
     };
     try {
-      const res = await dispatch(productListData(parameters)).unwrap();
+      const res = await dispatch(listPromotion(parameters)).unwrap();
+      console.log(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -134,13 +137,13 @@ function ProductList() {
   };
 
   useEffect(() => {
-    productsListApi();
+    promotionListApi();
   }, [page, searchValue]);
 
   return (
     <Box>
       <Box className="indexBox">
-        <TopBreaccrumb title={"Products"} to={`/admin/dashboard`} />
+        <TopBreaccrumb title={"Promotions"} to={`/admin/dashboard`} />
         <Box sx={{ my: 3 }}>
           <Stack
             direction={{ lg: "row", sm: "column" }}
@@ -268,7 +271,7 @@ function ProductList() {
               </Stack>
             </DialogTitle>
 
-            <AddProductForm
+            <AddPromotionForm
               onClick={handleButtonClick}
               initialData={singleData}
               type={addType}
