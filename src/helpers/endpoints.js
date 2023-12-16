@@ -29,6 +29,10 @@ export const authEndPoints = {
   promotion: {
     list: "/promotion",
     promotionAdd: "/promotion",
+    promotionDelete: (id) => `/promotion/${id}`,
+    promotionView: (id) => `/promotion/${id}`,
+    promotionAvailable: (id) => `/productpromotionsearch/${id}`,
+    promotionAddProduct: "/promotion/addproduct",
   },
   customer: {
     customerList: "customer/list",

@@ -6,9 +6,17 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Dialog,
+  DialogTitle,
   Grid,
   Skeleton,
   Stack,
+  IconButton,
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -21,8 +29,14 @@ import TopBreaccrumb from "../../../../components/TopBreadcrumb";
 import { viewProductData } from "../../../../redux/api/admin/productService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-
+import CloseIcon from "@mui/icons-material/Close";
+import Slide from "@mui/material/Slide";
 import Container from "@mui/material/Container";
+import { viewPromotion } from "../../../../redux/api/admin/promotionService";
+import AddPromotionForm from "../addPromotionform";
+import AddProductPromotionForm from "./addProductPromotionForm";
+import TableHeader from "../list/tableHeader";
+import TableRowsLoader from "../../../../components/TableLoader";
 
 function MediaCard({ products }) {
   const imageUrl = import.meta.env.REACT_APP_IMG_URL;
@@ -99,35 +113,49 @@ function MediaCard({ products }) {
     </Card>
   );
 }
-
-const ProductView = (props) => {
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+const PromotionView = (props) => {
   let { id } = useParams();
 
   const dispatch = useDispatch();
-  const productViewData = useSelector(
-    (state) => state.adminProduct.viewProduct
+  const promotionViewData = useSelector(
+    (state) => state.adminPromotion.viewPromotion?.data?.data
   );
-  console.log(productViewData);
+  const promotionTable = useSelector(
+    (state) => state.adminPromotion.viewPromotion
+  );
+  console.log(promotionViewData);
+  const [open, setOpen] = React.useState(false);
   const [unique, setUnique] = useState(null);
   const imageUrl = import.meta.env.VITE_APP_IMG_URL;
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   //list api
-  const viewProduct = async () => {
+  const viewPromotionAPi = async () => {
     const parameters = {
-      url: `${authEndPoints.product.productView(id)}`,
+      url: `${authEndPoints.promotion.promotionView(id)}`,
     };
     try {
-      const res = await dispatch(viewProductData(parameters)).unwrap();
+      const res = await dispatch(viewPromotion(parameters)).unwrap();
     } catch (errors) {
       errorAlert(errors?.error);
     }
   };
   useEffect(() => {
-    viewProduct();
-  }, [unique]);
+    viewPromotionAPi();
+  }, [id]);
   return (
     <>
       <Box className="indexBox">
-        <TopBreaccrumb title={"Product List"} to={`/admin/products`} />
+        <TopBreaccrumb title={"Promotion List"} to={`/admin/products`} />
         <Grid
           container
           spacing={2}
@@ -135,270 +163,102 @@ const ProductView = (props) => {
           justifyContent="center"
           alignItems="center"
         >
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={8}
-            lg={6}
-            sx={{ backgroundColor: "#951e76", my: 4 }}
-          >
-            <Stack direction={"column"} gap={1} alignItems={"center"}>
-              {!productViewData?.loading ? (
-                <Avatar
-                  src={
-                    imageUrl + productViewData?.data?.data?.product?.file_name
-                  }
-                  sx={{ width: 60, height: 60 }}
-                />
-              ) : (
-                <Skeleton variant="circular" width={60} height={60} />
-              )}
-              <Typography sx={{ mb: 2, color: "white" }}>
-                {!productViewData?.loading ? (
-                  `${productViewData?.data?.data?.product?.product_name}`
-                ) : (
-                  <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                )}
-              </Typography>
-            </Stack>
-            <Grid container justifyContent="center" alignItems="center">
-              <Grid
-                item
-                xs={12}
-                sm={10}
-                md={11}
-                sx={{ border: "1px solid white", mb: 4 }}
-              >
-                <Grid container>
-                  <Grid item xs={12} sm={5} md={5}>
-                    <Box className="viewLeftSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        Name
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={7} md={7}>
-                    <Box className="viewRightSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        {!productViewData?.loading ? (
-                          productViewData?.data?.data?.product?.product_name
-                        ) : (
-                          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                        )}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={12} sm={5} md={5}>
-                    <Box className="viewLeftSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        Cost
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={7} md={7}>
-                    <Box className="viewRightSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        {!productViewData?.loading ? (
-                          productViewData?.data?.data?.product?.cost
-                        ) : (
-                          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                        )}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={12} sm={5} md={5}>
-                    <Box className="viewLeftSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        Category
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={7} md={7}>
-                    <Box className="viewRightSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        {!productViewData?.loading ? (
-                          productViewData?.data?.data?.product?.categoryname
-                        ) : (
-                          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                        )}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={12} sm={5} md={5}>
-                    <Box className="viewLeftSide" height={100}>
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        SKU
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={7} md={7}>
-                    <Box className="viewRightSide" height={100}>
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        {!productViewData?.loading ? (
-                          productViewData?.data?.data?.product?.sku
-                        ) : (
-                          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                        )}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={12} sm={5} md={5}>
-                    <Box className="viewLeftSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        Description
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={7} md={7}>
-                    <Box className="viewRightSide">
-                      <Typography sx={{ py: 2, color: "white" }}>
-                        {!productViewData?.loading ? (
-                          productViewData?.data?.data?.product?.description
-                        ) : (
-                          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                        )}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+          <Grid item xs={12} sm={12} md={10} lg={10} sx={{ my: 4 }}>
+            <Card sx={{ minWidth: 275 }}>
+              <CardContent>
+                <Stack direction={"row"}>
+                  <Typography
+                    sx={{ fontSize: 20, width: "300px" }}
+                    gutterBottom
+                  >
+                    Name of Promotion:
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: 20 }}
+                    color="#951e76"
+                    gutterBottom
+                  >
+                    {promotionViewData?.name}
+                  </Typography>
+                </Stack>
+                <Stack direction={"row"}>
+                  <Typography sx={{ fontSize: 20, width: "300px" }}>
+                    Start Date:
+                  </Typography>
+                  <Typography sx={{ fontSize: 20 }} color="#951e76">
+                    {promotionViewData?.start_date}
+                  </Typography>
+                </Stack>
+                <Stack direction={"row"}>
+                  <Typography sx={{ fontSize: 20, mt: 2, width: "300px" }}>
+                    End Date:
+                  </Typography>
+                  <Typography sx={{ fontSize: 20, mt: 2 }} color="#951e76">
+                    {promotionViewData?.end_date}
+                  </Typography>
+                </Stack>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  style={{ color: "#951e76" }}
+                  onClick={handleClickOpen}
+                >
+                  Add Product
+                </Button>
+              </CardActions>
+            </Card>
           </Grid>
         </Grid>
+        <TableContainer className="rolesPageTable">
+          <Table>
+            <TableHeader />
+            <TableBody>
+              {promotionTable?.loading ? (
+                <TableRowsLoader rowsNum={10} colsNum={9} />
+              ) : (
+                promotionTable?.data?.data?.productdetails.map((item, i) => (
+                  <TableRow key={i}>
+                    <TableCell>{i + 1}</TableCell>
+                    <TableCell>{item?.name}</TableCell>
+                    <TableCell>{item?.start_date}</TableCell>
+                    <TableCell>{item?.end_date}</TableCell>
+                    <TableCell>{item?.status}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
-      <Box>
-        <Typography
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "25px",
-            marginBottom: "20px",
-          }}
+      {open === true ? (
+        <Dialog
+          fullWidth={true}
+          maxWidth={"sm"}
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
         >
-          Related Products
-        </Typography>
-        <Box>
-          <Container maxWidth="lg">
-            <Grid>
-              <Box
-                sx={{
-                  textAlign: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: " flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  {/* {products.subtitle && (
-                    <Typography
-                      color={"#951e76"}
-                      sx={{
-                        borderLeft: "4px solid",
-                        fontWeight: "600",
-                        paddingLeft: "10px",
-                      }}
-                      variant="h5"
-                    >
-                      {products.subtitle}
-                    </Typography>
-                  )} */}
-                </Box>
-                <Box
-                  component={"p"}
-                  sx={{
-                    fontSize: "24px",
-                    fontWeight: "700",
-                    fontFamily: "Barlow",
-                    "& span": {
-                      color: "#9f4103",
-                    },
-                  }}
-                >
-                  {/* {String(products?.title || "")
-                    .split(" ")
-                    .map((titles, index, array) => {
-                      return (
-                        index === 0 && (
-                          <>
-                            <span>{array[0]}</span> <>{array[1]}</>
-                          </>
-                        )
-                      );
-                    })} */}
-                </Box>
-              </Box>
-              <Swiper
-                spaceBetween={50}
-                slidesPerView={4}
-                speed={3500}
-                // navigation={true}
-                loop={true}
-                modules={[Autoplay]}
-                className="mySwiper"
-                autoplay={{
-                  delay: 2000,
-                  disableOnInteraction: true,
-                  pauseOnMouseEnter: true,
-                }}
-                breakpoints={{
-                  // when window width is >= 320px
-                  320: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                  },
-                  // when window width is >= 480px
-                  480: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                  },
-                  // when window width is >= 640px
-                  640: {
-                    slidesPerView: 3,
-                    spaceBetween: 40,
-                  },
-                  // when window width is >= 720px
-                  720: {
-                    slidesPerView: 4,
-                    spaceBetween: 40,
-                  },
-                  // when window width is >= 1200px
-                  1200: {
-                    slidesPerView: 4,
-                    spaceBetween: 40,
-                  },
-                }}
-                // onSlideChange={() => console.log('slide change')}
-                // onSwiper={(swiper) => console.log(swiper)}
-              >
-                {productViewData?.data?.data?.related_product?.map(
-                  (item, index) => (
-                    <SwiperSlide key={index}>
-                      {console.log(item)}
-                      <MediaCard products={item} />
-                    </SwiperSlide>
-                  )
-                )}
-              </Swiper>
-            </Grid>
-          </Container>
-        </Box>
-      </Box>
+          <DialogTitle>
+            <Stack
+              direction={"row"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
+              <Box> Add Product for Promotion</Box>
+              <IconButton onClick={handleClose}>
+                <CloseIcon />
+              </IconButton>
+            </Stack>
+          </DialogTitle>
+
+          <AddProductPromotionForm onClick={handleClose} />
+        </Dialog>
+      ) : null}
     </>
   );
 };
 
-export default ProductView;
+export default PromotionView;

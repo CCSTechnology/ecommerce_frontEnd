@@ -31,11 +31,15 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Link } from "react-router-dom";
 import TopBreaccrumb from "../../../../components/TopBreadcrumb";
 import AddProductForm from "../addPromotionform";
+
 import {
   deleteProductData,
   productListData,
 } from "../../../../redux/api/admin/productService";
-import { listPromotion } from "../../../../redux/api/admin/promotionService";
+import {
+  deletePromotion,
+  listPromotion,
+} from "../../../../redux/api/admin/promotionService";
 import AddPromotionForm from "../addPromotionform";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -52,7 +56,10 @@ function ProductList() {
   const [singleData, setSingleData] = useState(null);
   const [addType, setAddType] = useState(null);
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state?.adminProduct?.listProduct);
+  const promotionList = useSelector(
+    (state) => state?.adminPromotion?.listPromotion
+  );
+  console.log(promotionList);
   const [directoryPage, setDirectoryPage] = useState("admin");
 
   const stateValues = useSelector((state) => {
@@ -111,13 +118,13 @@ function ProductList() {
 
   const delteApiFn = async () => {
     const parameters = {
-      url: `${authEndPoints.product.deleteProductList(delid)}`,
+      url: `${authEndPoints.promotion.promotionDelete(delid)}`,
     };
     try {
-      const response = await dispatch(deleteProductData(parameters)).unwrap();
+      const response = await dispatch(deletePromotion(parameters)).unwrap();
       setDeleteModalOpen(false);
       successAlert(response.message);
-      productsListApi();
+      promotionListApi();
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -129,7 +136,7 @@ function ProductList() {
 
   const handleButtonClick = async () => {
     handleClose(); // Call handleClose to close the form
-    await productsListApi(); // Call handleAddDirectory to add directory data
+    await promotionListApi(); // Call handleAddDirectory to add directory data
   };
 
   const handleChange = (event) => {
@@ -191,19 +198,19 @@ function ProductList() {
           <Table>
             <TableHeader />
             <TableBody>
-              {productList?.loading ? (
+              {promotionList?.loading ? (
                 <TableRowsLoader rowsNum={10} colsNum={9} />
               ) : (
-                productList?.data?.data?.data?.map((row, i) => (
+                promotionList?.data?.data?.map((row, i) => (
                   <TableRow key={row.id}>
                     <TableCell>{i + 1}</TableCell>
-                    <TableCell>{row.product_name}</TableCell>
-                    <TableCell>{row.categoryname}</TableCell>
-                    <TableCell>{row.cost}</TableCell>
-                    <TableCell>{row.description}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.start_date}</TableCell>
+                    <TableCell>{row.end_date}</TableCell>
+                    <TableCell>{row.status}</TableCell>
                     <TableCell align="center">
                       <Stack direction={"row"} gap={2}>
-                        <Link to={`/admin/products/${row.unique_label}`}>
+                        <Link to={`/admin/promotions/${row.id}`}>
                           <VisibilityIcon
                             className="table-icons"
                             sx={{ color: "black" }}
@@ -226,13 +233,13 @@ function ProductList() {
             </TableBody>
           </Table>
         </TableContainer>
-        {productList?.data?.data?.data?.length === 0 ? (
+        {promotionList?.data?.data?.length === 0 ? (
           <Box sx={{ my: 2 }}>
             <Typography>No Data Found</Typography>
           </Box>
         ) : (
           <TablePagination
-            totalRecords={productList?.data?.data?.total}
+            totalRecords={promotionList?.data?.data?.total}
             handlePageChanges={handlePageChanges}
             page={page}
           />

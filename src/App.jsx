@@ -38,6 +38,9 @@ const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
 const Settings = lazy(() => import("./views/admin/settings"));
 const OrderList = lazy(() => import("./views/admin/orders/list"));
 const Promotions = lazy(() => import("./views/admin/promotions/list"));
+const PromotionsView = lazy(() =>
+  import("./views/admin/promotions/promotionView")
+);
 
 //Ecommerce
 const Login = lazy(() => import("./views/ecommerce/auth/login"));
@@ -103,6 +106,10 @@ function App() {
             <Route path="admin/customers" element={<CustomerList />}></Route>
             <Route path="admin/orders" element={<OrderList />}></Route>
             <Route path="admin/promotions" element={<Promotions />}></Route>
+            <Route
+              path="admin/promotions/:id"
+              element={<PromotionsView />}
+            ></Route>
             <Route
               path="admin/customers/:id"
               element={<CustomerView />}
