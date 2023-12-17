@@ -107,7 +107,7 @@ const MyForm = (props) => {
   const { id } = useParams();
   const { control, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
-      product: [],
+      product: [{ id: null, percentage: "" }], // Add initial item
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -132,6 +132,16 @@ const MyForm = (props) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    // Append an empty item when the component mounts
+    if (fields.length === 0) {
+      append({
+        id: null,
+        percentage: "",
+      });
+    }
+  }, [fields, append]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -181,12 +191,15 @@ const MyForm = (props) => {
                 percentage: "",
               })
             }
+            sx={{ color: "#951e76" }}
           >
             Add
           </Button>
         </Grid>
         <Grid item>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" sx={{ color: "#951e76" }}>
+            Submit
+          </Button>
         </Grid>
       </Grid>
     </form>

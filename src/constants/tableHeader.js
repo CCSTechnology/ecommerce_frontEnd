@@ -85,9 +85,9 @@ export const PROMOTION_HEADER = [
 export const PROMOTIONRELATED_HEADER = [
   { label: "S.No", align: "left", id: "id" },
   { label: "Name", align: "left", id: "name" },
-  { label: "Start Date", align: "left", id: "startdate" },
-  { label: "End Date", align: "left", id: "enddate" },
-  { label: "Status", align: "left", id: "status" },
+  { label: "Cost", align: "left", id: "startdate" },
+  { label: "Percentage", align: "left", id: "enddate" },
+  { label: "Promotion cost", align: "left", id: "status" },
 ];
 
 export const CATEGORY_HEADER = [
