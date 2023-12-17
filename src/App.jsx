@@ -36,8 +36,11 @@ const ProductView = lazy(() => import("./views/admin/products/productView"));
 const CustomerList = lazy(() => import("./views/admin/customers/list"));
 const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
 const Settings = lazy(() => import("./views/admin/settings"));
-
 const OrderList = lazy(() => import("./views/admin/orders/list"));
+const Promotions = lazy(() => import("./views/admin/promotions/list"));
+const PromotionsView = lazy(() =>
+  import("./views/admin/promotions/promotionView")
+);
 
 //Ecommerce
 const Login = lazy(() => import("./views/ecommerce/auth/login"));
@@ -74,7 +77,7 @@ function App() {
         <Routes>
           <Route path="/guest-login" element={<GuestCheckOut />}></Route>
           <Route path="/register" element={<SignUp />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />}></Route>
             <Route
@@ -83,14 +86,16 @@ function App() {
             ></Route>
             <Route path="/product/:productSlug" element={<Product />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
-            
+
             <Route path="/checkout" element={<CheckOut />}></Route>
             <Route path="/contact-us" element={<ContactUs />}></Route>
             <Route path="/about-us" element={<AboutUs />}></Route>
             <Route path="/user-profile" element={<UserProfile />}></Route>
             <Route path="/user/myorders" element={<MyOrders />}></Route>
-            <Route path="/user/change-password" element={<ChangePassword />}></Route>
-
+            <Route
+              path="/user/change-password"
+              element={<ChangePassword />}
+            ></Route>
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
@@ -100,6 +105,11 @@ function App() {
             <Route path="admin/products/:id" element={<ProductView />}></Route>
             <Route path="admin/customers" element={<CustomerList />}></Route>
             <Route path="admin/orders" element={<OrderList />}></Route>
+            <Route path="admin/promotions" element={<Promotions />}></Route>
+            <Route
+              path="admin/promotions/:id"
+              element={<PromotionsView />}
+            ></Route>
             <Route
               path="admin/customers/:id"
               element={<CustomerView />}
