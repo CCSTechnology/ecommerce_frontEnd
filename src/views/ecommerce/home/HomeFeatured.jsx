@@ -91,7 +91,7 @@ const FeaturedProductWrapper = styled(Box)`
         display: flex;
         flex-direction: column;
         gap: 32px;
-        margin-bottom: 32px;
+        margin-block: 32px;
 
 `
 

@@ -126,7 +126,7 @@ const PromotionView = (props) => {
   const promotionTable = useSelector(
     (state) => state.adminPromotion.viewPromotion
   );
-  console.log(promotionViewData);
+  console.log(promotionTable);
   const [open, setOpen] = React.useState(false);
   const [unique, setUnique] = useState(null);
   const imageUrl = import.meta.env.VITE_APP_IMG_URL;
@@ -220,10 +220,10 @@ const PromotionView = (props) => {
                 promotionTable?.data?.data?.productdetails.map((item, i) => (
                   <TableRow key={i}>
                     <TableCell>{i + 1}</TableCell>
-                    <TableCell>{item?.name}</TableCell>
-                    <TableCell>{item?.start_date}</TableCell>
-                    <TableCell>{item?.end_date}</TableCell>
-                    <TableCell>{item?.status}</TableCell>
+                    <TableCell>{item?.products?.product_name}</TableCell>
+                    <TableCell>{item?.products?.cost}</TableCell>
+                    <TableCell>{item?.percentage}</TableCell>
+                    <TableCell>{item?.sale_price_customer}</TableCell>
                   </TableRow>
                 ))
               )}

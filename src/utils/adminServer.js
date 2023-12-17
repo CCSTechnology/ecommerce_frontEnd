@@ -10,7 +10,7 @@ const TOKEN_PAYLOAD_KEY = "authorization";
 const ADMINSERVER = axios.create({
   // baseURL : "http://staggingapi.truevine.in/api",
   baseURL,
-    timeout,
+  timeout,
 });
 
 ADMINSERVER.interceptors.request.use(function (config) {

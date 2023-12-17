@@ -1,12 +1,13 @@
 import { TableHead, TableRow, TableCell } from "@mui/material";
 import {
   PRODUCT_HEADER,
+  PROMOTIONRELATED_HEADER,
   PROMOTION_HEADER,
 } from "../../../../constants/tableHeader";
 import React from "react";
 
 function TableHeader() {
-  const header = PROMOTION_HEADER;
+  const header = PROMOTIONRELATED_HEADER;
   return (
     <>
       {!!header.length && (

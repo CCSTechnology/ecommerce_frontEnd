@@ -7,6 +7,10 @@ import { homeDataService } from '../../../redux/api/public/homeService'
 import HomeDelivery from './HomeDelivery'
 import HomeCategory from './HomeCategory'
 import HomeFeatured from './HomeFeatured'
+import HomeAboutUs from './HomeAboutUs'
+import HomeVideo from './HomeVideo'
+import HomeSubBanner from './HomeSubBanner'
+import HomeTestimonials from './HomeTestimonials'
 
 export default function Home(){
   const dispatch = useDispatch()
@@ -25,8 +29,12 @@ export default function Home(){
        <HomeWrapper>
         <HomeBanner />
         <HomeDelivery />
-        <HomeCategory />
+        {/* <HomeCategory /> */}
         <HomeFeatured />
+
+        <HomeVideo />
+        <HomeTestimonials />
+        <HomeAboutUs />
       </HomeWrapper> 
     </StyledContainer>
   )
