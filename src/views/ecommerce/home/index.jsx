@@ -29,10 +29,10 @@ export default function Home(){
        <HomeWrapper>
         <HomeBanner />
         <HomeDelivery />
+        <HomeVideo />
         {/* <HomeCategory /> */}
         <HomeFeatured />
-
-        <HomeVideo />
+        <HomeSubBanner />
         <HomeTestimonials />
         <HomeAboutUs />
       </HomeWrapper> 
