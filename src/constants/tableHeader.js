@@ -68,6 +68,7 @@ export const PRODUCT_HEADER = [
   { label: "S.No", align: "left", id: "id" },
   { label: "Product Name", align: "left", id: "product_name" },
   { label: "Category", align: "left", id: "quantity" },
+  { label: "Weight in Grams", align: "left", id: "weight" },
   { label: "Price", align: "left", id: "price" },
   { label: "Product Description", align: "left", id: "description" },
   { label: "Actions", align: "left", id: "actions" },

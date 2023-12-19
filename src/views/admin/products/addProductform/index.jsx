@@ -54,6 +54,7 @@ const AddProductForm = (props, disabled) => {
   const initialvalue = useSelector(
     (state) => state?.adminProduct?.viewProduct?.data?.data?.product
   );
+  console.log(initialvalue);
 
   const formLoading = useSelector(
     (state) => state?.adminProduct?.viewProduct?.loading
@@ -91,10 +92,15 @@ const AddProductForm = (props, disabled) => {
   // Add Directory Api
   const handleAddProduct = async (values) => {
     console.log(values);
-
+    const { weight, ...data } = values;
+    const value = {
+      ...data,
+      weight: weight / 1000,
+    };
+    console.log(value);
     const parameters = {
       url: `${authEndPoints.product.productAdd}`,
-      data: values,
+      data: value,
     };
     try {
       const response = await dispatch(addProductData(parameters)).unwrap();
@@ -107,10 +113,18 @@ const AddProductForm = (props, disabled) => {
   };
 
   const handleEditProduct = async (values) => {
+    console.log(values);
+    const { weight, ...data } = values;
+    const value = {
+      ...data,
+      weight: weight / 1000,
+    };
+    console.log(value);
     const parameters = {
       url: `${authEndPoints.product.editProduct(initialvalue?.id)}`,
-      data: values,
+      data: value,
     };
+    console.log(parameters);
     try {
       const response = await dispatch(editProductData(parameters)).unwrap();
       onClick();
@@ -178,14 +192,12 @@ const AddProductForm = (props, disabled) => {
   useEffect(() => {
     if (type !== "add") {
       if (initialvalue) {
-        // const { date, start_time, end_time, created_by, created_at, ...others } = initialValue;
-        // const prevData = {
-        // 	...others,
-        // 	date: dayjs(date, "YYYY-MM-DD"),
-        // 	start_time: dayjs(start_time, "hh:mm A"),
-        // 	end_time: dayjs(end_time, "hh:mm A"),
-        // };
-        reset(initialvalue);
+        const { weight, ...restOfValues } = initialvalue;
+        const value = {
+          ...restOfValues,
+          weight: weight * 1000,
+        };
+        reset(value);
       } else {
         reset();
       }
@@ -249,6 +261,17 @@ const AddProductForm = (props, disabled) => {
                 label=" Image"
                 watch={watch}
                 setValue={setValue}
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={5} sx={{ mb: 2 }}>
+            <Grid item xs={6}>
+              <TextFormField
+                name="weight"
+                control={control}
+                Controller={Controller}
+                label="Weight In Grams"
+                error={errors?.weight?.message}
               />
             </Grid>
           </Grid>
