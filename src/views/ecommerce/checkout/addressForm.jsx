@@ -123,7 +123,10 @@ export default React.memo(function BillingAddressForm({
                 }
                 values.address_details = [details];
                 const response = await dispatch(guestAddAddress(values)).unwrap();
-                setGuestAllow(response);
+                setGuestAllow({
+                    ...response ,
+                    zipcode : details['zipcode']
+                });
                 toast.success("Address Added")
             }
         } catch (error) {

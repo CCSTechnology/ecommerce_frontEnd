@@ -206,8 +206,11 @@ function VegetableCard({ product }) {
           </SKU>
         </Details>
         <Price>
-          <OriginalPrice>₹ {Number(product?.cost).toFixed(2)}</OriginalPrice>
-          <DiscountedPrice>₹ {Number(product?.cost).toFixed(2)}</DiscountedPrice>
+          {
+            product?.promotion_cost_customer && product?.promotion_cost_customer < product?.cost ? <><OriginalPrice>₹ {Number(product?.cost).toFixed(2)}</OriginalPrice>
+            <DiscountedPrice>₹ {Number(product?.promotion_cost_customer).toFixed(2)}</DiscountedPrice></> : <DiscountedPrice>₹ {Number(product?.cost).toFixed(2)}</DiscountedPrice>
+          }
+          
         </Price>
       </Card>
       <Divider />

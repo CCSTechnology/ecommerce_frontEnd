@@ -106,3 +106,12 @@ export const checkOutWithGuest = createAsyncThunk("checkOutWithGuest", async (da
   }
 })
 
+export const getDeliveryCharge = createAsyncThunk("getDeliveryCharge", async (data, thunkApi) => {
+  try {
+    const response = await PUBLICSERVER.post("/getDeliveryCharges", data)
+    return response.data
+  } catch (error) {
+    return thunkApi.rejectWithValue(error);
+  }
+})
+

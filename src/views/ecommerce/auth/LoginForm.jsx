@@ -47,7 +47,7 @@ function LoginForm() {
   };
 
   const handleLogin = async (values) => {
-    const cardId = searchParams.get("cart_id") || null;
+    const cardId = searchParams.get("cart_id") || localStorage.getItem('cart_id') || null;
     const path = searchParams.get("callBackUrl") || "/";
     if (searchParams.get("callBackUrl")) {
       dispatch(cartViewServices({

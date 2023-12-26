@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MyOrdersApi } from '../../../redux/api/public/authService';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import dayjs from 'dayjs';
+import { ImagePath } from '../../../utils/helpers';
 
 export default function MyOrders() {
   const dispatch = useDispatch()
@@ -27,7 +28,6 @@ export default function MyOrders() {
       setOrderList(orders)
     }
   }, [orders])
-  console.log(orderList, "orderList")
   return (
     <StyledContainer>
       <MyOrdersWrapper>
@@ -63,40 +63,67 @@ export default function MyOrders() {
                   {
                     order?.details?.map((detail, detailIndex) => {
                       return <Grid container justifyContent={'space-between'} key={detailIndex} >
-                        <Grid item md={4} lg={4} sx={{
+                      <Grid item md={1} lg={3} sx={{
+                          padding: "10px",
+                          display: 'flex',
+                          alignItems: "center"
+                        }}>
+                          <Image loading="lazy" srcSet={ImagePath + detail.product.file_name} />
+                        </Grid>
+                        <Grid item md={3} lg={3} sx={{
                           padding: "10px",
                           display: 'flex',
                           alignItems: "center"
                         }}>
                           {detail.product_name}
                         </Grid>
-                        <Grid item md={4} lg={4} textAlign={'center'}>
+                        <Grid item md={3} lg={3} textAlign={'center'} sx={{
+                          display : "flex",
+                          justifyContent : "center",
+                          alignItems : "center"
+                        }}>
                           X{detail.quantity}
                         </Grid>
-                        <Grid item md={4} lg={4} textAlign={'center'}>
+                        <Grid item md={3} lg={3} textAlign={'center'} sx={{
+                          display : "flex",
+                          justifyContent : "center",
+                          alignItems : "center"
+                        }}>
                           ₹ {detail.total_amount}
                         </Grid>
                       </Grid>
                     })
                   }
                   <Divider />
-                  <Grid container>
-                    <Grid item md={4} lg={4} sx={{
+                  <Grid container >
+                    <Grid item md={3} lg={3} sx={{
                       padding: "10px",
                       display: 'flex',
                       alignItems: "center"
                     }}>Tax:</Grid>
-                    <Grid item md={4} lg={4}></Grid>
-                    <Grid item md={4} lg={4} textAlign={'center'} >₹{order?.total_tax}</Grid>
+                    <Grid item md={3} lg={3}></Grid>
+                    <Grid item md={3} lg={3}></Grid>
+
+                    <Grid item md={3} lg={3} textAlign={'center'} sx={{
+                      display : "flex",
+                      justifyContent :"center",
+                      alignItems :"center"
+                    }}>₹{order?.total_tax}</Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item md={4} lg={4} sx={{
+                    <Grid item md={3} lg={3} sx={{
                       padding: "10px",
                       display: 'flex',
                       alignItems: "center"
                     }}>Total:</Grid>
-                    <Grid item md={4} lg={4}></Grid>
-                    <Grid item md={4} lg={4} textAlign={'center'} >₹{order?.grand_total}</Grid>
+                    <Grid item md={3} lg={3}></Grid>
+                    <Grid item md={3} lg={3}></Grid>
+
+                    <Grid item md={3} lg={3} textAlign={'center'} sx={{
+                          display : "flex",
+                          justifyContent : "center",
+                          alignItems : "center"
+                        }}>₹{order?.grand_total}</Grid>
                   </Grid>
                 </AccordionDetails>
               </Accordion>
@@ -129,4 +156,10 @@ const Title = styled(Typography)`
 const OrderId = styled(Typography)`
    text-align: center;
   font-weight: 500;
+`
+
+const Image = styled('img')`
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
 `
