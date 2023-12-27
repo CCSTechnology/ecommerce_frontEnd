@@ -18,8 +18,12 @@ function ProductCard({ product, addToCart }) {
           flex: 1
         }}>
           <ProductName>{String(product.product_name)}</ProductName>
-
-          <ProductPrice>₹ {Number(product.cost).toFixed(2)}</ProductPrice>
+          {
+            product?.promotion_cost_customer && (product?.promotion_cost_customer < product.cost) ? <Box>
+              <ProductStrikePrice>₹ {Number(product.cost).toFixed(2)}</ProductStrikePrice>
+              <ProductPrice>₹ {Number(product.promotion_cost_customer).toFixed(2)}</ProductPrice>
+            </Box> :  <ProductPrice>₹ {Number(product.cost).toFixed(2)}</ProductPrice>
+          }
         </Box>
         <CartImgWrapper onClick={(e) => {
           e.preventDefault()
@@ -80,15 +84,29 @@ const ProductName = styled('p')`
 `;
 
 const ProductPrice = styled('span')`
-  color: var(--gray-scale-gray-900, #1a1a1a);
+  color: var(--gray-scale-gray-900, #951e76);
   align-self: stretch;
   white-space: nowrap;
+  padding-right:  10px;
   font: 500 16px/24px Poppins, sans-serif;
   @media (max-width: 991px) {
     margin-left: 5px;
     white-space: initial;
   }
 `;
+const ProductStrikePrice = styled('span')`
+  color: var(--gray-scale-gray-900, #1a1a1a);
+  align-self: stretch;
+  white-space: nowrap;
+  padding-right:  10px;
+  text-decoration: line-through;
+  font: 500 16px/24px Poppins, sans-serif;
+  @media (max-width: 991px) {
+    margin-left: 5px;
+    white-space: initial;
+  }
+`;
+
 
 
 const ProductFooter = styled(Box)`

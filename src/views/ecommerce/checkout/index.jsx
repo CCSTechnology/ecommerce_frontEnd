@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Typography } from '@mui/material';
 import React, { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartViewServices, checkOutWithGuest, checkOutWithUser } from '../../../redux/api/public/cartServices';
+import { cartViewServices, checkOutWithGuest, checkOutWithUser, getDeliveryCharge } from '../../../redux/api/public/cartServices';
 import { useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
@@ -36,6 +36,8 @@ export default memo(function GetLoginCheckout() {
     const [cartList, setCartList] = useState(null)
     const [user, setUser] = useState(null)
     const [guest, setGuest] = useState(null)
+    const [delivery, setDelivery] = useState(null)
+
     const breadcrumbs = [{
         label: "Home",
         link: '/',
@@ -49,10 +51,11 @@ export default memo(function GetLoginCheckout() {
     const cartId = localStorage.getItem('cart_id') || null
     const [guestAllow, setGuestAllow] = useState(null)
 
-    async function getCartList() {
+    async function getCartList(value) {
         try {
             const response = await dispatch(cartViewServices({
-                cart_id: cartId
+                cart_id: cartId,
+
             })).unwrap()
             setCartList(response || null)
         } catch (error) {
@@ -83,7 +86,8 @@ export default memo(function GetLoginCheckout() {
                 const response = await dispatch(checkOutWithUser({
                     billing_address_id: user?.id,
                     shipping_address_id: user?.id,
-                    delivery_charges: 0,
+                    delivery_charges: delivery?.amount,
+                    courier_name: delivery?.courier_name,
                     cart_id: ""
                 })).unwrap()
                 window.location.href = response.payment_details
@@ -108,7 +112,8 @@ export default memo(function GetLoginCheckout() {
                     billing_address_id: guestAllow?.billing_id,
                     shipping_address_id: guestAllow?.billing_id,
                     cart_id: cartId,
-                    delivery_charges: 0,
+                    delivery_charges: delivery?.amount,
+                    courier_name: delivery?.courier_name,
                     guest_id: guestAllow?.billing_id
                 })).unwrap()
                 window.location.href = response.payment_details
@@ -121,7 +126,19 @@ export default memo(function GetLoginCheckout() {
             errorAlert(error?.error)
         }
     }
+    async function handleGetDeliveryGuest(values) {
+        try {
+            const response = await dispatch(getDeliveryCharge({
+                "pincode": values?.zipcode,
+                "weight": cartList?.total_weight,
+                "cod": false
+            })).unwrap()
+            setDelivery(response)
 
+        } catch (error) {
+            errorAlert(error?.error)
+        }
+    }
 
 
     async function getMe() {
@@ -150,6 +167,7 @@ export default memo(function GetLoginCheckout() {
                 zipcode: address?.zipcode || "",
                 address: address?.address || "",
             }
+
             setUser(dat)
         } catch (error) {
         }
@@ -160,15 +178,23 @@ export default memo(function GetLoginCheckout() {
     }, [])
 
     useEffect(() => {
-        getCartList()
-    }, [user])
+        if (user) {
+            handleGetDeliveryGuest(user)
+        }
+        if (guestAllow) {
+            handleGetDeliveryGuest(guestAllow)
+        }
+    }, [user, guestAllow])
 
 
     useEffect(() => {
         if (cartData) {
             setCartList(cartData)
+
         }
     }, [cartData])
+
+
 
 
     return (
@@ -194,6 +220,7 @@ export default memo(function GetLoginCheckout() {
                         loading={formHook.formState.isSubmitting}
                         valid={formHook.formState.isValid}
                         checkout={cartList} guest={guest}
+                        delivery={delivery}
                         handleSubmit={handleSubmit}
                         handleCheckOut={handleCheckOut}
                         handleCheckOutGuest={handleCheckOutGuest} />

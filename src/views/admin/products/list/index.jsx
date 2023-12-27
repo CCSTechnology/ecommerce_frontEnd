@@ -196,6 +196,7 @@ function ProductList() {
                     <TableCell>{i + 1}</TableCell>
                     <TableCell>{row.product_name}</TableCell>
                     <TableCell>{row.categoryname}</TableCell>
+                    <TableCell>{row.weight * 1000}&nbsp;grams</TableCell>
                     <TableCell>{row.cost}</TableCell>
                     <TableCell>{row.description}</TableCell>
                     <TableCell align="center">

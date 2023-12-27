@@ -21,7 +21,9 @@ export default function HomeAboutUs() {
 
             <HomeAboutUsWrapper>
                 <AboutUs>
-                    <HomeTitle featured={aboutUs} link={false} />
+                    <Title>
+                        {aboutUs?.title || ''}
+                    </Title>
                     <HomeAboutUsContent
                         dangerouslySetInnerHTML={{
                             __html: aboutUs?.data
@@ -63,4 +65,12 @@ const AboutUs = styled(Box)`
         height: 100%;
         width: 100%;
     }
+`
+
+const Title = styled(Typography)`
+    color:  #951e76;
+  flex-grow: 1;
+  flex-basis: auto;
+  text-transform: capitalize;
+  font: 600 32px/38px Poppins, sans-serif;
 `

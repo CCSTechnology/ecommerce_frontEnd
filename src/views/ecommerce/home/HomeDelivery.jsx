@@ -69,6 +69,7 @@ const FeatureContainer = styled(Box)`
   gap: 20px;
   display: flex;
   margin: 16px 0;
+  padding: 20px;
 
   @media (max-width: 991px) {
     flex-direction: column;

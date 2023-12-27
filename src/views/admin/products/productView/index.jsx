@@ -232,6 +232,26 @@ const ProductView = (props) => {
                 </Grid>
                 <Grid container>
                   <Grid item xs={12} sm={5} md={5}>
+                    <Box className="viewLeftSide">
+                      <Typography sx={{ py: 2, color: "white" }}>
+                        Weight In Grams
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={7} md={7}>
+                    <Box className="viewRightSide">
+                      <Typography sx={{ py: 2, color: "white" }}>
+                        {!productViewData?.loading ? (
+                          productViewData?.data?.data?.product?.weight * 1000
+                        ) : (
+                          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                        )}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={12} sm={5} md={5}>
                     <Box className="viewLeftSide" height={100}>
                       <Typography sx={{ py: 2, color: "white" }}>
                         SKU

@@ -52,9 +52,10 @@ const Price = styled('span')`
 `
 
 
-export default React.memo(function OrderSummary({ checkout, guest, handleCheckOutGuest, handleCheckOut, handleSubmit, loading, valid }) {
+export default React.memo(function OrderSummary({ checkout, guest, handleCheckOutGuest, handleCheckOut, handleSubmit, loading, delivery }) {
     const products = checkout?.details || []
     const navigate = useNavigate()
+    const amount = delivery?.amount || 0
     return (
         <OrderSummaryWrapper>
             <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
@@ -74,11 +75,11 @@ export default React.memo(function OrderSummary({ checkout, guest, handleCheckOu
                 </OrderAmountWrapper>
                 <OrderAmountWrapper>
                     <Typography>Shipping:</Typography>
-                    <span>Free</span>
+                    <span>₹ {Number(delivery?.amount || 0).toFixed(2)}</span>
                 </OrderAmountWrapper>
                 <OrderAmountWrapper>
                     <Typography>Total:</Typography>
-                    <span>₹ {Number(checkout?.grand_total || 0).toFixed(2)}</span>
+                    <span>₹ {Number(checkout?.grand_total + amount || 0).toFixed(2)}</span>
                 </OrderAmountWrapper>
             </Box>
             <ButtonWrapper>
