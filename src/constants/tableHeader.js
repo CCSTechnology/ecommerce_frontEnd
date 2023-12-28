@@ -77,9 +77,9 @@ export const PRODUCT_HEADER = [
 export const PROMOTION_HEADER = [
   { label: "S.No", align: "left", id: "id" },
   { label: "Name", align: "left", id: "name" },
-  { label: "Start Date", align: "left", id: "startdate" },
-  { label: "End Date", align: "left", id: "enddate" },
-  { label: "Status", align: "left", id: "status" },
+  { label: "Cost", align: "left", id: "startdate" },
+  { label: "Percentage", align: "left", id: "enddate" },
+  { label: "Promotion cost", align: "left", id: "status" },
   { label: "Actions", align: "left", id: "actions" },
 ];
 
@@ -89,6 +89,7 @@ export const PROMOTIONRELATED_HEADER = [
   { label: "Cost", align: "left", id: "startdate" },
   { label: "Percentage", align: "left", id: "enddate" },
   { label: "Promotion cost", align: "left", id: "status" },
+  { label: "Actions", align: "left", id: "actions" },
 ];
 
 export const CATEGORY_HEADER = [
@@ -110,6 +111,8 @@ export const ORDER_HEADER = [
   { label: "Customer Name", align: "left", id: "customer_name" },
   { label: " Amount", align: "left", id: "amount" },
   { label: " Total Tax", align: "left", id: "total_tax" },
+  { label: " Total weight", align: "left", id: "total_weight" },
+  { label: " Courier Name", align: "left", id: "courier_name" },
   { label: "Shipping Cost", align: "left", id: "shipping_cost" },
   { label: "Grand Total", align: "left", id: "grand_total" },
   { label: "Order status", align: "left", id: "status" },

@@ -145,60 +145,62 @@ const PromotionView = (props) => {
     };
     try {
       const res = await dispatch(viewPromotion(parameters)).unwrap();
+      console.log(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
   };
   useEffect(() => {
     viewPromotionAPi();
-  }, [id]);
+  }, []);
   return (
     <>
-      <Box className="indexBox">
-        <TopBreaccrumb title={"Promotion List"} to={`/admin/products`} />
-        <Grid
-          container
-          spacing={2}
-          sx={{ my: 4 }}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={12} sm={12} md={10} lg={10} sx={{ my: 4 }}>
-            <Card sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Stack direction={"row"}>
-                  <Typography
-                    sx={{ fontSize: 20, width: "300px" }}
-                    gutterBottom
-                  >
-                    Name of Promotion:
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: 20 }}
-                    color="#951e76"
-                    gutterBottom
-                  >
-                    {promotionViewData?.name}
-                  </Typography>
-                </Stack>
-                <Stack direction={"row"}>
-                  <Typography sx={{ fontSize: 20, width: "300px" }}>
-                    Start Date:
-                  </Typography>
-                  <Typography sx={{ fontSize: 20 }} color="#951e76">
-                    {promotionViewData?.start_date}
-                  </Typography>
-                </Stack>
-                <Stack direction={"row"}>
-                  <Typography sx={{ fontSize: 20, mt: 2, width: "300px" }}>
-                    End Date:
-                  </Typography>
-                  <Typography sx={{ fontSize: 20, mt: 2 }} color="#951e76">
-                    {promotionViewData?.end_date}
-                  </Typography>
-                </Stack>
-              </CardContent>
-              <CardActions>
+      {promotionTable?.data?.data?.productdetails.map((row, i) => {
+        <Box className="indexBox">
+          <TopBreaccrumb title={"Promotion List"} to={`/admin/products`} />
+          <Grid
+            container
+            spacing={2}
+            sx={{ my: 4 }}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={12} sm={12} md={10} lg={10} sx={{ my: 4 }}>
+              <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                  <Stack direction={"row"}>
+                    <Typography
+                      sx={{ fontSize: 20, width: "300px" }}
+                      gutterBottom
+                    >
+                      Name of Product:
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 20 }}
+                      color="#951e76"
+                      gutterBottom
+                    >
+                      {row?.products.product_name}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"row"}>
+                    <Typography sx={{ fontSize: 20, width: "300px" }}>
+                      Start Date:
+                    </Typography>
+                    <Typography sx={{ fontSize: 20 }} color="#951e76">
+                      {promotionViewData?.start_date}
+                    </Typography>
+                  </Stack>
+                  <Stack direction={"row"}>
+                    <Typography sx={{ fontSize: 20, mt: 2, width: "300px" }}>
+                      End Date:
+                    </Typography>
+                    <Typography sx={{ fontSize: 20, mt: 2 }} color="#951e76">
+                      {promotionViewData?.end_date}
+                    </Typography>
+                  </Stack>
+                </CardContent>
+                {/* <CardActions>
                 <Button
                   size="small"
                   style={{ color: "#951e76" }}
@@ -206,11 +208,11 @@ const PromotionView = (props) => {
                 >
                   Add Product
                 </Button>
-              </CardActions>
-            </Card>
+              </CardActions> */}
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-        <TableContainer className="rolesPageTable">
+          {/* <TableContainer className="rolesPageTable">
           <Table>
             <TableHeader />
             <TableBody>
@@ -229,8 +231,10 @@ const PromotionView = (props) => {
               )}
             </TableBody>
           </Table>
-        </TableContainer>
-      </Box>
+        </TableContainer> */}
+        </Box>;
+      })}
+
       {open === true ? (
         <Dialog
           fullWidth={true}
