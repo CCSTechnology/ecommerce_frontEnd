@@ -37,8 +37,12 @@ export default function PublicFooter(props) {
                 <Div20>Contact Us</Div20>
               </Link>
               <Div21>Faqs</Div21>
-              <Div22>Terms & Condition</Div22>
-              <Div23>Privacy Policy</Div23>
+              <Link to="/terms-conditions">
+                <Div22>Terms & Condition</Div22>
+              </Link>
+              <Link to="/privacy-policy">
+                <Div23>Privacy Policy</Div23>
+              </Link>
             </Div18>
             <Div24>
               <Div25>Proxy</Div25>

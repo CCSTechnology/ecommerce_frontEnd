@@ -200,7 +200,7 @@ const FeaturedProducts = () => {
   return (
     <Box>
       <Box className="indexBox">
-        <TopBreaccrumb title={"Settings"} to={`/admin/dashboard`} />
+        <TopBreaccrumb title={"Featured Products"} to={`/admin/dashboard`} />
         <Stack
           direction={{ lg: "row", sm: "column" }}
           gap={2}
@@ -221,7 +221,10 @@ const FeaturedProducts = () => {
                 </Stack>
               </Stack>
             </Box>
-            <TableContainer className="rolesPageTable">
+            <TableContainer
+              className="rolesPageTable"
+              style={{ marginBottom: "30px" }}
+            >
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>

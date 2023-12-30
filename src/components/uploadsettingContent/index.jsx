@@ -61,7 +61,7 @@ const UploadSettingContent = () => {
   return (
     <Box>
       <Box className="indexBox">
-        <TopBreaccrumb title={"Settings"} to={`/admin/dashboard`} />
+        <TopBreaccrumb title={"Upload Content"} to={`/admin/dashboard`} />
         <Stack
           direction={{ lg: "row", sm: "column" }}
           gap={2}

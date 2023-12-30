@@ -119,12 +119,46 @@ const AdminSidebar = () => {
         >
           Orders
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           component={<Link to="admin/settings" className="link" />}
           icon={<IconComponent src={GoogleForms} />}
         >
           Settings
-        </MenuItem>
+        </MenuItem> */}
+        <SubMenu label="Settings" icon={<IconComponent src={GoogleForms} />}>
+          <MenuItem
+            component={
+              <Link to="admin/settings/upload-images" className="link" />
+            }
+            icon={<IconComponent src={GoogleForms} />}
+          >
+            Upload Images
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link to="admin/settings/upload-content" className="link" />
+            }
+            icon={<IconComponent src={GoogleForms} />}
+          >
+            Content Upload
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link to="admin/settings/featured-products" className="link" />
+            }
+            icon={<IconComponent src={GoogleForms} />}
+          >
+            Featured Products
+          </MenuItem>
+          <MenuItem
+            component={
+              <Link to="admin/settings/featured-products" className="link" />
+            }
+            icon={<IconComponent src={GoogleForms} />}
+          >
+            Footer Link
+          </MenuItem>
+        </SubMenu>
         <MenuItem
           component={<Link to="admin/promotions" className="link" />}
           icon={<IconComponent src={GoogleForms} />}
