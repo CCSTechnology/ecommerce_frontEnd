@@ -96,11 +96,59 @@ const TermsConditions = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Typography sx={{ fontSize: "16px" }}>
-                  Your information, whether public or private, will not be sold,
-                  exchanged, transferred, or given to any other company for any
-                  reason whatsoever, without your consent, other than for the
-                  express purpose of delivering the purchased product or service
-                  requested.
+                  (A) Security Rules
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  Visitors are prohibited from violating or attempting to
+                  violate the security of the Web site, including, without
+                  limitation,
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  • Accessing data not intended for such user or logging into a
+                  server or account which the user is not authorized to access,
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  • Attempting to probe, scan or test the vulnerability of a
+                  system or network or to breach security or authentication
+                  measures without proper authorization.
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  • Attempting to interfere with service to any user, host or
+                  network, including, without limitation, via means of
+                  submitting a virus or "Trojan horse" to the Website,
+                  overloading, "flooding", "mail bombing" or "crashing",
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  • Sending unsolicited electronic mail, including promotions
+                  and/or advertising of products or services. Violations of
+                  system or network security may result in civil or criminal
+                  liability. The business and / or its associate entities will
+                  have the right to investigate occurrences that they suspect as
+                  involving such violations and will have the right to involve,
+                  and cooperate with, law enforcement authorities in prosecuting
+                  users who are involved in such violations.
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  (B) General Rules
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  Visitors may not use the Web Site in order to transmit,
+                  distribute, store or destroy material
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  (a) That could constitute or encourage conduct that would be
+                  considered a criminal offence or violate any applicable law or
+                  regulation,
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  (b) In a manner that will infringe the copyright, trademark,
+                  trade secret or other intellectual property rights of others
+                  or violate the privacy or publicity of other personal rights
+                  of others
+                </Typography>
+                <Typography sx={{ fontSize: "16px", mt: 3 }}>
+                  (c) That is libelous, defamatory, pornographic, profane,
+                  obscene, threatening, abusive or hateful.
                 </Typography>
               </AccordionDetails>
             </Accordion>

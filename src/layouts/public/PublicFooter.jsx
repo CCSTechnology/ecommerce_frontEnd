@@ -43,6 +43,12 @@ export default function PublicFooter(props) {
               <Link to="/privacy-policy">
                 <Div23>Privacy Policy</Div23>
               </Link>
+              <Link to="/shipping-policy">
+                <Div23>Shipping Policy</Div23>
+              </Link>
+              <Link to="/refund-policy">
+                <Div23>Cancellation & Refund Policy</Div23>
+              </Link>
             </Div18>
             <Div24>
               <Div25>Proxy</Div25>
