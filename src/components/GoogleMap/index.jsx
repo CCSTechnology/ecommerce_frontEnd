@@ -11,7 +11,7 @@ import L from "leaflet";
 // Import the Leaflet components using dynamic import
 
 const GoogleMap = (props) => {
-  const ZOOM_LEVEL = 9;
+  const ZOOM_LEVEL = 14;
   const mapRef = useRef();
 
   const position = [8.721499525470726, 77.773508746398362];

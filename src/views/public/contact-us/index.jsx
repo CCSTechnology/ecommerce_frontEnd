@@ -39,7 +39,7 @@ const ContactUs = ({ title }) => {
 
         <Box sx={{ mt: 10 }}>
           <Grid container>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <Box textAlign={"center"} className="Contactline">
                 <img src={Location} style={{ height: "70px" }} />
                 <Box>
@@ -55,7 +55,7 @@ const ContactUs = ({ title }) => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4} sx={{ mt: { xs: 2, md: 0 } }}>
               <Box textAlign={"center"} className="Contactline">
                 <Link to="tel:+919321188645">
                   <img src={Call} style={{ height: "70px" }} />
@@ -68,7 +68,7 @@ const ContactUs = ({ title }) => {
                 </Link>
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <Box textAlign={"center"}>
                 <Link to="mailto:info@truevinefoods.com">
                   <img src={Email} style={{ height: "70px" }} />
