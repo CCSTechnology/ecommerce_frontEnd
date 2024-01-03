@@ -226,6 +226,7 @@ export default function Header() {
               display: "flex",
               gap: "10px",
               alignItems: "center",
+              mt: { xs: "-10px", md: "0px" },
             }}
           >
             <Link to="/login">Login</Link>
@@ -305,6 +306,10 @@ const CartContainer = styled(Box)`
   @media (max-width: 991px) {
     max-width: 100%;
     flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 400px) {
+    padding: 0 0px;
   }
 `;
 

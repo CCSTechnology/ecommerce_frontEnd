@@ -1,44 +1,42 @@
-import { Box, styled } from '@mui/material'
-import React, { useEffect } from 'react'
-import StyledContainer from '../../../components/ecommerce/StyledContainer'
-import HomeBanner from './HomeBanner'
-import { useDispatch } from 'react-redux'
-import { homeDataService } from '../../../redux/api/public/homeService'
-import HomeDelivery from './HomeDelivery'
-import HomeCategory from './HomeCategory'
-import HomeFeatured from './HomeFeatured'
-import HomeAboutUs from './HomeAboutUs'
-import HomeVideo from './HomeVideo'
-import HomeSubBanner from './HomeSubBanner'
-import HomeTestimonials from './HomeTestimonials'
+import { Box, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import StyledContainer from "../../../components/ecommerce/StyledContainer";
+import HomeBanner from "./HomeBanner";
+import { useDispatch } from "react-redux";
+import { homeDataService } from "../../../redux/api/public/homeService";
+import HomeDelivery from "./HomeDelivery";
+import HomeCategory from "./HomeCategory";
+import HomeFeatured from "./HomeFeatured";
+import HomeAboutUs from "./HomeAboutUs";
+import HomeVideo from "./HomeVideo";
+import HomeSubBanner from "./HomeSubBanner";
+import HomeTestimonials from "./HomeTestimonials";
 
-export default function Home(){
-  const dispatch = useDispatch()
+export default function Home() {
+  const dispatch = useDispatch();
   const HomeApi = async () => {
     try {
-     await dispatch(homeDataService()).unwrap()
-    } catch (error) {
-    }
-  }
+      await dispatch(homeDataService()).unwrap();
+    } catch (error) {}
+  };
   useEffect(() => {
-    HomeApi()
-  }, [])
+    HomeApi();
+  }, []);
 
   return (
     <StyledContainer>
-       <HomeWrapper>
+      <HomeWrapper>
         <HomeBanner />
         <HomeDelivery />
         <HomeVideo />
         {/* <HomeCategory /> */}
         <HomeFeatured />
-        <HomeSubBanner />
+        {/* <HomeSubBanner /> */}
         <HomeTestimonials />
         <HomeAboutUs />
-      </HomeWrapper> 
+      </HomeWrapper>
     </StyledContainer>
-  )
+  );
 }
 
-const HomeWrapper = styled(Box)(({ }) => ({
-}))
+const HomeWrapper = styled(Box)(({}) => ({}));

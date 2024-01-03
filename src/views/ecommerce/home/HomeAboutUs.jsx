@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Grid, Typography, styled } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import StyledContainer from "../../../components/ecommerce/StyledContainer";
@@ -19,7 +19,7 @@ export default function HomeAboutUs() {
         />
       </HomeAboutUsWrapper>
 
-      <HomeAboutUsWrapper>
+      {/* <HomeAboutUsWrapper>
         <AboutUs>
           <Title>{aboutUs?.title || ""}</Title>
           <HomeAboutUsContent
@@ -31,7 +31,26 @@ export default function HomeAboutUs() {
         <AboutUs>
           <img src="https://ccstechnolgy.s3.eu-north-1.amazonaws.com/TruevineProducts/0e4ff2f4-a09c-4a43-8cde-f7e13a3821f4.webp" />
         </AboutUs>
-      </HomeAboutUsWrapper>
+      </HomeAboutUsWrapper> */}
+      <Grid container>
+        <Grid md={6} xs={12}>
+          <Title sx={{ textAlign: { xs: "center" } }}>
+            {aboutUs?.title || ""}
+          </Title>
+          <HomeAboutUsContent
+            dangerouslySetInnerHTML={{
+              __html: aboutUs?.data,
+            }}
+            sx={{ p: { xs: "20px", md: "0px" }, pr: { md: "30px" } }}
+          />
+        </Grid>
+        <Grid md={6} xs={12}>
+          <img
+            src="https://ccstechnolgy.s3.eu-north-1.amazonaws.com/TruevineProducts/0e4ff2f4-a09c-4a43-8cde-f7e13a3821f4.webp"
+            style={{ width: "100%", marginBottom: "30px" }}
+          />
+        </Grid>
+      </Grid>
     </StyledContainer>
   );
 }
