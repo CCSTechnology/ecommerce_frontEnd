@@ -1,11 +1,131 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Container, Typography, styled } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-
-export default function HomeSubBanner() {
+import Carousel from "react-material-ui-carousel";
+import AOS from "aos";
+import StyledContainer from "../../../components/ecommerce/StyledContainer";
+const CustomDotIndicator = () => {
   return (
-    <HomeSubBannerWrapper>
-      {/* <img src="/subbanner.jpg" alt="subbanner"/> */}
-    </HomeSubBannerWrapper>
+    <div
+      style={{
+        display: "inline-block",
+        position: "relative",
+        zIndex: 999,
+        width: "40px",
+        height: "4px",
+        borderRadius: "2px",
+        margin: "0 5px",
+        // backgroundColor: "rgba(103, 103, 103, 0.40)",
+      }}
+    ></div>
+  );
+};
+const images = ["/banner1.jpg", "/baner2.webp"];
+export default function HomeSubBanner() {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: false,
+    });
+  }, []);
+  return (
+    // <HomeSubBannerWrapper>
+    //   <img src="/subbanner.jpg" alt="subbanner"/>
+    //  </HomeSubBannerWrapper>
+
+    <Container
+      maxWidth="lg"
+      sx={{ maxWidth: { xl: "77% !important", lg: "77%" } }}
+      className="oneee"
+      data-aos="fade-up"
+      data-aos-duration="3000"
+    >
+      <Carousel
+        IndicatorIcon={<CustomDotIndicator />}
+        // navButtonsAlwaysVisible={false}
+        indicatorIconButtonProps={{
+          style: {
+            backgroundColor: "rgba(103, 103, 103, 0.40)",
+            display: "inline-block",
+            position: "relative",
+            zIndex: 999,
+            width: "7%",
+            height: "4px",
+            borderRadius: "2px",
+            margin: "0 5px",
+            // marginTop: "20px",
+          },
+        }}
+        activeIndicatorIconButtonProps={{
+          style: {
+            backgroundColor: "#1967B2",
+            display: "inline-block",
+            position: "relative",
+            zIndex: 999,
+            width: "7%",
+            height: "4px",
+            borderRadius: "2px",
+            margin: "0 5px",
+            // marginTop: "20px",
+          },
+        }}
+      >
+        {/* <Box
+          textAlign={"center"}
+          onClick={() => {
+            setLightboxOpen(true);
+            setLightboxIndex(i);
+          }}
+        >
+          <img
+            src="/banner1.jpg"
+            style={{ width: "100%", marginBottom: "30px" }}
+          /> */}
+        {/* <Box mt={2} mb={5}>
+            <Typography variant="h5" className="plan-content">
+              {row.title}
+            </Typography>
+          </Box> */}
+        {images.map((imageUrl, index) => (
+          <Box textAlign="center" key={index}>
+            <img
+              src={imageUrl}
+              style={{ width: "100%", marginBottom: "30px" }}
+            />
+          </Box>
+        ))}
+      </Carousel>
+
+      {/* <>
+          
+            <Box
+              textAlign={"center"}
+              key={row.id}
+              // className="image-plan"
+              onClick={() => {
+                setLightboxOpen(true);
+                setLightboxIndex(i);
+              }}
+            >
+              <Image
+                src={row.images}
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
+                width={800}
+                height={395}
+                alt="plan"
+              />
+              <Box mt={2} mb={5}>
+                <Typography variant="h5" className="plan-content">
+                  {row.title}
+                </Typography>
+              </Box>
+            </Box>
+        
+        </> */}
+    </Container>
   );
 }
 

@@ -28,10 +28,10 @@ export default function Home() {
       <HomeWrapper>
         <HomeBanner />
         <HomeDelivery />
-        <HomeVideo />
+        {/* <HomeVideo /> */}
         {/* <HomeCategory /> */}
         <HomeFeatured />
-        {/* <HomeSubBanner /> */}
+        <HomeSubBanner />
         <HomeTestimonials />
         <HomeAboutUs />
       </HomeWrapper>
