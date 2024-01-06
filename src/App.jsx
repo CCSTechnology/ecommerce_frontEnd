@@ -1,4 +1,3 @@
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -36,6 +35,15 @@ const ProductView = lazy(() => import("./views/admin/products/productView"));
 const CustomerList = lazy(() => import("./views/admin/customers/list"));
 const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
 const Settings = lazy(() => import("./views/admin/settings"));
+const SettingsUploadImages = lazy(() =>
+  import("./views/admin/settings/upload-images")
+);
+const SettingsUploadContent = lazy(() =>
+  import("./views/admin/settings/upload-content")
+);
+const SettingsFeaturedProducts = lazy(() =>
+  import("./views/admin/settings/featured-products")
+);
 const OrderList = lazy(() => import("./views/admin/orders/list"));
 const Promotions = lazy(() => import("./views/admin/promotions/list"));
 const PromotionsView = lazy(() =>
@@ -57,7 +65,12 @@ const GuestCheckOut = lazy(() =>
 );
 
 const CheckOut = lazy(() => import("./views/ecommerce/checkout"));
-
+const TermsAndConditions = lazy(() =>
+  import("./views/ecommerce/terms-conditions")
+);
+const PrivacyPolicy = lazy(() => import("./views/ecommerce/privacy-policy"));
+const ShippingPolicy = lazy(() => import("./views/ecommerce/shipping-policy"));
+const RefundPolicy = lazy(() => import("./views/ecommerce/refund-policy"));
 function App() {
   return (
     <BrowserRouter>
@@ -96,6 +109,13 @@ function App() {
               path="/user/change-password"
               element={<ChangePassword />}
             ></Route>
+            <Route
+              path="/terms-conditions"
+              element={<TermsAndConditions />}
+            ></Route>
+            <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
+            <Route path="/shipping-policy" element={<ShippingPolicy />}></Route>
+            <Route path="/refund-policy" element={<RefundPolicy />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
             <Route path="admin/dashboard" element={<AdminDashboard />}></Route>
@@ -115,6 +135,18 @@ function App() {
               element={<CustomerView />}
             ></Route>
             <Route path="admin/settings" element={<Settings />}></Route>
+            <Route
+              path="admin/settings/upload-images"
+              element={<SettingsUploadImages />}
+            ></Route>
+            <Route
+              path="admin/settings/upload-content"
+              element={<SettingsUploadContent />}
+            ></Route>
+            <Route
+              path="admin/settings/featured-products"
+              element={<SettingsFeaturedProducts />}
+            ></Route>
           </Route>
           <Route element={<PlainLayout />}>
             <Route path="admin" element={<AdminLogin />}></Route>

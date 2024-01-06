@@ -39,8 +39,10 @@ import {
 import {
   deletePromotion,
   listPromotion,
+  viewPromotion,
 } from "../../../../redux/api/admin/promotionService";
 import AddPromotionForm from "../addPromotionform";
+import AddProductPromotionForm from "../promotionView/addProductPromotionForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -67,6 +69,10 @@ function ProductList() {
       deleteLoading: state.adminProduct?.listProduct?.loading,
     };
   });
+  const promotionTable = useSelector(
+    (state) => state.adminPromotion.viewPromotion
+  );
+  console.log(promotionTable);
 
   // cancel search
   const cancelSearch = () => {
@@ -91,6 +97,17 @@ function ProductList() {
     }
   };
 
+  const viewPromotionAPi = async () => {
+    const parameters = {
+      url: `${authEndPoints.promotion.promotionView(1)}`,
+    };
+    try {
+      const res = await dispatch(viewPromotion(parameters)).unwrap();
+      console.log(res);
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
   const handlePageChanges = (_event, pageValue) => {
     setPage(pageValue);
   };
@@ -146,7 +163,9 @@ function ProductList() {
   useEffect(() => {
     promotionListApi();
   }, [page, searchValue]);
-
+  useEffect(() => {
+    viewPromotionAPi();
+  }, []);
   return (
     <Box>
       <Box className="indexBox">
@@ -161,9 +180,9 @@ function ProductList() {
             <Stack
               direction={{ lg: "row", sm: "column" }}
               gap={2}
-              alignItems={"center"}
+              alignItems={"end"}
             >
-              <SearchInput
+              {/* <SearchInput
                 sx={{
                   border: "1px solid #303067",
                   borderRadius: "20px",
@@ -176,7 +195,7 @@ function ProductList() {
                 value={searchKey || ""}
                 onChange={(e) => onSearch(e)}
                 cancelSearch={cancelSearch}
-              />
+              /> */}
               <Button className="AddBtn" onClick={handleClickOpen}>
                 Add
               </Button>
@@ -198,29 +217,31 @@ function ProductList() {
           <Table>
             <TableHeader />
             <TableBody>
-              {promotionList?.loading ? (
+              {promotionTable?.loading ? (
                 <TableRowsLoader rowsNum={10} colsNum={9} />
               ) : (
-                promotionList?.data?.data?.map((row, i) => (
+                promotionTable?.data?.data?.productdetails.map((row, i) => (
                   <TableRow key={row.id}>
                     <TableCell>{i + 1}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.start_date}</TableCell>
-                    <TableCell>{row.end_date}</TableCell>
-                    <TableCell>{row.status}</TableCell>
+                    <TableCell>{row.products.product_name}</TableCell>
+                    <TableCell>{row.products.cost}</TableCell>
+                    <TableCell>{row.percentage}</TableCell>
+                    <TableCell>
+                      {row.products.promotion_cost_customer}
+                    </TableCell>
                     <TableCell align="center">
                       <Stack direction={"row"} gap={2}>
-                        <Link to={`/admin/promotions/${row.id}`}>
+                        {/* <Link to={`/admin/promotions/${row.id}`}>
                           <VisibilityIcon
                             className="table-icons"
                             sx={{ color: "black" }}
                           />
-                        </Link>
+                        </Link> */}
 
-                        <EditIcon
+                        {/* <EditIcon
                           className="table-icons"
-                          onClick={() => editDirectory(row.unique_label)}
-                        />
+                          onClick={() => editDirectory(row.id)}
+                        /> */}
                         <DeleteIcon
                           className="table-icons"
                           onClick={() => deleteDirectory(row.id)}
@@ -233,13 +254,13 @@ function ProductList() {
             </TableBody>
           </Table>
         </TableContainer>
-        {promotionList?.data?.data?.length === 0 ? (
+        {promotionTable?.data?.data?.productdetails.length === 0 ? (
           <Box sx={{ my: 2 }}>
             <Typography>No Data Found</Typography>
           </Box>
         ) : (
           <TablePagination
-            totalRecords={promotionList?.data?.data?.total}
+            totalRecords={promotionTable?.data?.data?.productdetails.total}
             handlePageChanges={handlePageChanges}
             page={page}
           />
@@ -271,18 +292,14 @@ function ProductList() {
                 alignItems={"center"}
                 justifyContent={"space-between"}
               >
-                <Box> {singleData ? "Edit Product" : "Add Product"}</Box>
+                <Box> Add Product for Promotion</Box>
                 <IconButton onClick={handleClose}>
                   <CloseIcon />
                 </IconButton>
               </Stack>
             </DialogTitle>
 
-            <AddPromotionForm
-              onClick={handleButtonClick}
-              initialData={singleData}
-              type={addType}
-            />
+            <AddProductPromotionForm onClick={handleClose} />
           </Dialog>
         ) : null}
       </Box>

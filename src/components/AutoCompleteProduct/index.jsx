@@ -36,7 +36,7 @@ const AsynchronousAutocomplete = ({
 
   const CheckAlreadyAvailable = async () => {
     try {
-      const response = await dispatch(AlreadyAvailablePromotion(id)).unwrap();
+      const response = await dispatch(AlreadyAvailablePromotion(1)).unwrap();
       const dataOptions = response.data || [];
       setOptions(dataOptions);
     } catch (error) {
@@ -117,7 +117,7 @@ const MyForm = (props) => {
 
   const onSubmit = async (values) => {
     console.log(values);
-    values.promotion_id = id;
+    values.promotion_id = 1;
 
     const data = {
       ...values,

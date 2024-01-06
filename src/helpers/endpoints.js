@@ -29,7 +29,7 @@ export const authEndPoints = {
   promotion: {
     list: "/promotion",
     promotionAdd: "/promotion",
-    promotionDelete: (id) => `/promotion/${id}`,
+    promotionDelete: (id) => `/promotionproductdelete/${id}`,
     promotionView: (id) => `/promotion/${id}`,
     promotionAvailable: (id) => `/productpromotionsearch/${id}`,
     promotionAddProduct: "/promotion/addproduct",

@@ -24,35 +24,53 @@ export default function PublicFooter(props) {
                 <Div11> customercare@truevine.in</Div11>
               </Div8>
             </Div4>
-            <Div12>
+            {/* <Div12>
               <Div13>My Account</Div13>
               <Div14>My Account</Div14>
               <Div15>Order History</Div15>
-              <Div16>Shoping Cart</Div16>
+
               <Div17>Wishlist</Div17>
-            </Div12>
+            </Div12> */}
             <Div18>
               <Div19>Helps</Div19>
               <Link to="/contact-us">
                 <Div20>Contact Us</Div20>
               </Link>
               <Div21>Faqs</Div21>
-              <Div22>Terms & Condition</Div22>
-              <Div23>Privacy Policy</Div23>
+              <Link to="/terms-conditions">
+                <Div22>Terms & Condition</Div22>
+              </Link>
+              <Link to="/privacy-policy">
+                <Div23>Privacy Policy</Div23>
+              </Link>
+              <Link to="/shipping-policy">
+                <Div23>Shipping Policy</Div23>
+              </Link>
+              <Link to="/refund-policy">
+                <Div23>Cancellation & Refund Policy</Div23>
+              </Link>
             </Div18>
             <Div24>
               <Div25>Proxy</Div25>
               <Div26>About</Div26>
-              <Div27>Shop</Div27>
-              <Div28>Product</Div28>
-              <Div29>Track Order</Div29>
+              <Link to="/category/all">
+                <Div27>Shop</Div27>
+              </Link>
+              <Link to="/category/all">
+                <Div28>Product</Div28>
+              </Link>
+              <Link to="/cart">
+                <Div16>Shoping Cart</Div16>
+              </Link>
+
+              {/* <Div29>Track Order</Div29> */}
             </Div24>
             <Div30>
               <Div31>Categories</Div31>
-              <Div32>Fruit & Vegetables</Div32>
-              <Div33>Meat & Fish</Div33>
+              <Div32>Peanut Butter</Div32>
+              {/* <Div33>Meat & Fish</Div33>
               <Div34>Bread & Bakery</Div34>
-              <Div35>Beauty & Health</Div35>
+              <Div35>Beauty & Health</Div35> */}
             </Div30>
           </Div3>
           <Div36>
@@ -252,7 +270,7 @@ const Div15 = styled.div`
 `;
 
 const Div16 = styled.div`
-  color: var(--gray-scale-white, #fff);
+  color: var(--gray-scale-gray-400, #999);
   margin-top: 12px;
   white-space: nowrap;
   font: 400 14px/21px Poppins, sans-serif;

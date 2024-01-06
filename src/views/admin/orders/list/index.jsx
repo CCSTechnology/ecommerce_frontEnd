@@ -245,6 +245,8 @@ function OrdersList() {
                     <TableCell>{row?.customer?.first_name}</TableCell>
                     <TableCell>{row?.amount}</TableCell>
                     <TableCell>{row?.total_tax}</TableCell>
+                    <TableCell>{row?.total_weight}</TableCell>
+                    <TableCell>{row?.courier_name}</TableCell>
                     <TableCell>{row?.shipping_cost}</TableCell>
                     <TableCell>{row?.grand_total}</TableCell>
                     <TableCell>
@@ -285,10 +287,10 @@ function OrdersList() {
                           className="table-icons"
                           onClick={() => downloadPdfApi("download")}
                         />
-                        <DeleteIcon
+                        {/* <DeleteIcon
                           className="table-icons"
                           // onClick={() => deleteDirectory(row.id)}
-                        />
+                        /> */}
                       </Stack>
                     </TableCell>
                   </TableRow>

@@ -47,12 +47,15 @@ function LoginForm() {
   };
 
   const handleLogin = async (values) => {
-    const cardId = searchParams.get("cart_id") || localStorage.getItem('cart_id') || null;
+    const cardId =
+      searchParams.get("cart_id") || localStorage.getItem("cart_id") || null;
     const path = searchParams.get("callBackUrl") || "/";
     if (searchParams.get("callBackUrl")) {
-      dispatch(cartViewServices({
-        cart_id: cardId
-      }))
+      dispatch(
+        cartViewServices({
+          cart_id: cardId,
+        })
+      );
     }
     if (cardId) {
       values.cart_id = cardId;
@@ -63,7 +66,7 @@ function LoginForm() {
     try {
       const response = await dispatch(publicAuthLogin(parameters)).unwrap();
       localStorage.setItem("public_token", response?.token);
-      localStorage.removeItem('cart_id')
+      localStorage.removeItem("cart_id");
       if (cardId) {
         localStorage.removeItem("cart_id");
       }
@@ -91,7 +94,7 @@ function LoginForm() {
           Login
         </Typography>
       </Box>
-      <Box sx={{ m: 5, mx: 15 }} className="formFullCtr">
+      <Box sx={{ m: 5, mx: { md: 15, xs: 5 } }} className="formFullCtr">
         <form onSubmit={handleSubmit(handleLogin)}>
           <Grid container spacing={3}>
             <Grid item xs={12}>

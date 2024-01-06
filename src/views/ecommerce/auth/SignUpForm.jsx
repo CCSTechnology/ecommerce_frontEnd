@@ -87,7 +87,7 @@ function SignUpForm() {
           Create New Account
         </Typography>
       </Box>
-      <Box sx={{ m: 5, mx: 15 }} className="formFullCtr">
+      <Box sx={{ m: 5, mx: { md: 15, xs: 5 } }} className="formFullCtr">
         <form onSubmit={handleSubmit(handleRegister)}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>

@@ -369,6 +369,7 @@ export default function MyAddress(props) {
                     <Grid container>
                       <Grid
                         item
+                        xs={12}
                         md={8}
                         lg={8}
                         sx={{
@@ -382,6 +383,7 @@ export default function MyAddress(props) {
 
                       <Grid
                         item
+                        xs={12}
                         md={4}
                         lg={4}
                         sx={{
@@ -398,7 +400,7 @@ export default function MyAddress(props) {
                       </Grid>
                     </Grid>
 
-                    <Grid item md={12} lg={12}>
+                    <Grid item md={12} lg={12} xs={12}>
                       {item.zipcode}
                     </Grid>
                     <Grid item md={12} lg={2}>
@@ -424,6 +426,7 @@ export default function MyAddress(props) {
                       item
                       md={6}
                       lg={6}
+                      xs={12}
                       sx={{
                         padding: "10px",
                         display: "flex",
@@ -441,6 +444,7 @@ export default function MyAddress(props) {
                       item
                       md={6}
                       lg={6}
+                      xs={12}
                       sx={{
                         padding: "10px",
                         display: "flex",
