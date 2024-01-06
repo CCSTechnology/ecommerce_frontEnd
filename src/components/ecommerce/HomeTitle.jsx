@@ -4,19 +4,18 @@ export default function HomeTitle({ featured, link = true }) {
   return (
     <HomeTitleWrapper>
       <Title>{featured?.title}</Title>
-      {
-        link && <Content>
+      {link && (
+        <Content>
           <ViewAll>View All</ViewAll>
-          <Image loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cabddc-d124-4af6-8d00-44a0757bd526?apiKey=a16585d2108947c5b17ddc9b1a13aff2&" />
+          <Image
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cabddc-d124-4af6-8d00-44a0757bd526?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
+          />
         </Content>
-      }
-
+      )}
     </HomeTitleWrapper>
   );
 }
-
-
-
 
 const HomeTitleWrapper = styled(Box)`
   justify-content: space-between;
@@ -34,6 +33,8 @@ const Title = styled(Box)`
   flex-basis: auto;
   text-transform: capitalize;
   font: 600 32px/38px Poppins, sans-serif;
+  text-align: center;
+  color: #951e76;
 `;
 
 const Content = styled(Box)`
@@ -46,14 +47,12 @@ const Content = styled(Box)`
   padding: 0 20px;
 `;
 
-
-
 const ViewAll = styled(Box)(({ theme }) => ({
   // color: "var(--branding-success, #00b207)",
   color: theme.palette.success.main,
   font: "500 16px/24px Poppins, sans-serif",
-  cursor: "pointer"
-}))
+  cursor: "pointer",
+}));
 
 const Image = styled("img")`
   aspect-ratio: 1.25;

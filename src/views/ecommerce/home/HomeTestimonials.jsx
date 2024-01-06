@@ -133,6 +133,7 @@ const HomeTestimonialsWrapper = styled(Box)`
   gap: 32px;
   margin-block: 30px;
   background: var(--Gray-Scale-Gray-50, #f2f2f2);
+  margin-top: 70px;
 `;
 
 const HomeFeaturedList = styled(Swiper)(({}) => ({

@@ -46,7 +46,7 @@ export default function HomeAboutUs() {
         mt={6}
       >
         {" "}
-        <Grid container>
+        <Grid container sx={{ mb: 4 }}>
           <Grid md={6} xs={12}>
             <Title sx={{ textAlign: { xs: "center" } }}>
               {aboutUs?.title || ""}
@@ -55,7 +55,11 @@ export default function HomeAboutUs() {
               dangerouslySetInnerHTML={{
                 __html: aboutUs?.data,
               }}
-              sx={{ p: { xs: "20px", md: "0px" }, pr: { md: "30px" } }}
+              sx={{
+                p: { xs: "20px", md: "0px" },
+                pr: { md: "30px" },
+                pl: { md: "39px" },
+              }}
             />
           </Grid>
           <Grid md={6} xs={12}>
@@ -78,6 +82,8 @@ const HomeAboutUsWrapper = styled(Box)`
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin-top: 60px;
+  margin-bottom: 40px;
 `;
 const HomeAboutUsContent = styled("div")`
   margin-top: 20px;
