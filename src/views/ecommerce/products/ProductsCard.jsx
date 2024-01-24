@@ -1,9 +1,10 @@
 import React from "react";
 import { ImagePath } from "../../../utils/helpers";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { CartBag } from "../../../helpers/images";
+import imageUrl from "../../../assets/images/images_offer2.png";
 
 export default function ProductCard({ product, addToCart }) {
   return (
@@ -12,6 +13,34 @@ export default function ProductCard({ product, addToCart }) {
         <LazyImage loading="lazy" srcSet={ImagePath + product.file_name} />
         <LazyImage2 loading="lazy" src={ImagePath + product.file_name} />
       </ImageContainer>
+      {product.promotion && (
+        <Box
+          sx={{
+            // background: "#f5eded",
+            position: "relative",
+            bottom: "292px",
+            right: "-230px",
+            width: "70px",
+            borderRadius: "40px",
+            height: "65px",
+            backgroundImage: `url(${imageUrl})`, // Use template literals to insert the URL
+            backgroundSize: "cover", // Optional: Adjust background size
+            backgroundPosition: "center", // Optional: Adjust background position
+          }}
+        >
+          <Typography
+            sx={{
+              position: "absolute",
+              top: "11px",
+              left: "23px",
+              fontWeight: 600,
+              color: "white",
+            }}
+          >
+            {product.promotion.percentage} % OFF
+          </Typography>
+        </Box>
+      )}
       <PriceFooter>
         <Box
           sx={{
