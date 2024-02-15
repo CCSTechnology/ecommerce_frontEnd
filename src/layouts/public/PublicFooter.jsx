@@ -74,7 +74,9 @@ export default function PublicFooter(props) {
             </Div30>
           </Div3>
           <Div36>
-            <Div37>Ecobazar eCommerce © 2021. All Rights Reserved</Div37>
+            <Div37>
+              TrueVine Foods Pvt Limited © 2024. All Rights Reserved
+            </Div37>
             <Div38>
               <Img2
                 loading="lazy"
