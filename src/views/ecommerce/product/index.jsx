@@ -1,117 +1,139 @@
-import { Box, Button, styled } from "@mui/material"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
-import { toast } from "react-toastify"
-import QuantityComponent from "../../../components/QuantityComponent"
-import CustomBreadcrumbs from "../../../components/ecommerce/Breadcrumps"
-import StyledContainer from "../../../components/ecommerce/StyledContainer"
-import { errorAlert } from "../../../helpers/globalFunctions"
-import { addCartServices, cartViewServices, guestAddCartServices } from "../../../redux/api/public/cartServices"
-import { productViewService } from "../../../redux/api/public/productService"
-import ProductSlides from "./ProductSlides"
-import ProductDetailTab from "./ProductDetailsTab"
-import RelatedProduct from "./RelatedProduct"
-import { breadCrumbsCapitalize } from "../../../utils/helpers"
-
+import { Box, Button, styled } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import QuantityComponent from "../../../components/QuantityComponent";
+import CustomBreadcrumbs from "../../../components/ecommerce/Breadcrumps";
+import StyledContainer from "../../../components/ecommerce/StyledContainer";
+import { errorAlert } from "../../../helpers/globalFunctions";
+import {
+  addCartServices,
+  cartViewServices,
+  guestAddCartServices,
+} from "../../../redux/api/public/cartServices";
+import { productViewService } from "../../../redux/api/public/productService";
+import ProductSlides from "./ProductSlides";
+import ProductDetailTab from "./ProductDetailsTab";
+import RelatedProduct from "./RelatedProduct";
+import { breadCrumbsCapitalize } from "../../../utils/helpers";
 
 const CartComponent = ({ count = 1, product = null, finishApi }) => {
-  const [quantity, setQuantity] = useState(count)
+  const [quantity, setQuantity] = useState(count);
 
-  const token = localStorage.getItem('public_token') || null
-  const cart_id = localStorage.getItem('cart_id') || null
+  const token = localStorage.getItem("public_token") || null;
+  const cart_id = localStorage.getItem("cart_id") || null;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const addToCart = async (type = "add") => {
-    const message = type === "add" ? "Product added successfully" : "Product reduced successfully"
+    const message =
+      type === "add"
+        ? "Product added successfully"
+        : "Product reduced successfully";
     if (token) {
       try {
-        await dispatch(addCartServices({
-          product_id: product?.id,
-          quantity,
-          type,
-        })).unwrap()
-        finishApi()
+        await dispatch(
+          addCartServices({
+            product_id: product?.id,
+            quantity,
+            type,
+          })
+        ).unwrap();
+        finishApi();
 
-        toast.success(message)
+        toast.success(message);
       } catch (error) {
-        errorAlert(error?.error)
+        errorAlert(error?.error);
       } finally {
-        dispatch(cartViewServices({
-          cart_id
-        }))
+        dispatch(
+          cartViewServices({
+            cart_id,
+          })
+        );
       }
     } else {
       try {
-        const response = await dispatch(guestAddCartServices({
-          cart_id,
-          product_id: product?.id,
-          quantity,
-          type
-        })).unwrap()
-        finishApi()
+        const response = await dispatch(
+          guestAddCartServices({
+            cart_id,
+            product_id: product?.id,
+            quantity,
+            type,
+          })
+        ).unwrap();
+        finishApi();
         if (response?.cartdetails) {
-          localStorage.setItem('cart_id', response?.cartdetails.cart_id)
+          localStorage.setItem("cart_id", response?.cartdetails.cart_id);
         }
-        toast.success(message)
+        toast.success(message);
       } catch (error) {
-        errorAlert(error?.error)
-      }
-      finally {
-        dispatch(cartViewServices({
-          cart_id
-        }))
+        errorAlert(error?.error);
+      } finally {
+        dispatch(
+          cartViewServices({
+            cart_id,
+          })
+        );
       }
     }
-  }
+  };
 
-  return <>
-    <CartComponentWrapper>
-      <QuantityComponent product={product} quantity={quantity} cartType="product" setQuantity={setQuantity} finishApi={finishApi} />
-      <AddToCart product={product} addToCart={addToCart} />
-      <BuyNow product={product} addToCart={addToCart} quantity={quantity} />
-    </CartComponentWrapper>
-    <Divider />
-  </>
-}
-
+  return (
+    <>
+      <CartComponentWrapper>
+        <QuantityComponent
+          product={product}
+          quantity={quantity}
+          cartType="product"
+          setQuantity={setQuantity}
+          finishApi={finishApi}
+        />
+        <AddToCart product={product} addToCart={addToCart} />
+        <BuyNow product={product} addToCart={addToCart} quantity={quantity} />
+      </CartComponentWrapper>
+      <Divider />
+    </>
+  );
+};
 
 const CartComponentWrapper = styled(Box)`
-
-display: flex; 
-gap: 10px;
-
-`
+  display: flex;
+  gap: 10px;
+`;
 
 const Product = () => {
-  const dispatch = useDispatch()
-  const { productSlug } = useParams()
-  const [productSingle, setProductSingle] = useState(null)
-  const [relatedProduct, setRelatedPodct] = useState([])
-  const breadcrumbs = [{
-    label: "Home",
-    link: '/',
-  }, {
-    label: productSingle?.categoryname || "Category",
-    link: "/category/" + productSingle?.categoryname || "all",
-
-  }, {
-    label: breadCrumbsCapitalize(productSlug)
-  }]
+  const dispatch = useDispatch();
+  const { productSlug } = useParams();
+  const [productSingle, setProductSingle] = useState(null);
+  const [relatedProduct, setRelatedPodct] = useState([]);
+  const breadcrumbs = [
+    {
+      label: "Home",
+      link: "/",
+    },
+    {
+      label: productSingle?.categoryname || "Category",
+      link: "/category/" + productSingle?.categoryname || "all",
+    },
+    {
+      label: breadCrumbsCapitalize(productSlug),
+    },
+  ];
 
   async function fetchProduct(unique_label) {
     try {
-      const response = await dispatch(productViewService({
-        unique_label,
-      })).unwrap()
-      setProductSingle(response?.product)
-      setRelatedPodct(response?.related_product)
-    } catch (error) {
-    }
+      const response = await dispatch(
+        productViewService({
+          unique_label,
+        })
+      ).unwrap();
+      setProductSingle(response?.product);
+      setRelatedPodct(response?.related_product);
+    } catch (error) {}
   }
   useEffect(() => {
-    fetchProduct(productSlug)
-  }, [productSlug])
+    fetchProduct(productSlug);
+  }, [productSlug]);
   return (
     <StyledContainer>
       <ProductWrapper>
@@ -120,53 +142,48 @@ const Product = () => {
           <ProductSlider>
             <ProductSlides product={productSingle} />
           </ProductSlider>
-          <ProductDetails >
+          <ProductDetails>
             <VegetableCard product={productSingle} />
             <UpdatedComponent product={productSingle} />
-            <CartComponent product={productSingle} finishApi={() => fetchProduct(productSlug)} />
+            <CartComponent
+              product={productSingle}
+              finishApi={() => fetchProduct(productSlug)}
+            />
           </ProductDetails>
         </ProductContainer>
         <ProductDetailTab />
         <RelatedProduct relatedProduct={relatedProduct} />
       </ProductWrapper>
     </StyledContainer>
-  )
-}
+  );
+};
 
-export default Product
-
+export default Product;
 
 const ProductContainer = styled(Box)`
+  display: flex;
+  padding: 20px;
+  height: 600px;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
 
-display: flex;
-padding: 20px;
-height: 600px;
-gap: 10px;
-margin-bottom: 20px;
- `
-
-const ProductWrapper = styled(Box)`
-`
+const ProductWrapper = styled(Box)``;
 
 const ProductSlider = styled(Box)`
-width: 100%;
-flex :1;
-max-width: 50%;
-
-`
+  width: 100%;
+  flex: 1;
+  max-width: 50%;
+`;
 
 const ProductDetails = styled(Box)`
-flex: 1;
-display: flex;
-flex-direction: column;
-gap: 20px;
-padding: 0 20px;
-justify-content: space-between;
-`
-
-
-
-
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+  justify-content: space-between;
+`;
 
 function VegetableCard({ product }) {
   return (
@@ -206,11 +223,21 @@ function VegetableCard({ product }) {
           </SKU>
         </Details>
         <Price>
-          {
-            product?.promotion_cost_customer && product?.promotion_cost_customer < product?.cost ? <><OriginalPrice>₹ {Number(product?.cost).toFixed(2)}</OriginalPrice>
-            <DiscountedPrice>₹ {Number(product?.promotion_cost_customer).toFixed(2)}</DiscountedPrice></> : <DiscountedPrice>₹ {Number(product?.cost).toFixed(2)}</DiscountedPrice>
-          }
-          
+          {product?.promotion_cost_customer &&
+          product?.promotion_cost_customer < product?.cost ? (
+            <>
+              <OriginalPrice>
+                ₹ {Number(product?.cost).toFixed(2)}
+              </OriginalPrice>
+              <DiscountedPrice>
+                ₹ {Number(product?.promotion_cost_customer).toFixed(2)}
+              </DiscountedPrice>
+            </>
+          ) : (
+            <DiscountedPrice>
+              ₹ {Number(product?.cost).toFixed(2)}
+            </DiscountedPrice>
+          )}
         </Price>
       </Card>
       <Divider />
@@ -227,7 +254,7 @@ const Card = styled(Box)`
 const Header = styled(Box)`
   display: flex;
   width: 100%;
-  align-items : center;
+  align-items: center;
   gap: 8px;
 `;
 
@@ -268,7 +295,7 @@ const Images = styled(Box)`
   }
 `;
 
-const LazyImage = styled('img')`
+const LazyImage = styled("img")`
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
@@ -357,17 +384,13 @@ const Divider = styled(Box)`
   }
 `;
 
-
-
 function UpdatedComponent({ product }) {
   return (
     <Container>
       <UpdatedComponentHeader>
         <Brand>Description: </Brand>
       </UpdatedComponentHeader>
-      <Content>
-        {product?.description}
-      </Content>
+      <Content>{product?.description}</Content>
       <Divider />
     </Container>
   );
@@ -406,47 +429,53 @@ const Content = styled(Box)`
   }
 `;
 
-
-
 const AddToCart = ({ addToCart }) => {
-  return <AddToCartWrapper fullWidth variant="contained" onClick={() => {
-    addToCart('add')
-  }}> Add to Cart</AddToCartWrapper>
-}
-
+  return (
+    <AddToCartWrapper
+      fullWidth
+      variant="contained"
+      onClick={() => {
+        addToCart("add");
+      }}
+    >
+      {" "}
+      Add to Cart
+    </AddToCartWrapper>
+  );
+};
 
 const AddToCartWrapper = styled(Button)`
+  color: white;
+  border-radius: 170px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%; /* 19.2px */
+`;
 
-    color: white;
-    border-radius: 170px;
-    font-family: Poppins;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 19.2px */ 
-`
-
-
-
-const BuyNow = ({addToCart, product}) => {
-  const navigate = useNavigate()
+const BuyNow = ({ addToCart, product }) => {
+  const navigate = useNavigate();
 
   async function BuyNowApi(e) {
-   await addToCart('add')
-    navigate("/checkout")
+    await addToCart("add");
+    navigate("/checkout");
   }
 
-  return <BuyNowWrapper fullWidth variant="contained" onClick={BuyNowApi}> BuyNow</BuyNowWrapper>
-}
-
+  return (
+    <BuyNowWrapper fullWidth variant="contained" onClick={BuyNowApi}>
+      {" "}
+      BuyNow
+    </BuyNowWrapper>
+  );
+};
 
 const BuyNowWrapper = styled(Button)`
-
-    color: white;
-    border-radius: 170px;
-    font-family: Poppins;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 19.2px */ 
-`
+  color: white;
+  border-radius: 170px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%; /* 19.2px */
+`;

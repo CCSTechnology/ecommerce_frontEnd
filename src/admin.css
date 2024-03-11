@@ -669,3 +669,39 @@ ogo .backimg {
   width: 300px;
   border-radius: 10px;
 }
+
+/* .img-banner-logo {
+  padding-top: 49px;
+} */
+
+@media only screen and (max-width: 1139px) and (min-width: 1024px) {
+  .img-banner-logo {
+    padding-top: 49px;
+  }
+}
+
+@media only screen and (max-width: 1139px) and (min-width: 1024px) {
+  .img-banner-logo {
+    padding-top: 49px;
+  }
+}
+
+@media only screen and (max-width: 1139px) and (min-width: 1024px) {
+  .img-banner-logo1 {
+    padding-left: 46px !important;
+  }
+}
+
+@media (min-width: 1141px) {
+  .img-banner-logo {
+    padding-top: 41px;
+  }
+  /* Add more styles here */
+}
+
+@media (min-width: 1141px) {
+  .img-banner-logo1 {
+    padding-left: 46px !important;
+  }
+  /* Add more styles here */
+}

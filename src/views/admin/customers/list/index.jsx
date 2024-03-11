@@ -115,6 +115,13 @@ const Customers = () => {
   const dataCustomer = useSelector(
     (state) => state?.adminCustomer?.listCustomer
   );
+
+  const stateValues = useSelector((state) => {
+    return {
+      deleteLoading: state.adminCustomer?.listCustomer?.loading,
+    };
+  });
+
   // cancel search
   const cancelSearch = () => {
     setSearchKey("");
@@ -191,6 +198,20 @@ const Customers = () => {
   //       errorAlert(errors?.error);
   //     }
   //   };
+
+  const delteApiFn = async () => {
+    const parameters = {
+      url: `${authEndPoints.customer.deleteCustomerList(delid)}`,
+    };
+    try {
+      const response = await dispatch(deleteCustomerData(parameters)).unwrap();
+      setDeleteModalOpen(false);
+      successAlert(response.message);
+      customerListApi();
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
 
   // customerlist Api
   const customerListApi = async () => {
@@ -290,10 +311,6 @@ const Customers = () => {
                                 sx={{ color: "black" }}
                               />
                             </Link>
-                            <DeleteIcon
-                              className="table-icons"
-                              onClick={() => deleteDirectory(item.id)}
-                            />
                           </Stack>
                         </TableCell>
                       </TableRow>
@@ -313,6 +330,16 @@ const Customers = () => {
                 page={page}
               />
             )}
+            {deleteModalOpen && (
+              <DeleteModal
+                open={deleteModalOpen}
+                close={() => deleteDirectoryModalClose()}
+                title={"Delete Product"}
+                content={"Are you sure want to delete Customer?"}
+                submit={delteApiFn}
+                loading={stateValues.deleteLoading}
+              />
+            )}
           </Grid>
         </Grid>
       </Box>
@@ -322,3 +349,8 @@ const Customers = () => {
 
 export default Customers;
 // onChange={(e) => handleCheck(item, e)}
+
+//  <DeleteIcon
+//    className="table-icons"
+//    onClick={() => deleteDirectory(item.id)}
+//  />
