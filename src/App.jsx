@@ -65,6 +65,9 @@ const GuestCheckOut = lazy(() =>
 );
 
 const CheckOut = lazy(() => import("./views/ecommerce/checkout"));
+
+const GuestCheckOutNew = lazy(() => import("./views/ecommerce/guest-checkout"));
+
 const TermsAndConditions = lazy(() =>
   import("./views/ecommerce/terms-conditions")
 );
@@ -101,6 +104,11 @@ function App() {
             <Route path="/cart" element={<Cart />}></Route>
 
             <Route path="/checkout" element={<CheckOut />}></Route>
+            <Route
+              path="/guest-checkout"
+              element={<GuestCheckOutNew />}
+            ></Route>
+
             <Route path="/contact-us" element={<ContactUs />}></Route>
             <Route path="/about-us" element={<AboutUs />}></Route>
             <Route path="/user-profile" element={<UserProfile />}></Route>

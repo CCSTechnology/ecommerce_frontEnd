@@ -9,8 +9,8 @@ const SuccessError = ({ title, path }) => {
       <Box
         sx={{
           background: "#e1e1ec",
-          height: "450px",
-          width: "450px",
+          height: { md: "450px", sm: "400px" },
+          width: { md: "450px" },
           borderRadius: "20px",
         }}
       >

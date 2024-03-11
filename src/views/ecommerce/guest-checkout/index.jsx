@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -7,6 +8,8 @@ import {
   DialogTitle,
   Grid,
   IconButton,
+  Modal,
+  Stack,
   Typography,
 } from "@mui/material";
 import React, { memo, useEffect, useState } from "react";
@@ -30,8 +33,27 @@ import { toast } from "react-toastify";
 import { errorAlert } from "../../../helpers/globalFunctions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import BasicCard from "./cardAddress";
 
+import Slide from "@mui/material/Slide";
+import BasicCard from "./cardAddress";
+import { LineWeight } from "@mui/icons-material";
+import { logout } from "../../../redux/api/admin/authService";
+import { LoadingButton } from "@mui/lab";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   phone_number: yup.string().required("Phone number is required"),
@@ -56,9 +78,19 @@ export default memo(function GetLoginCheckout() {
   const [user, setUser] = useState(null);
   const [guest, setGuest] = useState(null);
   const [delivery, setDelivery] = useState(null);
+  const [billData, setBillData] = useState(null);
+  const [deliveryAddress, setDeliveryAddress] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [addrData, setAddrData] = useState(null);
 
-  //   const [data, setData] = useState(null);
-  //   console.log(data);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const breadcrumbs = [
     {
       label: "Home",
@@ -75,7 +107,7 @@ export default memo(function GetLoginCheckout() {
 
   const cartId = localStorage.getItem("cart_id") || null;
   const [guestAllow, setGuestAllow] = useState(null);
-
+  console.log(guestAllow);
   async function getCartList(value) {
     try {
       const response = await dispatch(
@@ -97,6 +129,30 @@ export default memo(function GetLoginCheckout() {
     defaultValues: {},
     resolver: yupResolver(schema),
   });
+
+  async function handleCheckOut() {
+    try {
+      //Valid User
+      if (user) {
+        const response = await dispatch(
+          checkOutWithUser({
+            billing_address_id: user?.id,
+            shipping_address_id: user?.id,
+            delivery_charges: delivery?.amount,
+            courier_name: delivery?.courier_name,
+            cart_id: "",
+          })
+        ).unwrap();
+        window.location.href = response.payment_details;
+      }
+      //Expries Token
+      else {
+        setPopup(true);
+      }
+    } catch (error) {
+      errorAlert(error?.error);
+    }
+  }
 
   const onSuccessCallback = async (values) => {
     console.log(values);
@@ -121,7 +177,6 @@ export default memo(function GetLoginCheckout() {
     //   },
     // });
   };
-
   const triggerPaymentRazorpay = (response) => {
     // e.preventDefault();
     console.log(response);
@@ -152,32 +207,6 @@ export default memo(function GetLoginCheckout() {
     paymentObject.open();
   };
 
-  async function handleCheckOut() {
-    try {
-      //Valid User
-      if (user) {
-        const response = await dispatch(
-          checkOutWithUser({
-            billing_address_id: user?.id,
-            shipping_address_id: user?.id,
-            delivery_charges: delivery?.amount,
-            courier_name: delivery?.courier_name,
-            cart_id: "",
-          })
-        ).unwrap();
-        // setOrderIdData(response);
-        triggerPaymentRazorpay(response);
-        // window.location.href = response.payment_details;
-      }
-      //Expries Token
-      else {
-        setPopup(true);
-      }
-    } catch (error) {
-      errorAlert(error?.error);
-    }
-  }
-
   async function handleCheckOutGuest(values) {
     try {
       const {
@@ -185,22 +214,24 @@ export default memo(function GetLoginCheckout() {
         formState: { isValid },
       } = formHook;
 
-      if (isValid) {
-        const response = await dispatch(
-          checkOutWithGuest({
-            billing_address_id: guestAllow?.billing_id,
-            shipping_address_id: guestAllow?.billing_id,
-            cart_id: cartId,
-            delivery_charges: delivery?.amount,
-            courier_name: delivery?.courier_name,
-            guest_id: guestAllow?.billing_id,
-          })
-        ).unwrap();
-        window.location.href = response.payment_details;
-      } else {
-        trigger();
-        toast.info("Please Add Address");
-      }
+      // if (isValid) {
+      const response = await dispatch(
+        checkOutWithGuest({
+          billing_address_id: guestAllow?.billing_id,
+          shipping_address_id: guestAllow?.billing_id,
+          cart_id: cartId,
+          delivery_charges: delivery?.amount,
+          courier_name: delivery?.courier_name,
+          guest_id: guestAllow?.billing_id,
+        })
+      ).unwrap();
+      triggerPaymentRazorpay(response);
+      // window.location.href = response.payment_details;
+      // }
+      // else {
+      //   trigger();
+      //   toast.info("Please Add Address");
+      // }
     } catch (error) {
       errorAlert(error?.error);
     }
@@ -270,26 +301,80 @@ export default memo(function GetLoginCheckout() {
     }
   }, [cartData]);
 
-  // useEffect(() => {
-  //   loadScript("https://checkout.razorpay.com/v1/checkout.js");
-  // }, []);
-
   return (
     <StyledContainer>
       <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
       <CardTitle>Check Out</CardTitle>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={5} lg={6} sx={{ ml: 2 }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          lg={6}
+          sx={{
+            ml: 3,
+            p: { md: 10, xs: 3 },
+          }}
+          className="new-checkout"
+        >
+          {/* {!billData ? (
+            <>
+              {" "}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <LoadingButton
+                  loadingPosition="center"
+                  variant="contained"
+                  className="Submitbtn"
+                  sx={{
+                    backgroundColor: "#951e76",
+                    mt: 2,
+                    height: "50px",
+                    fontSize: "20px",
+                  }}
+                  onClick={handleClickOpen}
+                >
+                  Add Address
+                </LoadingButton>
+              </Box>
+              <BillingAddressForm
+                open={open}
+                handleClose={handleClose}
+                formHook={formHook}
+                billData={billData?.billing_id}
+              />
+            </>
+          ) : (
+            <BillingAddressForm
+              formHook={formHook}
+              user={user}
+              setUser={setUser}
+              getMe={getMe}
+              setGuestAllow={setGuestAllow}
+              billData={billData?.billing_id}
+              setBillData={setBillData}
+            />
+          )} */}
           <BillingAddressForm
             formHook={formHook}
             user={user}
             setUser={setUser}
             getMe={getMe}
             setGuestAllow={setGuestAllow}
+            billData={billData?.billing_id}
+            setBillData={setBillData}
+
+            // Pass the function here
           />
-          {/* <BasicCard user={user} /> */}
+          {/* <BasicCard handleOpen={handleOpen} addrData={addrData} /> */}
         </Grid>
+
         <Grid
           item
           xs={12}
@@ -306,7 +391,7 @@ export default memo(function GetLoginCheckout() {
             loading={formHook.formState.isSubmitting}
             valid={formHook.formState.isValid}
             checkout={cartList}
-            // guest={guest}
+            guest={guest}
             delivery={delivery}
             handleSubmit={handleSubmit}
             handleCheckOut={handleCheckOut}
@@ -314,56 +399,6 @@ export default memo(function GetLoginCheckout() {
           />
         </Grid>
       </Grid>
-      {/* {popUp ? (
-        <Dialog
-          title="Please Login"
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          open={popUp}
-        >
-          <DialogTitle id="alert-dialog-title">{"Please Login"}</DialogTitle>
-          <IconButton
-            aria-label="close"
-            onClick={(e) => {
-              e.preventDefault();
-              setPopup(false);
-            }}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              You are not Logged In, Please Login!
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                const path = cartId
-                  ? `/login?callBackUrl=/checkout&cart_id=${cartId}`
-                  : "/login?callBackUrl=/checkout";
-                navigate(path);
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              onClick={() => {
-                setPopup(false);
-                setGuest(true);
-              }}
-            >
-              Guest Login
-            </Button>
-          </DialogActions>
-        </Dialog>
-      ) : null} */}
     </StyledContainer>
   );
 });

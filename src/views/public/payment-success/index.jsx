@@ -11,24 +11,24 @@ const Success = ({ title }) => {
   const dispatch = useDispatch();
   // let { id } = useParams();
   // console.log(id);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const orderId = searchParams.get("order_id");
-  console.log(orderId);
+  // const location = useLocation();
+  // const searchParams = new URLSearchParams(location.search);
+  // const orderId = searchParams.get("order_id");
+  // console.log(orderId);
 
-  const paymentSuccess = async () => {
-    console.log(orderId);
-    const data = {
-      order_id: orderId,
-    };
-    try {
-      const res = await dispatch(paymentSuccessMessage(data)).unwrap();
-    } catch (error) {}
-  };
+  // const paymentSuccess = async () => {
+  //   console.log(orderId);
+  //   const data = {
+  //     order_id: orderId,
+  //   };
+  //   try {
+  //     const res = await dispatch(paymentSuccessMessage(data)).unwrap();
+  //   } catch (error) {}
+  // };
 
-  useEffect(() => {
-    paymentSuccess();
-  }, []);
+  // useEffect(() => {
+  //   paymentSuccess();
+  // }, []);
 
   return (
     <Container
