@@ -66,7 +66,7 @@ export default React.memo(function BillingAddressForm({
   // const [open, setOpen] = React.useState(false);
   const handleAddressEdit = () => setOpen(true);
   const [addrData, setAddrData] = useState(null);
-  console.log(addrData.address_details[0]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -219,22 +219,22 @@ export default React.memo(function BillingAddressForm({
                       </Grid>
                       <Grid item sx={{ pl: 3 }}>
                         <Typography component="div">
-                          {addrData.address_details[0]?.street_name}
+                          {addrData?.address_details[0]?.street_name}
                         </Typography>
                         <Typography component="div">
-                          {addrData.address_details[0]?.line1}
+                          {addrData?.address_details[0]?.line1}
                         </Typography>
                         <Typography component="div">
-                          {addrData.address_details[0]?.city}
+                          {addrData?.address_details[0]?.city}
                         </Typography>
                         <Typography component="div">
-                          {addrData.address_details[0]?.state}
+                          {addrData?.address_details[0]?.state}
                         </Typography>
                         <Typography component="div">
-                          {addrData.address_details[0]?.country}
+                          {addrData?.address_details[0]?.country}
                         </Typography>
                         <Typography component="div">
-                          {addrData.address_details[0]?.zipcode}
+                          {addrData?.address_details[0]?.zipcode}
                         </Typography>
                       </Grid>
                     </Grid>
