@@ -201,6 +201,10 @@ export default React.memo(function BillingAddressForm({
     }
   }, [user]);
 
+  useEffect(() => {
+    setOpen(true);
+  }, []);
+
   return (
     <Box>
       <Box>
