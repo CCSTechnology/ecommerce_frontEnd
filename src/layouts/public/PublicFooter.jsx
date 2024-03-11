@@ -14,10 +14,10 @@ export default function PublicFooter(props) {
               <Div5>
                 <Img loading="lazy" src={logo} />
               </Div5>
-              <Div7>
+              {/* <Div7>
                 Morbi cursus porttitor enim lobortis molestie. Duis gravida
                 turpis dui, eget bibendum magna congue nec.
-              </Div7>
+              </Div7> */}
               <Div8>
                 <Div9>(+91) 93211 88645</Div9>
                 <Div10>or</Div10>
