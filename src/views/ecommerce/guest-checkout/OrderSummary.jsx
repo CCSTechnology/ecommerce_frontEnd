@@ -91,17 +91,17 @@ export default React.memo(function OrderSummary({
       </Box>
       <ButtonWrapper>
         {/* {guest === true ? ( */}
-        {/* <form onSubmit={handleSubmit(handleCheckOutGuest)}>
-            <LoadingButton loading={loading} type="submit" variant="contained">
-              Guest Check out
-            </LoadingButton>
-          </form> */}
-        {/* ) : ( */}
-        <form onSubmit={handleSubmit(handleCheckOut)}>
-          <Button type="submit" variant="contained">
-            Check out
-          </Button>
+        <form onSubmit={handleSubmit(handleCheckOutGuest)}>
+          <LoadingButton loading={loading} type="submit" variant="contained">
+            Guest Check out
+          </LoadingButton>
         </form>
+        {/* ) : ( */}
+        {/* <form onSubmit={handleSubmit(handleCheckOut)}>
+            <Button type="submit" variant="contained">
+              Check out
+            </Button>
+          </form> */}
         {/* )} */}
         <Button
           variant="contained"

@@ -127,7 +127,6 @@ function OrdersList() {
   };
 
   const downloadPdfApi = async (type) => {
-    console.log(type);
     const parameters = {
       url: `${authEndPoints.order.download}`,
     };
@@ -287,10 +286,6 @@ function OrdersList() {
                           className="table-icons"
                           onClick={() => downloadPdfApi("download")}
                         />
-                        {/* <DeleteIcon
-                          className="table-icons"
-                          // onClick={() => deleteDirectory(row.id)}
-                        /> */}
                       </Stack>
                     </TableCell>
                   </TableRow>
@@ -299,27 +294,6 @@ function OrdersList() {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* {productList?.data?.data?.data?.length === 0 ? (
-          <Box sx={{ my: 2 }}>
-            <Typography>No Data Found</Typography>
-          </Box>
-        ) : (
-          <TablePagination
-            totalRecords={productList?.data?.data?.total}
-            handlePageChanges={handlePageChanges}
-            page={page}
-          />
-        )} */}
-        {/* {deleteModalOpen && (
-          <DeleteModal
-            open={deleteModalOpen}
-            close={() => deleteDirectoryModalClose()}
-            title={"Delete Product"}
-            content={"Are you sure want to delete this Product?"}
-            submit={delteApiFn}
-            loading={stateValues.deleteLoading}
-          />
-        )} */}
       </Box>
     </Box>
   );
