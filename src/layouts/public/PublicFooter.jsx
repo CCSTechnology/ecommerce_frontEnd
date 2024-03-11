@@ -78,7 +78,7 @@ export default function PublicFooter(props) {
               TrueVine Foods Pvt Limited © 2024. All Rights Reserved
             </Div37>
             <Div38>
-              <Img2
+              {/* <Img2
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/09319586-a7bc-4586-81e2-355f1c7519a9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
               />
@@ -93,17 +93,17 @@ export default function PublicFooter(props) {
               <Img5
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/6bd9aefd-4044-472d-9d9d-26e4d4221105?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
-              />
-              <Div39>
-                <Div40>
+              /> */}
+              {/* <Div39> */}
+              {/* <Div40>
                   <Img6
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/252c6e90-f27f-422b-8880-157d008b9350?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
                   />
                   <Div41>Secure</Div41>
                 </Div40>
-                <Div42>Payment</Div42>
-              </Div39>
+                <Div42>Payment</Div42> */}
+              {/* </Div39> */}
             </Div38>
           </Div36>
         </Div2>

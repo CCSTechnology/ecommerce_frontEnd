@@ -310,8 +310,8 @@ export default memo(function GetLoginCheckout() {
         <Grid
           item
           xs={12}
-          md={6}
-          lg={6}
+          md={4}
+          lg={4}
           sx={{
             ml: 3,
             p: { md: 10, xs: 3 },
@@ -378,8 +378,8 @@ export default memo(function GetLoginCheckout() {
         <Grid
           item
           xs={12}
-          md={5}
-          lg={5}
+          md={7}
+          lg={7}
           sx={{
             height: "100%",
             display: "flex",

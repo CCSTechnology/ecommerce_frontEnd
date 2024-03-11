@@ -210,7 +210,7 @@ export default React.memo(function BillingAddressForm({
           {billData ? (
             <Grid container spacing={3}>
               <Grid item={12}>
-                <Card sx={{ minHeight: 180, minWidth: { md: 700, xs: 300 } }}>
+                <Card sx={{ minHeight: 180, minWidth: { md: 450, xs: 300 } }}>
                   <CardContent>
                     <Grid container>
                       <Grid item>

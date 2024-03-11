@@ -280,7 +280,7 @@ export default memo(function GetLoginCheckout() {
       <CardTitle>Check Out</CardTitle>
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={5} lg={6} sx={{ ml: 2 }}>
+        <Grid item xs={12} md={4} lg={4} sx={{ ml: 2 }}>
           <BillingAddressForm
             formHook={formHook}
             user={user}
@@ -293,8 +293,8 @@ export default memo(function GetLoginCheckout() {
         <Grid
           item
           xs={12}
-          md={5}
-          lg={5}
+          md={7}
+          lg={7}
           sx={{
             height: "100%",
             display: "flex",
