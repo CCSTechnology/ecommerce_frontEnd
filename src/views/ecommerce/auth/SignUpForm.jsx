@@ -1,4 +1,11 @@
-import { Box, TextField, Typography, Grid, IconButton } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Grid,
+  IconButton,
+  Button,
+} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -6,7 +13,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LoadingButton } from "@mui/lab";
 import { publicAuthRegister } from "../../../redux/api/public/authService";
@@ -241,6 +248,11 @@ function SignUpForm() {
             >
               SignUp
             </LoadingButton>
+          </Box>
+          <Box className="text-center-cls" sx={{ my: 1 }}>
+            <Link to="/">
+              <Button sx={{ color: "#951e76" }}>Redirect To Home</Button>
+            </Link>
           </Box>
         </form>
       </Box>

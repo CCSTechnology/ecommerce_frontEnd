@@ -56,9 +56,9 @@ export default memo(function GetLoginCheckout() {
   const [user, setUser] = useState(null);
   const [guest, setGuest] = useState(null);
   const [delivery, setDelivery] = useState(null);
-
+  const [addressType, setAddrressType] = useState(null);
   //   const [data, setData] = useState(null);
-  //   console.log(data);
+  console.log(user);
   const breadcrumbs = [
     {
       label: "Home",
@@ -248,6 +248,8 @@ export default memo(function GetLoginCheckout() {
       };
 
       setUser(dat);
+      setAddrressType(response);
+      console.log(response);
     } catch (error) {}
   }
 
@@ -256,7 +258,7 @@ export default memo(function GetLoginCheckout() {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user && addressType?.addresses?.length > 0) {
       handleGetDeliveryGuest(user);
     }
     if (guestAllow) {
@@ -287,6 +289,7 @@ export default memo(function GetLoginCheckout() {
             setUser={setUser}
             getMe={getMe}
             setGuestAllow={setGuestAllow}
+            addressType={addressType?.addresses}
           />
           {/* <BasicCard user={user} /> */}
         </Grid>

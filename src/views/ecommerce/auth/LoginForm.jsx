@@ -1,4 +1,11 @@
-import { Box, TextField, Typography, Grid, IconButton } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Grid,
+  IconButton,
+  Button,
+} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -166,6 +173,12 @@ function LoginForm() {
             >
               Log In
             </LoadingButton>
+          </Box>
+
+          <Box className="text-center-cls" sx={{ my: 1 }}>
+            <Link to="/">
+              <Button sx={{ color: "#951e76" }}>Redirect To Home</Button>
+            </Link>
           </Box>
         </form>
       </Box>

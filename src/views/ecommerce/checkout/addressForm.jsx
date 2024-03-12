@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { LoadingButton } from "@mui/lab";
 import { Box, Container, Grid, Modal, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { FormInputText } from "../../../components/formField/TextField";
@@ -43,6 +43,7 @@ export default React.memo(function BillingAddressForm({
   formHook,
   setGuestAllow,
   setUser,
+  addressType,
 }) {
   const dispatch = useDispatch();
   const [editAddress, setEditAddress] = React.useState(!user ? true : false);
@@ -169,6 +170,48 @@ export default React.memo(function BillingAddressForm({
     }
   }
 
+  async function handleAddAddressType(values) {
+    values.is_default = 1;
+    (values.address = "222 Citigate Drive, Barrhaven, ON, Canada"),
+      (values.type = "Shipping Address");
+    try {
+      if (user) {
+        await dispatch(publicAddAddress(values)).unwrap();
+        await getMe();
+        toast.success("Address Added");
+        handleClose();
+      } else {
+        const details = {};
+        values.same_address = true;
+        values.cart_id = localStorage.getItem("cart_id") || null;
+        const array = [
+          "country",
+          "state",
+          "city",
+          "street_name",
+          "line1",
+          "zipcode",
+          "address",
+        ];
+        for (const [key, value] of Object.entries(values)) {
+          if (array.includes(key)) {
+            details[key] = value;
+            delete values[key];
+          }
+        }
+        values.address_details = [details];
+        const response = await dispatch(guestAddAddress(values)).unwrap();
+        setGuestAllow({
+          ...response,
+          zipcode: details["zipcode"],
+        });
+        toast.success("Address Added");
+      }
+    } catch (error) {
+      errorAlert(error?.error);
+    }
+  }
+
   function handleEditAddress() {
     setEditAddress((state) => !state);
   }
@@ -185,6 +228,13 @@ export default React.memo(function BillingAddressForm({
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (addressType?.length === 0) {
+      // Open the modal here
+      setOpen(true);
+    }
+  }, [addressType]);
 
   return (
     <Box>
@@ -305,7 +355,162 @@ export default React.memo(function BillingAddressForm({
             </Box> */}
         </Box>
       </Container>
-      <Modal
+      {addressType?.length === 0 ? (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <form onSubmit={formHook.handleSubmit(handleAddAddressType)}>
+              {" "}
+              <Grid container spacing={3}>
+                {" "}
+                {inputs.map((input, index) => {
+                  const { type, name, show, label } = input;
+                  if (show) {
+                    switch (type) {
+                      case "phone":
+                        return (
+                          <Grid item span={6} key={index}>
+                            <MobileField
+                              name={name}
+                              control={formHook.control}
+                              label="Mobile"
+                              error={formHook.errors?.phone_number?.message}
+                            />
+                          </Grid>
+                        );
+                      default:
+                        return (
+                          <Grid item lg={6} key={index}>
+                            <FormInputText
+                              disabled={!editAddress}
+                              control={formHook.control}
+                              name={name}
+                              label={label}
+                              error={formHook.formState.errors?.[name]?.message}
+                            />
+                          </Grid>
+                        );
+                    }
+                  }
+                })}
+                <Grid item md={12}>
+                  {" "}
+                  <Box
+                    sx={{
+                      my: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {/* {!formHook.formState.isValid ? ( */}
+                    <LoadingButton
+                      loadingPosition="center"
+                      loading={formHook.formState.isSubmitting}
+                      variant="contained"
+                      type="submit"
+                      // fullWidth
+                      // className="Submitbtn"
+                      sx={{ backgroundColor: "#951e76" }}
+                    >
+                      Add Address
+                    </LoadingButton>
+                    {/* ) : null} */}
+                  </Box>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Modal>
+      ) : (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <form onSubmit={formHook.handleSubmit(AddAddress)}>
+              {" "}
+              <Grid container spacing={3}>
+                {" "}
+                {inputs.map((input, index) => {
+                  const { type, name, show, label } = input;
+                  if (show) {
+                    switch (type) {
+                      case "phone":
+                        return (
+                          <Grid item span={6} key={index}>
+                            <MobileField
+                              name={name}
+                              control={formHook.control}
+                              label="Mobile"
+                              error={formHook.errors?.phone_number?.message}
+                            />
+                          </Grid>
+                        );
+                      default:
+                        return (
+                          <Grid item lg={6} key={index}>
+                            <FormInputText
+                              disabled={!editAddress}
+                              control={formHook.control}
+                              name={name}
+                              label={label}
+                              error={formHook.formState.errors?.[name]?.message}
+                            />
+                          </Grid>
+                        );
+                    }
+                  }
+                })}
+                <Grid item md={12}>
+                  {" "}
+                  <Box
+                    sx={{
+                      my: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {editAddress ? (
+                      <LoadingButton
+                        loadingPosition="center"
+                        loading={formHook.formState.isSubmitting}
+                        variant="contained"
+                        type="submit"
+                        // fullWidth
+                        // className="Submitbtn"
+                        sx={{ backgroundColor: "#951e76", mt: 2 }}
+                      >
+                        {!user ? "Add Address" : "Edit Address"}
+                      </LoadingButton>
+                    ) : !formHook.formState.isValid ? (
+                      <LoadingButton
+                        loadingPosition="center"
+                        loading={formHook.formState.isSubmitting}
+                        variant="contained"
+                        type="submit"
+                        // fullWidth
+                        // className="Submitbtn"
+                        sx={{ backgroundColor: "#951e76" }}
+                      >
+                        Add Address
+                      </LoadingButton>
+                    ) : null}
+                  </Box>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Modal>
+      )}
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -366,7 +571,7 @@ export default React.memo(function BillingAddressForm({
                       // className="Submitbtn"
                       sx={{ backgroundColor: "#951e76", mt: 2 }}
                     >
-                      {user ? "Edit Address" : "Add Address"}
+                      {!user ? "Add Address" : "Edit Address"}
                     </LoadingButton>
                   ) : !formHook.formState.isValid ? (
                     <LoadingButton
@@ -386,7 +591,7 @@ export default React.memo(function BillingAddressForm({
             </Grid>
           </form>
         </Box>
-      </Modal>
+      </Modal> */}
     </Box>
   );
 });
