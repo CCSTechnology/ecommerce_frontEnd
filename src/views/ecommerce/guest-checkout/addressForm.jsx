@@ -223,6 +223,12 @@ export default React.memo(function BillingAddressForm({
                       </Grid>
                       <Grid item sx={{ pl: 3 }}>
                         <Typography component="div">
+                          {addrData?.address_details[0]?.name}
+                        </Typography>
+                        <Typography component="div">
+                          {addrData?.address_details[0]?.phone_number}
+                        </Typography>
+                        <Typography component="div">
                           {addrData?.address_details[0]?.street_name}
                         </Typography>
                         <Typography component="div">

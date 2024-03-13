@@ -59,6 +59,7 @@ export default memo(function GetLoginCheckout() {
   const [addressType, setAddrressType] = useState(null);
   //   const [data, setData] = useState(null);
   console.log(user);
+  console.log(delivery);
   const breadcrumbs = [
     {
       label: "Home",
@@ -75,7 +76,7 @@ export default memo(function GetLoginCheckout() {
 
   const cartId = localStorage.getItem("cart_id") || null;
   const [guestAllow, setGuestAllow] = useState(null);
-
+  console.log(guestAllow);
   async function getCartList(value) {
     try {
       const response = await dispatch(

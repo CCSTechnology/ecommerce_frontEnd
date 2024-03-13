@@ -291,6 +291,10 @@ export default React.memo(function BillingAddressForm({
                       <LocationOnIcon />
                     </Grid>
                     <Grid item sx={{ pl: 3 }}>
+                      <Typography component="div">{user?.name}</Typography>
+                      <Typography component="div">
+                        {user?.phone_number}
+                      </Typography>
                       <Typography component="div">
                         {user?.street_name}
                       </Typography>

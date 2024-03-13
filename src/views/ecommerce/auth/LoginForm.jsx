@@ -179,6 +179,11 @@ function LoginForm() {
             <Link to="/">
               <Button sx={{ color: "#951e76" }}>Redirect To Home</Button>
             </Link>
+            {/* <Link to="/">
+              <Button sx={{ color: "#951e76" }} variant="contained">
+                Register
+              </Button>
+            </Link> */}
           </Box>
         </form>
       </Box>
