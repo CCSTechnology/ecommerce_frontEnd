@@ -126,9 +126,10 @@ function OrdersList() {
     }
   };
 
-  const downloadPdfApi = async (type) => {
+  const downloadPdfApi = async (type, id) => {
+    console.log(id);
     const parameters = {
-      url: `${authEndPoints.order.download}`,
+      url: `${authEndPoints.order.download(id)}`,
     };
     try {
       const blob = await dispatch(downLoadOrderData(parameters)).unwrap();
@@ -279,12 +280,12 @@ function OrdersList() {
                         <VisibilityIcon
                           className="table-icons"
                           sx={{ color: "black" }}
-                          onClick={() => downloadPdfApi("view")}
+                          onClick={() => downloadPdfApi("view", row.id)}
                         />
 
                         <FileDownloadIcon
                           className="table-icons"
-                          onClick={() => downloadPdfApi("download")}
+                          onClick={() => downloadPdfApi("download", row.id)}
                         />
                       </Stack>
                     </TableCell>

@@ -9,7 +9,7 @@ import {
   Tooltip,
   styled,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { logo } from "../../helpers/images";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,12 +40,12 @@ export default function Header() {
     e.preventDefault();
     setAnchorEl(null);
   };
-
-  async function fetchCart(cart_id) {
+  console.log(cartProductLength);
+  async function fetchCart(cartId) {
     try {
       const response = await dispatch(
         cartViewServices({
-          cart_id,
+          cartId,
         })
       ).unwrap();
       setCartData(response);
@@ -77,7 +77,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    fetchCart(cartId);
+    fetchCart();
   }, [cartId]);
 
   useEffect(() => {

@@ -7,37 +7,50 @@ import { useDispatch } from "react-redux";
 import { errorAlert } from "../../../helpers/globalFunctions";
 import { removeCartServices } from "../../../redux/api/public/cartServices";
 
-export default function CartProductCard({product, quantityShow = true, finishApi}) {
-  const dispatch = useDispatch()
-  const count = product?.quantity || 1
-  const [quantity, setQuantity] = useState(count)
+export default function CartProductCard({
+  product,
+  quantityShow = true,
+  finishApi,
+}) {
+  const dispatch = useDispatch();
+  const count = product?.quantity || 1;
+  const [quantity, setQuantity] = useState(count);
   async function removeCart(id) {
     try {
-      await dispatch(removeCartServices(id)).unwrap()
-      await finishApi()
+      await dispatch(removeCartServices(id)).unwrap();
+      await finishApi();
     } catch (error) {
-      finishApi()
-      errorAlert(error?.error)
+      finishApi();
+      errorAlert(error?.error);
     }
   }
+
   return (
     <Container>
       <Image loading="lazy" srcSet={ImagePath + product.products.file_name} />
       <Title>{product.products.product_name}</Title>
-      {
-        quantityShow &&  <QuantityComponent  product={product|| null} setQuantity={setQuantity} quantity={quantity}  finishApi={finishApi}/>
-      }
-     
+      {quantityShow && (
+        <QuantityComponent
+          product={product || null}
+          setQuantity={setQuantity}
+          quantity={quantity}
+          finishApi={finishApi}
+        />
+      )}
+
       <PriceContainer>
         <Price>₹ {product.total_amount}</Price>
         {/* <DiscountPrice>$20.99</DiscountPrice> */}
       </PriceContainer>
       <StockContainer>
         <StockStatus>In Stock</StockStatus>
-        <AddToCartButton variant="contained" onClick={()=>{
-          removeCart(product.id)
-        }}>
-            Remove
+        <AddToCartButton
+          variant="contained"
+          onClick={() => {
+            removeCart(product.id);
+          }}
+        >
+          Remove
         </AddToCartButton>
       </StockContainer>
     </Container>

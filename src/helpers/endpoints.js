@@ -57,7 +57,7 @@ export const authEndPoints = {
 
   order: {
     list: "order/list",
-    download: `createpdf/107`,
+    download: (id) => `createpdf/${id}`,
   },
 
   setting: {
