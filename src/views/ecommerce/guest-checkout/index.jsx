@@ -391,7 +391,7 @@ export default memo(function GetLoginCheckout() {
             loading={formHook.formState.isSubmitting}
             valid={formHook.formState.isValid}
             checkout={cartList}
-            guest={guest}
+            guest={guestAllow}
             delivery={delivery}
             handleSubmit={handleSubmit}
             handleCheckOut={handleCheckOut}

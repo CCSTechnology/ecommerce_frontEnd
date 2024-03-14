@@ -64,6 +64,7 @@ export default React.memo(function OrderSummary({
   const products = checkout?.details || [];
   const navigate = useNavigate();
   const amount = delivery?.amount || 0;
+  console.log(guest);
   return (
     <OrderSummaryWrapper>
       <OrderSummaryTitle>Order Summary</OrderSummaryTitle>
@@ -96,6 +97,7 @@ export default React.memo(function OrderSummary({
             loading={loading}
             type="submit"
             variant="contained"
+            disabled={guest ? false : true}
             // disabled={true}
           >
             Guest Check out

@@ -6,15 +6,18 @@ import { ImagePath } from "../../../utils/helpers";
 import { useDispatch } from "react-redux";
 import { errorAlert } from "../../../helpers/globalFunctions";
 import { removeCartServices } from "../../../redux/api/public/cartServices";
-
+import { useNavigate } from "react-router-dom";
+//
 export default function CartProductCard({
   product,
   quantityShow = true,
   finishApi,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const count = product?.quantity || 1;
   const [quantity, setQuantity] = useState(count);
+
   async function removeCart(id) {
     try {
       await dispatch(removeCartServices(id)).unwrap();

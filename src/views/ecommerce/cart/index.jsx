@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartViewServices } from "../../../redux/api/public/cartServices";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+import { logo } from "../../../helpers/images";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ const Cart = () => {
         })
       ).unwrap();
       setCartList(response?.details);
+      console.log("ggg");
     } catch (error) {
       setCartList([]);
     }
@@ -72,6 +74,7 @@ const Cart = () => {
   };
 
   useEffect(() => {
+    console.log("ggg");
     listCartApi();
   }, [cart_id]);
   return (

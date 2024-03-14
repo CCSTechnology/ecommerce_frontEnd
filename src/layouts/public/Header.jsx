@@ -27,9 +27,9 @@ export default function Header() {
   const [cartData, setCartData] = useState(data);
   const [userData, setUserData] = useState(user);
   const cartAmount = cartData?.grand_total || 0;
-  const cartProductLength = cartData?.details.length || 0;
+  const cartProductLength = cartData?.details?.length || 0;
   const dispatch = useDispatch();
-  const cartId = localStorage.getItem("cart_id") || null;
+  const cart_id = localStorage.getItem("cart_id") || null;
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -40,12 +40,12 @@ export default function Header() {
     e.preventDefault();
     setAnchorEl(null);
   };
-  console.log(cartProductLength);
-  async function fetchCart(cartId) {
+
+  async function fetchCart() {
     try {
       const response = await dispatch(
         cartViewServices({
-          cartId,
+          cart_id,
         })
       ).unwrap();
       setCartData(response);
@@ -77,8 +77,10 @@ export default function Header() {
   }
 
   useEffect(() => {
+    console.log("ggg");
+
     fetchCart();
-  }, [cartId]);
+  }, [cart_id]);
 
   useEffect(() => {
     fetchUser();
