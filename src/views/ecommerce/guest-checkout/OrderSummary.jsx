@@ -97,7 +97,7 @@ export default React.memo(function OrderSummary({
             loading={loading}
             type="submit"
             variant="contained"
-            disabled={guest ? false : true}
+            disabled={delivery ? false : true}
             // disabled={true}
           >
             Guest Check out

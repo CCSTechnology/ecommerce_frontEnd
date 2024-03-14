@@ -98,7 +98,11 @@ export default React.memo(function OrderSummary({
           </form> */}
         {/* ) : ( */}
         <form onSubmit={handleSubmit(handleCheckOut)}>
-          <Button type="submit" variant="contained">
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={delivery ? false : true}
+          >
             Check out
           </Button>
         </form>

@@ -167,7 +167,8 @@ export default React.memo(function BillingAddressForm({
         }
       }
       values.address_details = [details];
-
+      console.log(values);
+      console.log([details]);
       const response = await dispatch(guestAddAddress(values)).unwrap();
 
       setGuestAllow({
@@ -223,10 +224,10 @@ export default React.memo(function BillingAddressForm({
                       </Grid>
                       <Grid item sx={{ pl: 3 }}>
                         <Typography component="div">
-                          {addrData?.address_details[0]?.name}
+                          {addrData?.name}
                         </Typography>
                         <Typography component="div">
-                          {addrData?.address_details[0]?.phone_number}
+                          {addrData?.phone_number}
                         </Typography>
                         <Typography component="div">
                           {addrData?.address_details[0]?.street_name}

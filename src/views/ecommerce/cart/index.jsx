@@ -19,7 +19,7 @@ import { cartViewServices } from "../../../redux/api/public/cartServices";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { logo } from "../../../helpers/images";
-
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +40,7 @@ const Cart = () => {
     (state) => state.cart.cartViewServices
   );
   const [cartList, setCartList] = useState(cartData?.details || []);
+  console.log(cartList);
   const cart_id = localStorage.getItem("cart_id") || null;
   const breadcrumbs = [
     {
@@ -81,25 +82,53 @@ const Cart = () => {
     <Wrapper>
       <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
       <CardTitle>My Cart</CardTitle>
-      <ProductList>
-        {cartList?.map((product, index) => {
-          return (
-            <CartProductCard
-              key={index}
-              product={product}
-              finishApi={listCartApi}
-            />
-          );
-        })}
-      </ProductList>
+      {!cartList || cartList?.length === 0 ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            mt: 3,
+          }}
+        >
+          <ShoppingCartOutlinedIcon
+            fontSize="large"
+            sx={{ color: "#951e76", height: "60px" }}
+          />
+          <Typography sx={{ fontSize: "20px", ml: 2 }}>
+            Your Shopping Cart is Empty
+          </Typography>
+        </Box>
+      ) : (
+        <ProductList>
+          {cartList?.map((product, index) => {
+            return (
+              <CartProductCard
+                key={index}
+                product={product}
+                finishApi={listCartApi}
+              />
+            );
+          })}
+        </ProductList>
+      )}
+
       <ButtonWrapper>
         {/* <Button variant='contained' onClick={handlePayment}>Check out</Button> */}
         {cart_id ? (
-          <Button variant="contained" onClick={handleCheckout}>
+          <Button
+            variant="contained"
+            onClick={handleCheckout}
+            disabled={cartList?.length > 0 ? false : true}
+          >
             Check out
           </Button>
         ) : (
-          <Button variant="contained" onClick={handlePayment}>
+          <Button
+            variant="contained"
+            onClick={handlePayment}
+            disabled={cartList?.length > 0 ? false : true}
+          >
             Check out
           </Button>
         )}
