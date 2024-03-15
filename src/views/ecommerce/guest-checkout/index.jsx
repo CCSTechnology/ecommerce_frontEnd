@@ -166,6 +166,8 @@ export default memo(function GetLoginCheckout() {
     };
     const response = await dispatch(paymentStatusChange(formData)).unwrap();
     console.log(response);
+    const address_item = localStorage.removeItem("address_item");
+    const address_res = localStorage.removeItem("address_res");
     // paymentStatusChange(formData, {
     //   onSuccess: (response) => {
     //     navigate(`/`, {
@@ -300,6 +302,18 @@ export default memo(function GetLoginCheckout() {
       setCartList(cartData);
     }
   }, [cartData]);
+
+  useEffect(() => {
+    const addressRes = localStorage.getItem("address_res");
+    // const addressItem = localStorage.getItem("address_item");
+    // const value1 = JSON.parse(addressItem);
+
+    if (addressRes) {
+      const temp = JSON.parse(addressRes);
+      // setOpen(false);
+      setGuestAllow(temp);
+    }
+  }, []);
 
   return (
     <StyledContainer>

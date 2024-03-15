@@ -66,6 +66,7 @@ export default React.memo(function BillingAddressForm({
   // const [open, setOpen] = React.useState(false);
   const handleAddressEdit = () => setOpen(true);
   const [addrData, setAddrData] = useState(null);
+  console.log(addrData);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -169,17 +170,29 @@ export default React.memo(function BillingAddressForm({
       values.address_details = [details];
       console.log(values);
       console.log([details]);
-      const response = await dispatch(guestAddAddress(values)).unwrap();
-
+      let response = await dispatch(guestAddAddress(values)).unwrap();
+      response = {
+        ...response,
+        zipcode: details["zipcode"],
+      };
       setGuestAllow({
         ...response,
         zipcode: details["zipcode"],
       });
+
       console.log(response);
       toast.success("Address Added");
       handleClose();
       setBillData(response);
       setAddrData(values);
+      const address_item = localStorage.setItem(
+        "address_item",
+        JSON.stringify(values)
+      );
+      const address_res = localStorage.setItem(
+        "address_res",
+        JSON.stringify(response)
+      );
     } catch (error) {
       errorAlert(error?.error);
     }
@@ -201,9 +214,16 @@ export default React.memo(function BillingAddressForm({
       });
     }
   }, [user]);
-
   useEffect(() => {
-    setOpen(true);
+    const addressItem = localStorage.getItem("address_item");
+    if (addressItem) {
+      const temp = JSON.parse(addressItem);
+      // setOpen(false);
+      setAddrData(temp);
+      console.log(temp);
+    } else {
+      setOpen(true);
+    }
   }, []);
 
   return (
@@ -212,104 +232,75 @@ export default React.memo(function BillingAddressForm({
         <Title>Billing Address</Title>
 
         <>
-          {billData ? (
-            <Grid container spacing={3}>
-              <Grid item={12}>
-                <Card sx={{ minHeight: 180, minWidth: { md: 450, xs: 300 } }}>
-                  <CardContent>
-                    <Grid container>
-                      <Grid item>
-                        {" "}
-                        <LocationOnIcon />
-                      </Grid>
-                      <Grid item sx={{ pl: 3 }}>
-                        <Typography component="div">
-                          {addrData?.name}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.phone_number}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.address_details[0]?.street_name}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.address_details[0]?.line1}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.address_details[0]?.city}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.address_details[0]?.state}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.address_details[0]?.country}
-                        </Typography>
-                        <Typography component="div">
-                          {addrData?.address_details[0]?.zipcode}
-                        </Typography>
-                      </Grid>
+          {/* {billData ? ( */}
+          <Grid container spacing={3}>
+            <Grid item={12}>
+              <Card sx={{ minHeight: 180, minWidth: { md: 450, xs: 300 } }}>
+                <CardContent>
+                  <Grid container>
+                    <Grid item>
+                      <LocationOnIcon />
                     </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          ) : (
-            <Grid container spacing={3}>
-              <Grid item={12}>
-                {/* <Card sx={{ minHeight: 180, minWidth: { md: 700, xs: 300 } }}>
-                  <CardContent> */}
-                <Grid container>
-                  <Grid item></Grid>
-                  <Grid item sx={{ pl: 3 }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {/* <LoadingButton
-                        loadingPosition="center"
-                        variant="contained"
-                        // className="Submitbtn"
-                        sx={{
-                          backgroundColor: "#951e76",
-                          mt: 2,
-                          height: "50px",
-                          fontSize: "20px",
-                        }}
-                        onClick={handleAddressEdit}
-                      >
-                        Add Address
-                      </LoadingButton> */}
-                    </Box>
-                    {/* <Typography component="div">{user?.street_name}</Typography>
-                    <Typography component="div">{user?.line1}</Typography>
-                    <Typography component="div">{user?.city}</Typography>
-                    <Typography component="div">{user?.state}</Typography>
-                    <Typography component="div">{user?.country}</Typography>
-                    <Typography component="div">{user?.zipcode}</Typography> */}
+                    <Grid item sx={{ pl: 3 }}>
+                      <Typography component="div">{addrData?.name}</Typography>
+                      <Typography component="div">
+                        {addrData?.phone_number}
+                      </Typography>
+                      <Typography component="div">
+                        {addrData?.address_details[0]?.street_name}
+                      </Typography>
+                      <Typography component="div">
+                        {addrData?.address_details[0]?.line1}
+                      </Typography>
+                      <Typography component="div">
+                        {addrData?.address_details[0]?.city}
+                      </Typography>
+                      <Typography component="div">
+                        {addrData?.address_details[0]?.state}
+                      </Typography>
+                      <Typography component="div">
+                        {addrData?.address_details[0]?.country}
+                      </Typography>
+                      <Typography component="div">
+                        {addrData?.address_details[0]?.zipcode}
+                      </Typography>
+                    </Grid>
                   </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+          {/* ) : ( */}
+          <Grid container spacing={3}>
+            <Grid item={12}>
+              <Grid container>
+                <Grid item></Grid>
+                <Grid item sx={{ pl: 3 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  ></Box>
                 </Grid>
-                {/* </CardContent>
-                </Card> */}
               </Grid>
             </Grid>
-          )}
+          </Grid>
 
-          {billData && (
-            <LoadingButton
-              loadingPosition="center"
-              // loading={formHook.formState.isSubmitting}
-              variant="contained"
-              // fullWidth
-              // className="Submitbtn"
-              sx={{ backgroundColor: "#951e76", mt: 5 }}
-              onClick={handleAddressEdit}
-            >
-              Edit Address
-            </LoadingButton>
-          )}
+          {/* {billData && ( */}
+          <LoadingButton
+            loadingPosition="center"
+            // loading={formHook.formState.isSubmitting}
+            variant="contained"
+            // fullWidth
+            // className="Submitbtn"
+            sx={{ backgroundColor: "#951e76", mt: 5 }}
+            onClick={handleAddressEdit}
+          >
+            Edit Address
+          </LoadingButton>
+          {/* )} */}
         </>
 
         {/* <Box
@@ -343,6 +334,7 @@ export default React.memo(function BillingAddressForm({
             )}
           </Box> */}
       </Box>
+
       <Modal
         open={open}
         onClose={handleClose}
