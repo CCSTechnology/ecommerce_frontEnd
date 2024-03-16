@@ -31,7 +31,7 @@ const UpComingTaskTable = (props) => {
           </TableHead>
           <TableBody>
             {/* <TableRowsLoader rowsNum={5} colsNum={6} /> */}
-            {customer?.data?.data?.data.map((item, index) => (
+            {customer?.data?.data?.data?.slice(0, 5)?.map((item, index) => (
               <TableRow>
                 <TableCell align="left">{index + 1}</TableCell>
                 <TableCell align="left">{item.first_name}</TableCell>

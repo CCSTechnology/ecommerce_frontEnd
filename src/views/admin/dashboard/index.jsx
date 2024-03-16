@@ -10,6 +10,7 @@ import { authEndPoints } from "../../../helpers/endpoints";
 import { customerListData } from "../../../redux/api/admin/customerService";
 import { errorAlert } from "../../../helpers/globalFunctions";
 import { productListData } from "../../../redux/api/admin/productService";
+import { orderListData } from "../../../redux/api/admin/orderService";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Dashboard = () => {
     (state) => state?.adminCustomer?.listCustomer
   );
   const productList = useSelector((state) => state?.adminProduct?.listProduct);
+  const orderList = useSelector((state) => state?.adminOrder?.listOrder);
 
   // const roleName = localStorage.getItem("roleName");
   const customerListApi = async () => {
@@ -43,8 +45,20 @@ const Dashboard = () => {
       errorAlert(errors?.error);
     }
   };
+  const orderListApi = async () => {
+    const parameters = {
+      url: `${authEndPoints.order.list}`,
+    };
+    try {
+      const res = await dispatch(orderListData(parameters)).unwrap();
+      console.log(res);
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
   useEffect(() => {
     customerListApi();
+    orderListApi();
   }, []);
 
   useEffect(() => {
@@ -58,7 +72,7 @@ const Dashboard = () => {
       <Box sx={{ my: 5 }}>
         <Grid container spacing={5}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            <CompleteTaskTable />
+            <CompleteTaskTable orderList={orderList} />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <InProgressTaskTable product={productList} />

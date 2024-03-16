@@ -13,6 +13,11 @@ import {
   IconButton,
   Typography,
   Badge,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  InputAdornment,
 } from "@mui/material";
 import TableRowsLoader from "../../../../components/TableLoader";
 import TableHeader from "./tableHeader";
@@ -94,8 +99,11 @@ function OrdersList() {
   const [addType, setAddType] = useState(null);
   const dispatch = useDispatch();
   const orderList = useSelector((state) => state?.adminOrder?.listOrder);
-  const [directoryPage, setDirectoryPage] = useState("admin");
-  console.log(orderList);
+  const [directoryPage, setDirectoryPage] = useState("paid");
+  const [orderStatus, setOrderStatus] = useState("");
+  const [userStatus, setUserStatus] = useState("");
+  console.log(orderStatus);
+
   const stateValues = useSelector((state) => {
     return {
       deleteLoading: state.adminProduct?.listProduct?.loading,
@@ -117,10 +125,11 @@ function OrdersList() {
   //list api
   const orderListApi = async () => {
     const parameters = {
-      url: `${authEndPoints.order.list}`,
+      url: `${authEndPoints.order.list}?Perpage=10&page=${page}&search=${searchKey}&payment_status=${directoryPage}&order_status=${orderStatus}&user=${userStatus}`,
     };
     try {
       const res = await dispatch(orderListData(parameters)).unwrap();
+      console.log(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -148,7 +157,19 @@ function OrdersList() {
   const handlePageChanges = (_event, pageValue) => {
     setPage(pageValue);
   };
-
+  const handleChange = (event) => {
+    setDirectoryPage(event.target.value);
+  };
+  const handleClose = () => {
+    setOrderStatus("");
+  };
+  const handleChangeOrderStatus = (event) => {
+    setOrderStatus(event.target.value);
+  };
+  const handleUserChange = (event) => {
+    console.log(event.target.value);
+    setUserStatus(event.target.value);
+  };
   const handleClickOpen = () => {
     setSingleData(null);
     setOpen(true);
@@ -194,7 +215,7 @@ function OrdersList() {
 
   useEffect(() => {
     orderListApi();
-  }, []);
+  }, [page, searchValue, directoryPage, orderStatus, userStatus]);
 
   return (
     <Box>
@@ -210,7 +231,7 @@ function OrdersList() {
             <Stack
               direction={{ lg: "row", sm: "column" }}
               gap={2}
-              alignItems={"center"}
+              alignItems={"left"}
             >
               <SearchInput
                 sx={{
@@ -220,7 +241,7 @@ function OrdersList() {
                   "&.Mui-focused ": {
                     border: "1px solid #6473ff",
                   },
-                  width: { xs: "100%", sm: "340px" },
+                  width: { xs: "100%", sm: "500px" },
                 }}
                 value={searchKey || ""}
                 onChange={(e) => onSearch(e)}
@@ -228,6 +249,124 @@ function OrdersList() {
               />
             </Stack>
           </Stack>
+          <Box>
+            <Stack
+              direction={{ lg: "row", sm: "column" }}
+              gap={7}
+              // alignItems={"right"}
+            >
+              <Box sx={{ mt: 2 }}>
+                <Typography sx={{ mb: 2 }}>Order Status</Typography>
+                <FormControl
+                  size="small"
+                  className="directorySelect"
+                  sx={{ width: "250px" }}
+                >
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={orderStatus}
+                    onChange={handleChangeOrderStatus}
+                    displayEmpty
+                    inputProps={{ "aria-lab<el": "Without label" }}
+                    IconComponent={() => (
+                      <IconButton
+                        onClick={() => {
+                          console.log("dattata");
+                          setOrderStatus("");
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    )}
+                  >
+                    <MenuItem value="">
+                      <span style={{ fontFamily: "Poppins!important" }}>
+                        Select An Option
+                      </span>
+                    </MenuItem>
+                    <MenuItem value={"pending"}>Pending</MenuItem>
+                    <MenuItem value={"processing"}>Processing</MenuItem>
+                    <MenuItem value={"intransist"}>In-transist</MenuItem>
+                    <MenuItem value={"delivered"}>Delivered</MenuItem>
+                    <MenuItem value={"completed"}>Completed</MenuItem>
+
+                    {/* <MenuItem value={"company"}>Company</MenuItem> */}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Typography sx={{ mb: 2 }}>Payment Status</Typography>
+                <FormControl
+                  size="small"
+                  className="directorySelect"
+                  sx={{ width: "250px" }}
+                >
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={directoryPage}
+                    onChange={handleChange}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    IconComponent={() => (
+                      <IconButton
+                        onClick={() => {
+                          console.log("dattata");
+                          setDirectoryPage("");
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    )}
+                  >
+                    <MenuItem value="">
+                      <span>Select An Option</span>
+                    </MenuItem>
+
+                    <MenuItem value={"paid"}>Paid</MenuItem>
+                    <MenuItem value={"unpaid"}>UnPaid</MenuItem>
+                    {/* <MenuItem value={"company"}>Company</MenuItem> */}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Typography sx={{ mb: 2 }}>User</Typography>
+                <FormControl
+                  size="small"
+                  className="directorySelect"
+                  sx={{ width: "250px" }}
+                >
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={userStatus}
+                    onChange={handleUserChange}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    IconComponent={() => (
+                      <IconButton
+                        onClick={() => {
+                          console.log("dattata");
+                          setUserStatus("");
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    )}
+                  >
+                    <MenuItem value="">
+                      <span>Select An Option</span>
+                    </MenuItem>
+
+                    <MenuItem value={"customer"}>Customer</MenuItem>
+                    <MenuItem value={"guest"}>Guest</MenuItem>
+                    {/* <MenuItem value={"company"}>Company</MenuItem> */}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Stack>
+          </Box>
         </Box>
         <TableContainer className="rolesPageTable">
           <Table>
@@ -242,7 +381,14 @@ function OrdersList() {
                     <TableCell>{row?.date}</TableCell>
                     <TableCell>{row?.order_no}</TableCell>
                     <TableCell>{row?.invoice_no}</TableCell>
-                    <TableCell>{row?.customer?.first_name}</TableCell>
+                    <TableCell>
+                      {row?.customer_id ? "Customer" : "Guest"}{" "}
+                    </TableCell>
+                    <TableCell>
+                      {row?.guest?.name ??
+                        (row?.customer?.first_name &&
+                          row?.customer?.first_name)}
+                    </TableCell>
                     <TableCell>{row?.amount}</TableCell>
                     <TableCell>{row?.total_tax}</TableCell>
                     <TableCell>{row?.total_weight}</TableCell>
@@ -277,12 +423,18 @@ function OrdersList() {
                     </TableCell>
                     <TableCell align="center">
                       <Stack direction={"row"} gap={2}>
-                        <VisibilityIcon
+                        {/* <VisibilityIcon
                           className="table-icons"
                           sx={{ color: "black" }}
-                          onClick={() => downloadPdfApi("view", row.id)}
-                        />
+                          // onClick={() => downloadPdfApi("view", row.id)}
+                        /> */}
 
+                        <Link to={`/admin/orders/${row.id}`}>
+                          <VisibilityIcon
+                            className="table-icons"
+                            sx={{ color: "black" }}
+                          />
+                        </Link>
                         <FileDownloadIcon
                           className="table-icons"
                           onClick={() => downloadPdfApi("download", row.id)}
@@ -295,6 +447,17 @@ function OrdersList() {
             </TableBody>
           </Table>
         </TableContainer>
+        {orderList?.data?.data?.data?.length === 0 ? (
+          <Box sx={{ my: 2 }}>
+            <Typography>No Data Found</Typography>
+          </Box>
+        ) : (
+          <TablePagination
+            totalRecords={orderList?.data?.data?.total}
+            handlePageChanges={handlePageChanges}
+            page={page}
+          />
+        )}
       </Box>
     </Box>
   );

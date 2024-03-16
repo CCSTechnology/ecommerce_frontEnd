@@ -45,6 +45,7 @@ const SettingsFeaturedProducts = lazy(() =>
   import("./views/admin/settings/featured-products")
 );
 const OrderList = lazy(() => import("./views/admin/orders/list"));
+const OrderView = lazy(() => import("./views/admin/orders/orderView"));
 const Promotions = lazy(() => import("./views/admin/promotions/list"));
 const PromotionsView = lazy(() =>
   import("./views/admin/promotions/promotionView")
@@ -133,6 +134,7 @@ function App() {
             <Route path="admin/products/:id" element={<ProductView />}></Route>
             <Route path="admin/customers" element={<CustomerList />}></Route>
             <Route path="admin/orders" element={<OrderList />}></Route>
+            <Route path="admin/orders/:id" element={<OrderView />}></Route>
             <Route path="admin/promotions" element={<Promotions />}></Route>
             <Route
               path="admin/promotions/:id"

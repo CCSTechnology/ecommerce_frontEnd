@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   orderListData,
   downLoadOrderData,
+  viewOrderData,
+  orderStatusChangeData,
 } from "../../../redux/api/admin/orderService";
 
 const initialState = {
@@ -30,11 +32,16 @@ const initialState = {
     data: null,
     error: null,
   },
-  //   viewProduct: {
-  //     loading: false,
-  //     data: null,
-  //     error: null,
-  //   },
+  viewOrder: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  orderStatusChange: {
+    loading: false,
+    data: null,
+    error: null,
+  },
   //   commonList: {
   //     loading: false,
   //     data: null,
@@ -74,6 +81,32 @@ export const orderSlice = createSlice({
       .addCase(downLoadOrderData.rejected, (state, action) => {
         state.downloadOrder.loading = false;
         state.downloadOrder.error = action.payload;
+      })
+
+      .addCase(viewOrderData.pending, (state, action) => {
+        state.viewOrder.loading = true;
+      })
+      .addCase(viewOrderData.fulfilled, (state, action) => {
+        state.viewOrder.loading = false;
+        state.viewOrder.data = action.payload;
+        state.viewOrder.error = false;
+      })
+      .addCase(viewOrderData.rejected, (state, action) => {
+        state.viewOrder.loading = false;
+        state.viewOrder.error = action.payload;
+      })
+
+      .addCase(orderStatusChangeData.pending, (state, action) => {
+        state.orderStatusChange.loading = true;
+      })
+      .addCase(orderStatusChangeData.fulfilled, (state, action) => {
+        state.orderStatusChange.loading = false;
+        state.orderStatusChange.data = action.payload;
+        state.orderStatusChange.error = false;
+      })
+      .addCase(orderStatusChangeData.rejected, (state, action) => {
+        state.orderStatusChange.loading = false;
+        state.orderStatusChange.error = action.payload;
       });
   },
 });

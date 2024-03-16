@@ -108,6 +108,7 @@ export const ORDER_HEADER = [
   { label: "Date", align: "left", id: "date" },
   { label: "Order No", align: "left", id: "order_no" },
   { label: "Invoice No", align: "left", id: "invoice_no" },
+  { label: "Customer Type", align: "left", id: "customer_type" },
   { label: "Customer Name", align: "left", id: "customer_name" },
   { label: " Amount", align: "left", id: "amount" },
   { label: " Total Tax", align: "left", id: "total_tax" },

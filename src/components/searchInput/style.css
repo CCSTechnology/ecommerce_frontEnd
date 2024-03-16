@@ -1,18 +1,18 @@
 .inputSearch {
-    height: 34px !important;
-    border-radius: 10px !important;
-    /* width: 340px !important; */
+  height: 48px !important;
+  border-radius: 10px !important;
+  /* width: 340px !important; */
 }
 
 .inputSearch svg {
-    font-size: 20px;
-    position: relative;
-    top: 3px;
-    color: #969696;
+  font-size: 20px;
+  position: relative;
+  top: 3px;
+  color: #969696;
 }
 
 .inputSearch input {
-    padding: 0px 3px 2px;
-    font-size: 14px;
-    color: #969696;
+  padding: 0px 3px 2px;
+  font-size: 14px;
+  color: #969696;
 }

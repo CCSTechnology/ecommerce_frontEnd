@@ -97,22 +97,36 @@ export const downLoadOrderData = createAsyncThunk(
 //   }
 // );
 
-// export const viewProductData = createAsyncThunk(
-//   "viewProductData",
-//   async (params, thunkApi) => {
-//     const { url = "", ...others } = params;
-//     try {
-//       const response = await ADMINSERVER({
-//         url,
-//         params: others,
-//         method: "GET",
-//       });
-//       return response.data;
-//     } catch (error) {
-//       return thunkApi.rejectWithValue(error);
-//     }
-//   }
-// );
+export const viewOrderData = createAsyncThunk(
+  "viewOrderData",
+  async (params, thunkApi) => {
+    const { url = "", ...others } = params;
+    try {
+      const response = await ADMINSERVER({
+        url,
+        params: others,
+        method: "GET",
+      });
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const orderStatusChangeData = createAsyncThunk(
+  "orderStatusChangeData",
+  async ({ id, order_status }, thunkApi) => {
+    try {
+      const response = await ADMINSERVER.put(
+        `/order/updatestatus/${id}?status=${order_status}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
 
 // export const commonListData = createAsyncThunk(
 //   "commonListData",
