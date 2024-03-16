@@ -8,6 +8,7 @@ export const authEndPoints = {
   },
   admin: {
     adminLogin: "/auth/login",
+    viewNotify: "notification/view",
   },
 
   category: {
