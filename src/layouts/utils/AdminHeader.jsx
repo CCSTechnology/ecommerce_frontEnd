@@ -8,6 +8,8 @@ import { useNavigate, Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Avatar,
+  Divider,
+  Grid,
   List,
   ListItem,
   ListItemAvatar,
@@ -19,7 +21,7 @@ import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 
 import { useDispatch, useSelector } from "react-redux";
-import { successAlert } from "../../helpers/globalFunctions";
+import { errorAlert, successAlert } from "../../helpers/globalFunctions";
 import {
   notificationUpdateData,
   notificationViewData,
@@ -64,13 +66,14 @@ const AdminHeader = () => {
     setAnchorEl(null);
   };
 
-  const handleNotification = async (id) => {
+  const handleNotification = async (event_id, id) => {
     const parameters = {
       id: id,
     };
     try {
       const res = await dispatch(notificationUpdateData(parameters)).unwrap();
-      //   navigate(`admin/orders/${id}`);
+      navigate(`admin/orders/${event_id}`);
+      notificationData();
       console.log(res);
       handleClose();
     } catch (errors) {
@@ -106,7 +109,7 @@ const AdminHeader = () => {
           <Stack direction={"row"} gap={3} alignItems={"center"}>
             <Box>
               <Badge
-                badgeContent="0"
+                badgeContent={getdata?.data?.length}
                 color="secondary"
                 onClick={handleClick}
                 sx={{ cursor: "pointer" }}
@@ -174,23 +177,50 @@ const AdminHeader = () => {
                         alignItems="flex-start"
                         //   key={index}
                         onClick={() => {
-                          handleNotification(notification.id);
+                          handleNotification(
+                            notification?.event_id,
+                            notification?.id
+                          );
                         }}
                       >
-                        <ListItemAvatar>
-                          <Avatar alt="Remy Sharp" src="" />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={notification.id}
-                          secondary={
-                            <React.Fragment>
-                              {notification.description}
-                            </React.Fragment>
-                          }
-                        />
+                        <Grid container>
+                          <Grid
+                            item
+                            md={3}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              background: "#951e76",
+                              fontSize: "16px",
+                              color: "white",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            <ListItemAvatar
+                              sx={{
+                                display: "flex",
+                                textAlign: "center",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {notification?.type}
+                            </ListItemAvatar>
+                          </Grid>
+                          <Grid item md={8} sx={{ pl: 3 }}>
+                            {" "}
+                            <ListItemText
+                              sx={{ cursor: "pointer" }}
+                              primary={notification?.description}
+                              // secondary={<React.Fragment></React.Fragment>}
+                            />
+                          </Grid>
+                        </Grid>
                       </ListItem>
-                      {/* ) : null} */}
+                      <Divider />
 
+                      {/* ) : null} */}
+                      {/* 
                       {index === getdata?.data?.length - 1 ? (
                         <ListItem
                           components={Link}
@@ -204,11 +234,11 @@ const AdminHeader = () => {
                               >
                                 {"View All Notification"}
                               </Box>
-                              // </Link>
+                            
                             }
                           />
                         </ListItem>
-                      ) : null}
+                      ) : null} */}
                     </Fragment>
                   );
                 })
