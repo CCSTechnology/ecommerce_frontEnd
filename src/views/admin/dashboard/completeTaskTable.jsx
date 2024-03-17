@@ -11,6 +11,7 @@ import {
   Badge,
 } from "@mui/material";
 import TableRowsLoader from "../../../components/TableLoader";
+import { Link } from "react-router-dom";
 
 const CompleteTaskTable = (props) => {
   const { tableData, loading, orderList } = props;
@@ -35,46 +36,61 @@ const CompleteTaskTable = (props) => {
           </TableHead>
           <TableBody>
             {/* <TableRowsLoader rowsNum={5} colsNum={6} /> */}
-            {orderList?.data?.data?.data?.slice(0, 5)?.map((row, index) => (
-              <TableRow key={row.id}>
-                <TableCell>{index + 1}</TableCell>
+            {orderList?.data?.data?.data
+              ?.filter((row) => row.paid_status === "Paid")
+              ?.slice(0, 5)
+              ?.map((row, index) => (
+                <TableRow key={row.id}>
+                  <TableCell>{index + 1}</TableCell>
 
-                <TableCell>{row?.order_no}</TableCell>
-                <TableCell>{row?.invoice_no}</TableCell>
-                {/* <TableCell>{row?.guest?.name}</TableCell> */}
-                <TableCell>
-                  {row?.guest?.name ?? (row?.customer_id && row?.customer_id)}
-                </TableCell>
-                <TableCell>{row?.amount}</TableCell>
+                  <TableCell sx={{ background: "white" }}>
+                    <Link
+                      to={`/admin/orders/${row.id}`}
+                      style={{
+                        background: "white",
+                        color: "#951e76",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {row?.order_no}
+                    </Link>
+                  </TableCell>
 
-                <TableCell>
-                  <Badge
-                    className={
-                      row.status == "Pending"
-                        ? "pending"
-                        : row.status == "Completed"
-                        ? "completed"
-                        : "cancelled "
-                    }
-                  >
-                    {row?.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    className={
-                      row.paid_status == "Unpaid"
-                        ? "cancelled"
-                        : row.paid_status == "Paid"
-                        ? "completed"
-                        : "pending"
-                    }
-                  >
-                    {row?.paid_status}
-                  </Badge>
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell>{row?.invoice_no}</TableCell>
+                  {/* <TableCell>{row?.guest?.name}</TableCell> */}
+                  <TableCell>
+                    {row?.guest?.name ?? (row?.customer_id && row?.customer_id)}
+                  </TableCell>
+                  <TableCell>{row?.amount}</TableCell>
+
+                  <TableCell>
+                    <Badge
+                      className={
+                        row.status == "Pending"
+                          ? "pending"
+                          : row.status == "Completed"
+                          ? "completed"
+                          : "cancelled "
+                      }
+                    >
+                      {row?.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      className={
+                        row.paid_status == "Unpaid"
+                          ? "cancelled"
+                          : row.paid_status == "Paid"
+                          ? "completed"
+                          : "pending"
+                      }
+                    >
+                      {row?.paid_status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -56,7 +56,11 @@ const OrderView = () => {
   );
   console.log(orderSingleViewData);
   const [statusData, setStausData] = useState(null);
-  const [orderStatus, setOrderStatus] = useState("");
+  const [orderStatus, setOrderStatus] = useState(
+    `${orderSingleViewData?.data?.data?.status}`
+  );
+  console.log(orderStatus);
+
   const handleChangeOrderStatus = (event) => {
     setOrderStatus(event.target.value);
     setOpen(true);
@@ -103,7 +107,10 @@ const OrderView = () => {
   }, [statusData]);
   return (
     <Box className="indexBox">
-      <TopBreaccrumb title={"Orders"} to={`/admin/dashboard`} />
+      <TopBreaccrumb
+        title={`Order-${orderSingleViewData?.data?.data?.order_no}`}
+        // to={`/admin/dashboard`}
+      />
       <Stack
         direction={{ lg: "row", sm: "column" }}
         gap={2}
@@ -211,6 +218,7 @@ const OrderView = () => {
               value={orderStatus}
               onChange={handleChangeOrderStatus}
               displayEmpty
+              // defaultValue={orderSingleViewData?.data?.data?.status}
               inputProps={{ "aria-label": "Without label" }}
               IconComponent={() => (
                 <IconButton
@@ -223,9 +231,6 @@ const OrderView = () => {
                 </IconButton>
               )}
             >
-              <MenuItem value="">
-                <span>Select An Option</span>
-              </MenuItem>
               <MenuItem value={"Pending"}>Pending</MenuItem>
               <MenuItem value={"Processing"}>Processing</MenuItem>
               <MenuItem value={"Intransist"}>In-transist</MenuItem>

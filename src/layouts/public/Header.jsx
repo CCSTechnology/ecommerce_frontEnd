@@ -78,7 +78,6 @@ export default function Header() {
 
   useEffect(() => {
     console.log("ggg");
-
     fetchCart();
   }, [cart_id]);
 
