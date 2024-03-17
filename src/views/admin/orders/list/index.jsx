@@ -373,7 +373,7 @@ function OrdersList() {
             <TableHeader />
             <TableBody>
               {orderList?.loading ? (
-                <TableRowsLoader rowsNum={10} colsNum={9} />
+                <TableRowsLoader rowsNum={10} colsNum={15} />
               ) : (
                 orderList?.data?.data?.data?.map((row, i) => (
                   <TableRow key={row.id}>
