@@ -379,8 +379,19 @@ function OrdersList() {
                   <TableRow key={row.id}>
                     <TableCell>{i + 1}</TableCell>
                     <TableCell>{row?.date}</TableCell>
-                    <TableCell>{row?.order_no}</TableCell>
-                    <TableCell>{row?.invoice_no}</TableCell>
+                    <TableCell>
+                      <Link
+                        to={`/admin/orders/${row.id}`}
+                        style={{
+                          background: "white",
+                          color: "#951e76",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {row?.order_no}
+                      </Link>
+                    </TableCell>
+                    {/* <TableCell>{row?.invoice_no}</TableCell> */}
                     <TableCell>
                       {row?.customer_id ? "Customer" : "Guest"}{" "}
                     </TableCell>
@@ -429,12 +440,12 @@ function OrdersList() {
                           // onClick={() => downloadPdfApi("view", row.id)}
                         /> */}
 
-                        <Link to={`/admin/orders/${row.id}`}>
+                        {/* <Link to={`/admin/orders/${row.id}`}>
                           <VisibilityIcon
                             className="table-icons"
                             sx={{ color: "black" }}
                           />
-                        </Link>
+                        </Link> */}
                         <FileDownloadIcon
                           className="table-icons"
                           onClick={() => downloadPdfApi("download", row.id)}
