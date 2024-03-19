@@ -147,33 +147,33 @@ function CategoryList() {
         <Box sx={{ my: 3 }}>
           <Stack
             direction={{ lg: "row", sm: "column" }}
-            gap={2}
-            alignItems={"center"}
+            // gap={2}
+            // alignItems={"center"}
             justifyContent={"space-between"}
           >
-            <Stack
-              direction={{ lg: "row", sm: "column" }}
-              gap={2}
-              alignItems={"center"}
+            <SearchInput
+              sx={{
+                border: "1px solid #303067",
+                borderRadius: "20px",
+                height: "32.69px",
+
+                "&.Mui-focused ": {
+                  border: "1px solid #6473ff",
+                },
+                width: { xs: "100%", sm: "340px" },
+              }}
+              value={searchKey || ""}
+              onChange={(e) => onSearch(e)}
+              cancelSearch={cancelSearch}
+            />
+            <Button
+              className="AddBtn"
+              onClick={handleClickOpen}
+              // sx={{ display: "flex", justifyContent: "flex-end" }}
             >
-              <SearchInput
-                sx={{
-                  border: "1px solid #303067",
-                  borderRadius: "20px",
-                  height: "32.69px",
-                  "&.Mui-focused ": {
-                    border: "1px solid #6473ff",
-                  },
-                  width: { xs: "100%", sm: "340px" },
-                }}
-                value={searchKey || ""}
-                onChange={(e) => onSearch(e)}
-                cancelSearch={cancelSearch}
-              />
-              <Button className="AddBtn" onClick={handleClickOpen}>
-                Add
-              </Button>
-            </Stack>
+              Add New Category
+            </Button>
+
             {/* <FormControl size="small" className="directorySelect">
                                 <Select
                                     labelId="demo-select-small-label"

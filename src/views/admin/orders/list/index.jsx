@@ -256,7 +256,7 @@ function OrdersList() {
               // alignItems={"right"}
             >
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ mb: 2, fontSize: "14px" }}>
+                <Typography sx={{ mb: 2, fontSize: "13px" }}>
                   Order Status
                 </Typography>
                 <FormControl
@@ -265,7 +265,7 @@ function OrdersList() {
                   sx={{ width: "250px" }}
                 >
                   <Select
-                    sx={{ fontSize: "14px", height: "37px" }}
+                    sx={{ fontSize: "13px", height: "32px" }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={orderStatus}
@@ -283,23 +283,33 @@ function OrdersList() {
                       </IconButton>
                     )}
                   >
-                    <MenuItem value="">
+                    <MenuItem value="" sx={{ fontSize: "13px" }}>
                       <span style={{ fontFamily: "Poppins!important" }}>
-                        Select An Option
+                        Select Order Status
                       </span>
                     </MenuItem>
-                    <MenuItem value={"pending"}>Pending</MenuItem>
-                    <MenuItem value={"processing"}>Processing</MenuItem>
-                    <MenuItem value={"intransist"}>In-transist</MenuItem>
-                    <MenuItem value={"delivered"}>Delivered</MenuItem>
-                    <MenuItem value={"completed"}>Completed</MenuItem>
+                    <MenuItem value={"pending"} sx={{ fontSize: "13px" }}>
+                      Pending
+                    </MenuItem>
+                    <MenuItem value={"processing"} sx={{ fontSize: "13px" }}>
+                      Processing
+                    </MenuItem>
+                    <MenuItem value={"intransist"} sx={{ fontSize: "13px" }}>
+                      In-transist
+                    </MenuItem>
+                    <MenuItem value={"delivered"} sx={{ fontSize: "13px" }}>
+                      Delivered
+                    </MenuItem>
+                    <MenuItem value={"completed"} sx={{ fontSize: "13px" }}>
+                      Completed
+                    </MenuItem>
 
                     {/* <MenuItem value={"company"}>Company</MenuItem> */}
                   </Select>
                 </FormControl>
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ mb: 2, fontSize: "14px" }}>
+                <Typography sx={{ mb: 2, fontSize: "13px" }}>
                   Payment Status
                 </Typography>
                 <FormControl
@@ -308,7 +318,7 @@ function OrdersList() {
                   sx={{ width: "250px" }}
                 >
                   <Select
-                    sx={{ fontSize: "14px", height: "37px" }}
+                    sx={{ fontSize: "13px", height: "32px" }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={directoryPage}
@@ -326,25 +336,29 @@ function OrdersList() {
                       </IconButton>
                     )}
                   >
-                    <MenuItem value="">
-                      <span>Select An Option</span>
+                    <MenuItem value="" sx={{ fontSize: "13px" }}>
+                      <span>Select Payment Status</span>
                     </MenuItem>
 
-                    <MenuItem value={"paid"}>Paid</MenuItem>
-                    <MenuItem value={"unpaid"}>UnPaid</MenuItem>
+                    <MenuItem value={"paid"} sx={{ fontSize: "13px" }}>
+                      Paid
+                    </MenuItem>
+                    <MenuItem value={"unpaid"} sx={{ fontSize: "13px" }}>
+                      UnPaid
+                    </MenuItem>
                     {/* <MenuItem value={"company"}>Company</MenuItem> */}
                   </Select>
                 </FormControl>
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ mb: 2, fontSize: "14px" }}>User</Typography>
+                <Typography sx={{ mb: 2, fontSize: "143x" }}>User</Typography>
                 <FormControl
                   size="small"
                   className="directorySelect"
                   sx={{ width: "250px" }}
                 >
                   <Select
-                    sx={{ fontSize: "14px", height: "37px" }}
+                    sx={{ fontSize: "13px", height: "32px" }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={userStatus}
@@ -362,12 +376,16 @@ function OrdersList() {
                       </IconButton>
                     )}
                   >
-                    <MenuItem value="">
-                      <span>Select An Option</span>
+                    <MenuItem value="" sx={{ fontSize: "13px" }}>
+                      <span>Select User Type</span>
                     </MenuItem>
 
-                    <MenuItem value={"customer"}>Customer</MenuItem>
-                    <MenuItem value={"guest"}>Guest</MenuItem>
+                    <MenuItem value={"customer"} sx={{ fontSize: "13px" }}>
+                      Customer
+                    </MenuItem>
+                    <MenuItem value={"guest"} sx={{ fontSize: "13px" }}>
+                      Guest
+                    </MenuItem>
                     {/* <MenuItem value={"company"}>Company</MenuItem> */}
                   </Select>
                 </FormControl>
@@ -388,9 +406,11 @@ function OrdersList() {
               ) : (
                 orderList?.data?.data?.data?.map((row, i) => (
                   <TableRow key={row.id}>
-                    <TableCell>{i + 1}</TableCell>
-                    <TableCell>{row?.date}</TableCell>
-                    <TableCell>
+                    <TableCell className="product-center">{i + 1}</TableCell>
+                    <TableCell className="product-center">
+                      {row?.date}
+                    </TableCell>
+                    <TableCell className="product-center">
                       <Link
                         to={`/admin/orders/${row.id}`}
                         style={{
@@ -403,21 +423,27 @@ function OrdersList() {
                       </Link>
                     </TableCell>
                     {/* <TableCell>{row?.invoice_no}</TableCell> */}
-                    <TableCell>
+                    <TableCell className="product-center">
                       {row?.customer_id ? "Customer" : "Guest"}{" "}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="product-center">
                       {row?.guest?.name ??
                         (row?.customer?.first_name &&
                           row?.customer?.first_name)}
                     </TableCell>
-                    <TableCell>{row?.amount}</TableCell>
-                    <TableCell>{row?.total_tax}</TableCell>
+                    <TableCell className="product-center">
+                      {row?.amount}
+                    </TableCell>
+                    {/* <TableCell>{row?.total_tax}</TableCell>
                     <TableCell>{row?.total_weight}</TableCell>
-                    <TableCell>{row?.courier_name}</TableCell>
-                    <TableCell>{row?.shipping_cost}</TableCell>
-                    <TableCell>{row?.grand_total}</TableCell>
-                    <TableCell>
+                    <TableCell>{row?.courier_name}</TableCell> */}
+                    <TableCell className="product-center">
+                      {row?.shipping_cost}
+                    </TableCell>
+                    <TableCell className="product-center">
+                      {row?.grand_total}
+                    </TableCell>
+                    <TableCell className="product-center">
                       <Badge
                         className={
                           row.status == "Pending"
@@ -430,7 +456,7 @@ function OrdersList() {
                         {row?.status}
                       </Badge>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="product-center">
                       <Badge
                         className={
                           row.paid_status == "Unpaid"

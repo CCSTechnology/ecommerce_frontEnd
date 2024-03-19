@@ -16,7 +16,7 @@ const UpComingTaskTable = (props) => {
 
   return (
     <Box>
-      <Typography sx={{ mb: 2 }}>New Customers</Typography>
+      <Typography sx={{ mb: 2, fontWeight: 600 }}>New Customers</Typography>
       <TableContainer className="rolesPageTable">
         <Table
           size="small"
@@ -33,7 +33,7 @@ const UpComingTaskTable = (props) => {
               {/* <TableCell align="left">Status</TableCell> */}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="dashboard-body">
             {/* <TableRowsLoader rowsNum={5} colsNum={6} /> */}
             {customer?.data?.data?.data?.slice(0, 5)?.map((item, index) => (
               <TableRow>

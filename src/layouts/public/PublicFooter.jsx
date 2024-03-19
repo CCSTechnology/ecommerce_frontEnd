@@ -75,7 +75,7 @@ export default function PublicFooter(props) {
           </Div3>
           <Div36>
             <Div37>
-              TrueVine Foods Pvt Limited © 2024. All Rights Reserved
+              Truevine Foods Private Limited © 2024. All Rights Reserved
             </Div37>
             <Div38>
               {/* <Img2

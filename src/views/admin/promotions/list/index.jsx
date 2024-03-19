@@ -197,7 +197,7 @@ function ProductList() {
                 cancelSearch={cancelSearch}
               /> */}
               <Button className="AddBtn" onClick={handleClickOpen}>
-                Add
+                Add New Promotion
               </Button>
             </Stack>
             {/* <FormControl size="small" className="directorySelect">
@@ -226,11 +226,17 @@ function ProductList() {
               ) : (
                 promotionTable?.data?.data?.productdetails.map((row, i) => (
                   <TableRow key={row.id}>
-                    <TableCell>{i + 1}</TableCell>
-                    <TableCell>{row.products.product_name}</TableCell>
-                    <TableCell>{row.products.cost}</TableCell>
-                    <TableCell>{row.percentage}</TableCell>
-                    <TableCell>
+                    <TableCell className="product-center">{i + 1}</TableCell>
+                    <TableCell className="product-center">
+                      {row.products.product_name}
+                    </TableCell>
+                    <TableCell className="product-center">
+                      {row.products.cost}
+                    </TableCell>
+                    <TableCell className="product-center">
+                      {row.percentage}
+                    </TableCell>
+                    <TableCell className="product-center">
                       {row.products.promotion_cost_customer}
                     </TableCell>
                     <TableCell align="center">

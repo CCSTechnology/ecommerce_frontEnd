@@ -19,7 +19,7 @@ const CompleteTaskTable = (props) => {
 
   return (
     <Box>
-      <Typography sx={{ mb: 2 }}>New Orders</Typography>
+      <Typography sx={{ mb: 2, fontWeight: 600 }}>New Orders</Typography>
       <TableContainer className="rolesPageTable">
         <Table
           size="small"
@@ -38,7 +38,7 @@ const CompleteTaskTable = (props) => {
               {/* <TableCell align="left">Status</TableCell> */}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="dashboard-body">
             {/* <TableRowsLoader rowsNum={5} colsNum={6} /> */}
             {orderList?.data?.data?.data
               ?.filter((row) => row.paid_status === "Paid")

@@ -16,7 +16,7 @@ const InProgressTaskTable = (props) => {
 
   return (
     <Box>
-      <Typography sx={{ mb: 2 }}>New Products</Typography>
+      <Typography sx={{ mb: 2, fontWeight: 600 }}>New Products</Typography>
       <TableContainer className="rolesPageTable">
         <Table
           size="small"
@@ -33,7 +33,7 @@ const InProgressTaskTable = (props) => {
               {/* <TableCell align="left">Status</TableCell> */}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className="dashboard-body">
             {/* <TableRowsLoader rowsNum={5} colsNum={6} />  */}
             {product?.data?.data?.data.map((item, index) => (
               <TableRow>

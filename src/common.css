@@ -276,3 +276,11 @@ table {
 .new-textfield-menu {
   font-size: 13px !important;
 }
+
+.product-center {
+  text-align: center !important;
+}
+
+.dashboard-body tr td {
+  text-align: center !important;
+}

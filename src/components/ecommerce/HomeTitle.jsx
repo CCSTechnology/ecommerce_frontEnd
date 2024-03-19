@@ -1,4 +1,5 @@
 import { Box, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function HomeTitle({ featured, link = true }) {
   return (
@@ -6,7 +7,11 @@ export default function HomeTitle({ featured, link = true }) {
       <Title>{featured?.title}</Title>
       {link && (
         <Content>
-          <ViewAll>View All</ViewAll>
+          <Link to="/category/all">
+            {" "}
+            <ViewAll>View All</ViewAll>
+          </Link>
+
           <Image
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cabddc-d124-4af6-8d00-44a0757bd526?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"

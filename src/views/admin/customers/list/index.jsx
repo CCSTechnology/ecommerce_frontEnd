@@ -272,9 +272,9 @@ const Customers = () => {
                     onChange={(e) => onSearch(e)}
                     cancelSearch={cancelSearch}
                   />
-                  <Button className="AddBtn" onClick={handleClickOpen}>
+                  {/* <Button className="AddBtn" onClick={handleClickOpen}>
                     Add
-                  </Button>
+                  </Button> */}
                 </Stack>
               </Stack>
             </Box>

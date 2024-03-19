@@ -214,7 +214,7 @@ const OrderView = () => {
         <DialogContent dividers>
           <FormControl size="small" className="directorySelect">
             <Select
-              sx={{ fontSize: "14px", height: "40px" }}
+              sx={{ fontSize: "13px", height: "32px" }}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={orderStatus}
@@ -233,11 +233,21 @@ const OrderView = () => {
                 </IconButton>
               )}
             >
-              <MenuItem value={"Pending"}>Pending</MenuItem>
-              <MenuItem value={"Processing"}>Processing</MenuItem>
-              <MenuItem value={"Intransist"}>In-transist</MenuItem>
-              <MenuItem value={"Delivered"}>Delivered</MenuItem>
-              <MenuItem value={"Completed"}>Completed</MenuItem>
+              <MenuItem value={"Pending"} sx={{ fontSize: "13px" }}>
+                Pending
+              </MenuItem>
+              <MenuItem value={"Processing"} sx={{ fontSize: "13px" }}>
+                Processing
+              </MenuItem>
+              <MenuItem value={"Intransist"} sx={{ fontSize: "13px" }}>
+                In-transist
+              </MenuItem>
+              <MenuItem value={"Delivered"} sx={{ fontSize: "13px" }}>
+                Delivered
+              </MenuItem>
+              <MenuItem value={"Completed"} sx={{ fontSize: "13px" }}>
+                Completed
+              </MenuItem>
 
               {/* <MenuItem value={"company"}>Company</MenuItem> */}
             </Select>
