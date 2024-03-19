@@ -171,7 +171,11 @@ const UploadSettingImages = () => {
               className="rolesPageTable"
               style={{ marginBottom: "20px" }}
             >
-              <Table aria-label="simple table">
+              <Table
+                size="small"
+                aria-label="a dense table"
+                className="order-table-list"
+              >
                 <TableHead>
                   <TableRow>
                     <TableCell>S.No</TableCell>
@@ -245,7 +249,7 @@ const UploadSettingImages = () => {
                 alignItems={"center"}
                 justifyContent={"space-between"}
               >
-                <Box> "Add Image"</Box>
+                <Box>{addType === "edit" ? "Edit Image" : "Add Image"}</Box>
                 <IconButton onClick={handleClose}>
                   <CloseIcon />
                 </IconButton>

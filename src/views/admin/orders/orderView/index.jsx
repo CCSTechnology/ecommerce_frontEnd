@@ -37,6 +37,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
+import { Login } from "@mui/icons-material";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -54,13 +55,13 @@ const OrderView = () => {
   const orderSingleViewData = useSelector(
     (state) => state?.adminOrder?.viewOrder
   );
-  console.log(orderSingleViewData);
+
   const [statusData, setStausData] = useState(null);
   const [orderStatus, setOrderStatus] = useState(
     `${orderSingleViewData?.data?.data?.status}`
   );
+  console.log(orderSingleViewData?.data?.data?.status);
   console.log(orderStatus);
-
   const handleChangeOrderStatus = (event) => {
     setOrderStatus(event.target.value);
     setOpen(true);
@@ -84,7 +85,7 @@ const OrderView = () => {
     try {
       const res = await dispatch(orderStatusChangeData(parameters)).unwrap();
       setStausData(res);
-      console.log(res);
+
       handleClose();
     } catch (errors) {
       errorAlert(errors?.error);
@@ -97,7 +98,6 @@ const OrderView = () => {
     };
     try {
       const res = await dispatch(viewOrderData(parameters)).unwrap();
-      console.log(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -109,6 +109,7 @@ const OrderView = () => {
     <Box className="indexBox">
       <TopBreaccrumb
         title={`Order-${orderSingleViewData?.data?.data?.order_no}`}
+
         // to={`/admin/dashboard`}
       />
       <Stack
@@ -127,14 +128,14 @@ const OrderView = () => {
         >
           <Badge
             className="completed"
-            sx={{ ml: 2, width: "150px", height: "30px", fontSize: "20px" }}
+            sx={{ ml: 2, width: "150px", height: "20px", fontSize: "16px" }}
           >
             {orderSingleViewData?.data?.data?.status}
           </Badge>
           <ModeEditOutlineOutlinedIcon
             sx={{
-              width: "60px",
-              height: "40px",
+              width: "40px",
+              height: "30px",
               color: "#951e76",
               background: "#f1edf0",
               borderRadius: "10px",
@@ -213,6 +214,7 @@ const OrderView = () => {
         <DialogContent dividers>
           <FormControl size="small" className="directorySelect">
             <Select
+              sx={{ fontSize: "14px", height: "40px" }}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={orderStatus}

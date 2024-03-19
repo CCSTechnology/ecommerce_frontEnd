@@ -18,7 +18,7 @@ const bull = (
 
 export default function BasicCard(props) {
   const { orderSingleViewData } = props;
-  console.log(orderSingleViewData);
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -33,7 +33,7 @@ export default function BasicCard(props) {
               alignItems: "center",
             }}
           >
-            <Typography>Customer Name:</Typography>
+            <Typography sx={{ fontSize: "14px" }}>Customer Name:</Typography>
           </Grid>
           <Grid
             item
@@ -46,7 +46,7 @@ export default function BasicCard(props) {
             }}
           >
             {/* {detail.product_name} */}
-            <Typography>
+            <Typography sx={{ fontSize: "14px" }}>
               {orderSingleViewData?.data?.data?.guest
                 ? orderSingleViewData?.data?.data?.guest?.name
                 : orderSingleViewData?.data?.data?.customer?.first_name}
@@ -64,7 +64,7 @@ export default function BasicCard(props) {
               alignItems: "center",
             }}
           >
-            <Typography>Phone Number:</Typography>
+            <Typography sx={{ fontSize: "14px" }}>Phone Number:</Typography>
           </Grid>
           <Grid
             item
@@ -77,7 +77,7 @@ export default function BasicCard(props) {
             }}
           >
             {/* {detail.product_name} */}
-            <Typography>
+            <Typography sx={{ fontSize: "14px" }}>
               {orderSingleViewData?.data?.data?.guest
                 ? orderSingleViewData?.data?.data?.guest?.phone_number
                 : orderSingleViewData?.data?.data?.customer?.mobile}
@@ -95,7 +95,7 @@ export default function BasicCard(props) {
               alignItems: "center",
             }}
           >
-            <Typography>Email:</Typography>
+            <Typography sx={{ fontSize: "14px" }}>Email:</Typography>
           </Grid>
           <Grid
             item
@@ -108,7 +108,7 @@ export default function BasicCard(props) {
             }}
           >
             {/* {detail.product_name} */}
-            <Typography>
+            <Typography sx={{ fontSize: "14px" }}>
               {orderSingleViewData?.data?.data?.guest
                 ? orderSingleViewData?.data?.data?.guest?.email
                 : orderSingleViewData?.data?.data?.customer?.email}

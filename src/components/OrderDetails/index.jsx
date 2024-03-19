@@ -22,7 +22,7 @@ const bull = (
 
 export default function OrderDetailsCard(props) {
   const { orderSingleViewData } = props;
-  console.log(orderSingleViewData);
+
   return (
     <>
       <Card sx={{ minWidth: 275 }}>
@@ -32,12 +32,16 @@ export default function OrderDetailsCard(props) {
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <Box>
-              <Typography sx={{ textAlign: "center", fontWeight: 500 }}>
+              <Typography
+                sx={{ textAlign: "center", fontWeight: 500, fontSize: "14px" }}
+              >
                 Order No :{orderSingleViewData?.data?.data?.order_no}
               </Typography>
             </Box>
             <Box>
-              <Typography sx={{ textAlign: "center", fontWeight: 500 }}>
+              <Typography
+                sx={{ textAlign: "center", fontWeight: 500, fontSize: "14px" }}
+              >
                 Date :{" "}
                 {dayjs(orderSingleViewData?.data?.data?.date).format(
                   "DD MMM YYYY"
@@ -80,7 +84,10 @@ export default function OrderDetailsCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography> {detail.product_name}</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>
+                      {" "}
+                      {detail.product_name}
+                    </Typography>
 
                     {/* Product Name */}
                   </Grid>
@@ -95,7 +102,9 @@ export default function OrderDetailsCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography>{detail.quantity}</Typography>
+                    <Typography sx={{ fontSize: "14px" }}>
+                      {detail.quantity}
+                    </Typography>
                     {/* Quantity */}
                   </Grid>
                   <Grid
@@ -109,7 +118,9 @@ export default function OrderDetailsCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography>₹{detail.total_amount}</Typography>{" "}
+                    <Typography sx={{ fontSize: "14px" }}>
+                      ₹{detail.total_amount}
+                    </Typography>{" "}
                     {/* Amount */}
                   </Grid>
                 </Grid>
@@ -129,7 +140,7 @@ export default function OrderDetailsCard(props) {
                 mt: 2,
               }}
             >
-              <Typography> Shipping Cost:</Typography>
+              <Typography sx={{ fontSize: "14px" }}> Shipping Cost:</Typography>
             </Grid>
             <Grid item md={3} lg={3}></Grid>
             <Grid item md={3} lg={3}></Grid>
@@ -145,7 +156,7 @@ export default function OrderDetailsCard(props) {
                 alignItems: "center",
               }}
             >
-              <Typography>
+              <Typography sx={{ fontSize: "14px" }}>
                 ₹{orderSingleViewData?.data?.data?.shipping_cost}
               </Typography>
 
@@ -163,7 +174,7 @@ export default function OrderDetailsCard(props) {
                 alignItems: "center",
               }}
             >
-              <Typography>Total:</Typography>
+              <Typography sx={{ fontSize: "14px" }}>Total:</Typography>
             </Grid>
             <Grid item md={3} lg={3}></Grid>
             <Grid item md={3} lg={3}></Grid>
@@ -179,7 +190,7 @@ export default function OrderDetailsCard(props) {
                 alignItems: "center",
               }}
             >
-              <Typography>
+              <Typography sx={{ fontSize: "14px" }}>
                 ₹{orderSingleViewData?.data?.data?.grand_total}
               </Typography>
 

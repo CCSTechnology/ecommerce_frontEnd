@@ -256,13 +256,16 @@ function OrdersList() {
               // alignItems={"right"}
             >
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ mb: 2 }}>Order Status</Typography>
+                <Typography sx={{ mb: 2, fontSize: "14px" }}>
+                  Order Status
+                </Typography>
                 <FormControl
                   size="small"
                   className="directorySelect"
                   sx={{ width: "250px" }}
                 >
                   <Select
+                    sx={{ fontSize: "14px", height: "37px" }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={orderStatus}
@@ -296,13 +299,16 @@ function OrdersList() {
                 </FormControl>
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ mb: 2 }}>Payment Status</Typography>
+                <Typography sx={{ mb: 2, fontSize: "14px" }}>
+                  Payment Status
+                </Typography>
                 <FormControl
                   size="small"
                   className="directorySelect"
                   sx={{ width: "250px" }}
                 >
                   <Select
+                    sx={{ fontSize: "14px", height: "37px" }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={directoryPage}
@@ -331,13 +337,14 @@ function OrdersList() {
                 </FormControl>
               </Box>
               <Box sx={{ mt: 2 }}>
-                <Typography sx={{ mb: 2 }}>User</Typography>
+                <Typography sx={{ mb: 2, fontSize: "14px" }}>User</Typography>
                 <FormControl
                   size="small"
                   className="directorySelect"
                   sx={{ width: "250px" }}
                 >
                   <Select
+                    sx={{ fontSize: "14px", height: "37px" }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
                     value={userStatus}
@@ -369,7 +376,11 @@ function OrdersList() {
           </Box>
         </Box>
         <TableContainer className="rolesPageTable">
-          <Table>
+          <Table
+            size="small"
+            aria-label="a dense table"
+            className="order-table-list"
+          >
             <TableHeader />
             <TableBody>
               {orderList?.loading ? (

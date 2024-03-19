@@ -18,7 +18,11 @@ const UpComingTaskTable = (props) => {
     <Box>
       <Typography sx={{ mb: 2 }}>New Customers</Typography>
       <TableContainer className="rolesPageTable">
-        <Table aria-label="simple table">
+        <Table
+          size="small"
+          aria-label="a dense table"
+          className="order-table-list"
+        >
           <TableHead>
             <TableRow>
               <TableCell>S.No</TableCell>

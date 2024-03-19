@@ -27,7 +27,9 @@ function PasswordField(props) {
         control={control}
         render={({ field }) => (
           <Box>
-            <Typography variant="subtitle1">{label}</Typography>
+            <Typography variant="subtitle1" sx={{ fontSize: "13px" }}>
+              {label}
+            </Typography>
             <TextField
               fullWidth
               variant={variant && variant}
@@ -47,6 +49,7 @@ function PasswordField(props) {
                   </InputAdornment>
                 ),
               }}
+              className="new-textfield"
             />
           </Box>
         )}

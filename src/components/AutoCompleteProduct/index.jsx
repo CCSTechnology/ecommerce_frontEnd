@@ -159,6 +159,7 @@ const MyForm = (props) => {
                 onSelectProduct={(id) => {
                   setValue(`product[${index}].id`, id);
                 }}
+                className="promote-form"
               />
             </Grid>
             <Grid item md={6}>
@@ -168,6 +169,7 @@ const MyForm = (props) => {
                 onChange={(e) =>
                   setValue(`product[${index}].percentage`, e.target.value)
                 }
+                className="promote-form"
               />
             </Grid>
           </Stack>

@@ -185,7 +185,11 @@ function ProductList() {
           </Stack>
         </Box>
         <TableContainer className="rolesPageTable">
-          <Table>
+          <Table
+            size="small"
+            aria-label="a dense table"
+            className="order-table-list"
+          >
             <TableHeader />
             <TableBody>
               {productList?.loading ? (

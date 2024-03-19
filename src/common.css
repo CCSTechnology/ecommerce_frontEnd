@@ -209,11 +209,70 @@ table {
 } */
 
 .order-details-view {
-  font-size: 20px !important;
+  font-size: 16px !important;
   font-weight: 600 !important;
   color: #951e76;
 }
 
 .css-1hju3x6-MuiPaper-root-MuiDialog-paper {
   width: 500px !important;
+}
+
+.f14 {
+  font-size: 14px !important;
+}
+
+.cus-table td {
+  text-align: center;
+}
+
+.order-table-list thead tr th {
+  font-size: 13px !important;
+}
+
+.order-table-list tbody tr td {
+  font-size: 13px !important;
+}
+
+.f13 {
+  font-size: 13px !important;
+}
+
+.new-textfield .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+  font-size: 13px !important;
+}
+
+.new-textfield .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
+  font-size: 13px !important;
+}
+
+.new-textfield
+  css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  font-size: 13px !important;
+}
+
+.promote-form .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  font-size: 13px;
+}
+
+.css-1kkal6p-MuiAutocomplete-root .MuiOutlinedInput-root {
+  font-size: 13px;
+}
+
+.css-gdh49b-MuiAutocomplete-listbox {
+  font-size: 13px;
+}
+
+.image-edit-content
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.featured-add .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  font-size: 13px !important;
+}
+
+.new-textfield-menu {
+  font-size: 13px !important;
 }

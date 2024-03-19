@@ -18,33 +18,35 @@ const bull = (
 
 export default function OrderShippingCard(props) {
   const { orderSingleViewData } = props;
-  console.log(orderSingleViewData);
+
   return (
     <Card sx={{ minWidth: 275, mb: 4 }}>
       <CardContent>
         <Grid container>
           <Grid item md={6}>
-            <Typography>Customer Address:</Typography>
-            <Typography>
+            <Typography className="f14" sx={{ fontWeight: "700" }}>
+              Customer Address:
+            </Typography>
+            <Typography className="f14">
               {orderSingleViewData?.data?.data?.shipping_address?.line1}
             </Typography>
-            <Typography>
+            <Typography className="f14">
               {" "}
               {orderSingleViewData?.data?.data?.shipping_address?.street_name}
             </Typography>
-            <Typography>
+            <Typography className="f14">
               {" "}
               {orderSingleViewData?.data?.data?.shipping_address?.city}
             </Typography>
-            <Typography>
+            <Typography className="f14">
               {" "}
               {orderSingleViewData?.data?.data?.shipping_address?.state}
             </Typography>
-            <Typography>
+            <Typography className="f14">
               {" "}
               {orderSingleViewData?.data?.data?.shipping_address?.country}
             </Typography>
-            <Typography>
+            <Typography className="f14">
               {" "}
               {orderSingleViewData?.data?.data?.shipping_address?.zipcode}
             </Typography>
@@ -61,7 +63,7 @@ export default function OrderShippingCard(props) {
                   alignItems: "center",
                 }}
               >
-                <Typography>Courier Name:</Typography>
+                <Typography className="f14">Courier Name:</Typography>
               </Grid>
               <Grid
                 item
@@ -73,7 +75,7 @@ export default function OrderShippingCard(props) {
                   alignItems: "center",
                 }}
               >
-                <Typography>
+                <Typography className="f14">
                   {" "}
                   {orderSingleViewData?.data?.data?.courier_name}
                 </Typography>
@@ -90,7 +92,7 @@ export default function OrderShippingCard(props) {
                   alignItems: "center",
                 }}
               >
-                <Typography>Total Weight:</Typography>
+                <Typography className="f14">Total Weight:</Typography>
               </Grid>
               <Grid
                 item
@@ -102,7 +104,7 @@ export default function OrderShippingCard(props) {
                   alignItems: "center",
                 }}
               >
-                <Typography>
+                <Typography className="f14">
                   {" "}
                   {orderSingleViewData?.data?.data?.total_weight}
                 </Typography>

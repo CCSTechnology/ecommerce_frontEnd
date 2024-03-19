@@ -78,6 +78,8 @@ const FeaturedProducts = () => {
     (state) => state?.adminSetting?.settingImageView
   );
 
+  console.log(openFeature);
+
   const dataFetaure = useSelector(
     (state) => state?.adminSetting?.featuredDataList
   );
@@ -225,7 +227,11 @@ const FeaturedProducts = () => {
               className="rolesPageTable"
               style={{ marginBottom: "30px" }}
             >
-              <Table aria-label="simple table">
+              <Table
+                size="small"
+                aria-label="a dense table"
+                className="order-table-list"
+              >
                 <TableHead>
                   <TableRow>
                     <TableCell>S.No</TableCell>
@@ -344,8 +350,13 @@ const FeaturedProducts = () => {
                           }
                           sx={{ width: 300 }}
                           renderInput={(params) => (
-                            <TextField {...params} label="Product Name" />
+                            <TextField
+                              {...params}
+                              label="Product Name"
+                              className="featured-add"
+                            />
                           )}
+                          className="featured-add1"
                         />
                       )}
                     />

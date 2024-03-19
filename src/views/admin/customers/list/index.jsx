@@ -279,7 +279,11 @@ const Customers = () => {
               </Stack>
             </Box>
             <TableContainer className="rolesPageTable">
-              <Table>
+              <Table
+                size="small"
+                aria-label="a dense table"
+                className="order-table-list"
+              >
                 <TableHeaders />
 
                 <TableBody>
@@ -287,7 +291,7 @@ const Customers = () => {
                     <TableRowsLoader rowsNum={10} colsNum={10} />
                   ) : (
                     dataCustomer?.data?.data?.data?.map((item, i) => (
-                      <TableRow key={item.id}>
+                      <TableRow key={item.id} className="cus-table">
                         <TableCell>{i + 1}</TableCell>
                         <TableCell>{item.first_name}</TableCell>
                         <TableCell>{item.last_name}</TableCell>
@@ -303,7 +307,7 @@ const Customers = () => {
                             checked={item.is_approved}
                           />
                         </TableCell>
-                        <TableCell align="center">
+                        <TableCell sx={{ textAlign: "center" }}>
                           <Stack direction={"row"} gap={2}>
                             <Link to={`/admin/customers/${item.id}`}>
                               <VisibilityIcon

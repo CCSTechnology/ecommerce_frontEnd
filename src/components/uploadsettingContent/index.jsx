@@ -75,6 +75,7 @@ const UploadSettingContent = () => {
                     <Button
                       className="AddBtn"
                       onClick={() => handleExpand("product")}
+                      sx={{ fontSize: "13px" }}
                     >
                       Products
                     </Button>
@@ -83,6 +84,7 @@ const UploadSettingContent = () => {
                     <Button
                       className="AddBtn"
                       onClick={() => handleExpand("category")}
+                      sx={{ fontSize: "13px" }}
                     >
                       Categories
                     </Button>
@@ -91,6 +93,7 @@ const UploadSettingContent = () => {
                     <Button
                       className="AddBtn"
                       onClick={() => handleExpand("about")}
+                      sx={{ fontSize: "13px" }}
                     >
                       Contents
                     </Button>

@@ -301,7 +301,7 @@ const ProductView = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "25px",
+            fontSize: "20px",
             marginBottom: "20px",
           }}
         >

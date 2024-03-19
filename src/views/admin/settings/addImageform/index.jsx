@@ -178,21 +178,31 @@ const SettingForm = (props, disabled) => {
                 name="type"
                 control={control}
                 render={({ field }) => (
-                  <Select
-                    fullWidth
-                    variant="outlined"
-                    size="medium"
-                    {...field} // Spread the field props
-                    IconComponent={KeyboardArrowDownIcon}
-                    displayEmpty
-                    style={{ fontSize: "14px", color: "#9E9E9E" }}
-                  >
-                    <MenuItem value="" disabled>
-                      Select Banner Type
-                    </MenuItem>
-                    <MenuItem value="top">Top</MenuItem>
-                    <MenuItem value="bottom">Bottom</MenuItem>
-                  </Select>
+                  <>
+                    {" "}
+                    <InputLabel
+                      id="type-label"
+                      sx={{ fontSize: "13px", mb: 1 }}
+                    >
+                      Banner Type
+                    </InputLabel>
+                    <Select
+                      fullWidth
+                      variant="outlined"
+                      size="medium"
+                      {...field} // Spread the field props
+                      IconComponent={KeyboardArrowDownIcon}
+                      displayEmpty
+                      style={{ fontSize: "13px", color: "#9E9E9E" }}
+                      className="image-edit-content"
+                    >
+                      <MenuItem value="" disabled>
+                        Select Banner Type
+                      </MenuItem>
+                      <MenuItem value="top">Top</MenuItem>
+                      <MenuItem value="bottom">Bottom</MenuItem>
+                    </Select>
+                  </>
                 )}
               />
             </Grid>
