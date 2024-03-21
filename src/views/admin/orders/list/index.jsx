@@ -469,7 +469,13 @@ function OrdersList() {
                         {row?.paid_status}
                       </Badge>
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <Stack direction={"row"} gap={2}>
                         {/* <VisibilityIcon
                           className="table-icons"

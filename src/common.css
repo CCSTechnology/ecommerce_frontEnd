@@ -284,3 +284,9 @@ table {
 .dashboard-body tr td {
   text-align: center !important;
 }
+
+.table-actions td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -203,9 +203,21 @@ function CategoryList() {
                     <TableCell style={{ textAlign: "center" }}>
                       {i + 1}
                     </TableCell>
+
                     <TableCell style={{ textAlign: "center" }}>
-                      {row.label}
+                      <Link
+                        to={`/admin/category/${row.unique_label}`}
+                        style={{
+                          background: "white",
+                          color: "#951e76",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {" "}
+                        {row.label}{" "}
+                      </Link>
                     </TableCell>
+
                     {/* <TableCell>{row.parent}</TableCell>
                     <TableCell>description</TableCell> */}
 

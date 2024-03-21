@@ -127,7 +127,7 @@ const ProductView = (props) => {
   return (
     <>
       <Box className="indexBox">
-        <TopBreaccrumb title={"Product List"} to={`/admin/products`} />
+        <TopBreaccrumb title={"Product"} to={`/admin/products`} />
         <Grid
           container
           spacing={2}

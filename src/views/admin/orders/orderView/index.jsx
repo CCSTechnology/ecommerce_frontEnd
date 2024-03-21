@@ -38,6 +38,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import { Login } from "@mui/icons-material";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -57,11 +58,12 @@ const OrderView = () => {
   );
 
   const [statusData, setStausData] = useState(null);
-  const [orderStatus, setOrderStatus] = useState(
-    `${orderSingleViewData?.data?.data?.status}`
-  );
+  const [data, setData] = useState(null);
+  const [orderStatus, setOrderStatus] = useState("Pending");
+  console.log(data);
   console.log(orderSingleViewData?.data?.data?.status);
   console.log(orderStatus);
+  console.log(statusData);
   const handleChangeOrderStatus = (event) => {
     setOrderStatus(event.target.value);
     setOpen(true);
@@ -98,6 +100,7 @@ const OrderView = () => {
     };
     try {
       const res = await dispatch(viewOrderData(parameters)).unwrap();
+      setData(res);
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -105,6 +108,12 @@ const OrderView = () => {
   useEffect(() => {
     viewSingleOrder();
   }, [statusData]);
+
+  useEffect(() => {
+    if (orderSingleViewData?.data?.data?.status) {
+      setOrderStatus(orderSingleViewData.data.data.status);
+    }
+  }, [orderSingleViewData]);
   return (
     <Box className="indexBox">
       <TopBreaccrumb
@@ -126,12 +135,17 @@ const OrderView = () => {
             justifyContent: "flex-start",
           }}
         >
-          <Badge
-            className="completed"
-            sx={{ ml: 2, width: "150px", height: "20px", fontSize: "16px" }}
-          >
-            {orderSingleViewData?.data?.data?.status}
-          </Badge>
+          {orderSingleViewData?.loading ? (
+            <Skeleton width={200} height={30} />
+          ) : (
+            <Badge
+              className="completed"
+              sx={{ ml: 2, width: "150px", height: "20px", fontSize: "16px" }}
+            >
+              {orderSingleViewData?.data?.data?.status}
+            </Badge>
+          )}
+
           <ModeEditOutlineOutlinedIcon
             sx={{
               width: "40px",

@@ -199,7 +199,17 @@ function ProductList() {
                   <TableRow key={row.id}>
                     <TableCell className="product-center">{i + 1}</TableCell>
                     <TableCell className="product-center">
-                      {row.product_name}
+                      <Link
+                        to={`/admin/products/${row.unique_label}`}
+                        style={{
+                          background: "white",
+                          color: "#951e76",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {" "}
+                        {row.product_name}
+                      </Link>
                     </TableCell>
                     <TableCell className="product-center">
                       {row.categoryname}
@@ -211,7 +221,13 @@ function ProductList() {
                     <TableCell className="product-center">
                       {row.description}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <Stack direction={"row"} gap={2}>
                         <Link to={`/admin/products/${row.unique_label}`}>
                           <VisibilityIcon

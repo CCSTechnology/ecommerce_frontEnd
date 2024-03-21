@@ -239,7 +239,13 @@ function ProductList() {
                     <TableCell className="product-center">
                       {row.products.promotion_cost_customer}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <Stack direction={"row"} gap={2}>
                         {/* <Link to={`/admin/promotions/${row.id}`}>
                           <VisibilityIcon

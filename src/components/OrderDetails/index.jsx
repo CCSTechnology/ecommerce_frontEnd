@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MyOrders from "../../views/ecommerce/myorders";
-import { Divider, Grid, Stack } from "@mui/material";
+import { Divider, Grid, Skeleton, Stack } from "@mui/material";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { ImagePath } from "../../utils/helpers";
@@ -32,21 +32,37 @@ export default function OrderDetailsCard(props) {
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <Box>
-              <Typography
-                sx={{ textAlign: "center", fontWeight: 500, fontSize: "14px" }}
-              >
-                Order No :{orderSingleViewData?.data?.data?.order_no}
-              </Typography>
+              {orderSingleViewData?.loading ? (
+                <Skeleton width={200} />
+              ) : (
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    fontWeight: 500,
+                    fontSize: "14px",
+                  }}
+                >
+                  Order No :{orderSingleViewData?.data?.data?.order_no}
+                </Typography>
+              )}
             </Box>
             <Box>
-              <Typography
-                sx={{ textAlign: "center", fontWeight: 500, fontSize: "14px" }}
-              >
-                Date :{" "}
-                {dayjs(orderSingleViewData?.data?.data?.date).format(
-                  "DD MMM YYYY"
-                )}
-              </Typography>
+              {orderSingleViewData?.loading ? (
+                <Skeleton width={200} />
+              ) : (
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    fontWeight: 500,
+                    fontSize: "14px",
+                  }}
+                >
+                  Date :{" "}
+                  {dayjs(orderSingleViewData?.data?.data?.date).format(
+                    "DD MMM YYYY"
+                  )}
+                </Typography>
+              )}
             </Box>
           </Stack>
 
@@ -69,10 +85,15 @@ export default function OrderDetailsCard(props) {
                       mt: 2,
                     }}
                   >
-                    <Image
-                      loading="lazy"
-                      srcSet={ImagePath + detail?.product?.file_name}
-                    />
+                    {" "}
+                    {orderSingleViewData?.loading ? (
+                      <Skeleton variant="circular" width={50} height={50} />
+                    ) : (
+                      <Image
+                        loading="lazy"
+                        srcSet={ImagePath + detail?.product?.file_name}
+                      />
+                    )}
                   </Grid>
                   <Grid
                     item
@@ -84,10 +105,14 @@ export default function OrderDetailsCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontSize: "14px" }}>
-                      {" "}
-                      {detail.product_name}
-                    </Typography>
+                    {orderSingleViewData?.loading ? (
+                      <Skeleton variant="rounded" width={200} />
+                    ) : (
+                      <Typography sx={{ fontSize: "14px" }}>
+                        {" "}
+                        {detail.product_name}
+                      </Typography>
+                    )}
 
                     {/* Product Name */}
                   </Grid>
@@ -102,9 +127,13 @@ export default function OrderDetailsCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontSize: "14px" }}>
-                      {detail.quantity}
-                    </Typography>
+                    {orderSingleViewData?.loading ? (
+                      <Skeleton variant="rounded" width={200} />
+                    ) : (
+                      <Typography sx={{ fontSize: "14px" }}>
+                        {detail.quantity}
+                      </Typography>
+                    )}
                     {/* Quantity */}
                   </Grid>
                   <Grid
@@ -118,9 +147,13 @@ export default function OrderDetailsCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontSize: "14px" }}>
-                      ₹{detail.total_amount}
-                    </Typography>{" "}
+                    {orderSingleViewData?.loading ? (
+                      <Skeleton variant="rounded" width={200} />
+                    ) : (
+                      <Typography sx={{ fontSize: "14px" }}>
+                        ₹{detail.total_amount}
+                      </Typography>
+                    )}
                     {/* Amount */}
                   </Grid>
                 </Grid>
@@ -156,10 +189,14 @@ export default function OrderDetailsCard(props) {
                 alignItems: "center",
               }}
             >
-              <Typography sx={{ fontSize: "14px" }}>
-                ₹{orderSingleViewData?.data?.data?.shipping_cost}
-              </Typography>
-
+              {" "}
+              {orderSingleViewData?.loading ? (
+                <Skeleton variant="rounded" width={200} />
+              ) : (
+                <Typography sx={{ fontSize: "14px" }}>
+                  ₹{orderSingleViewData?.data?.data?.shipping_cost}
+                </Typography>
+              )}
               {/* tax */}
             </Grid>
           </Grid>
@@ -190,10 +227,14 @@ export default function OrderDetailsCard(props) {
                 alignItems: "center",
               }}
             >
-              <Typography sx={{ fontSize: "14px" }}>
-                ₹{orderSingleViewData?.data?.data?.grand_total}
-              </Typography>
-
+              {" "}
+              {orderSingleViewData?.loading ? (
+                <Skeleton width={200} />
+              ) : (
+                <Typography sx={{ fontSize: "14px" }}>
+                  ₹{orderSingleViewData?.data?.data?.grand_total}
+                </Typography>
+              )}
               {/* total */}
             </Grid>
           </Grid>

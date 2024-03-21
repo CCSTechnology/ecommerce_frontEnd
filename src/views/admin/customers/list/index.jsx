@@ -307,7 +307,13 @@ const Customers = () => {
                             checked={item.is_approved}
                           />
                         </TableCell>
-                        <TableCell sx={{ textAlign: "center" }}>
+                        <TableCell
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Stack direction={"row"} gap={2}>
                             <Link to={`/admin/customers/${item.id}`}>
                               <VisibilityIcon

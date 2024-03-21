@@ -35,7 +35,7 @@ const CategoryView = () => {
   }, []);
   return (
     <Box className="indexBox">
-      <TopBreaccrumb title={"Category List"} to={`/admin/category`} />
+      <TopBreaccrumb title={"Category"} to={`/admin/category`} />
       <Grid
         container
         spacing={2}
