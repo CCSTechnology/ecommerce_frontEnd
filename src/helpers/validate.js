@@ -63,6 +63,31 @@ const addressForm = yup.object().shape({
   // confirm_password: yup.string().min(8, "Comfirm Password is required").max(32),
 });
 
+const BenefitForm = yup.object().shape({
+  health_benifits: yup.array().of(
+    yup.object().shape({
+      health_benifit: yup
+        .string()
+        .required("Benefits are a required Field")
+        .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+    })
+  ),
+});
+
+const NutritionForm = yup.object().shape({
+  nutrician_details: yup.array().of(
+    yup.object().shape({
+      nutrician_detail: yup
+        .string()
+        .required("Is a required Field")
+        .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+      per_serve: yup.string().required("Is a required Field"),
+      // .matches(/^[0-9]{10}$/, "Alphabets not allowed"),
+      metric: yup.string().required("Metric is  required"),
+    })
+  ),
+});
+
 export {
   productForm,
   categoryForm,
@@ -70,4 +95,6 @@ export {
   passwordForm,
   addressForm,
   promotionForm,
+  BenefitForm,
+  NutritionForm,
 };

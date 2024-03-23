@@ -86,23 +86,23 @@ function ProductInfoForm({
 
   const handleFormSubmit = async (values) => {
     console.log(values);
-    // const { weight, ...data } = values;
-    // const value = {
-    //   ...data,
-    //   weight: weight / 1000,
-    // };
-    // console.log(value);
-    // const parameters = {
-    //   url: `${authEndPoints.product.productAdd}`,
-    //   data: value,
-    // };
+    const { weight, ...data } = values;
+    const value = {
+      ...data,
+      weight: weight / 1000,
+    };
+    console.log(value);
+    const parameters = {
+      url: `${authEndPoints.product.productAdd}`,
+      data: value,
+    };
     try {
-      //   const response = await dispatch(addProductData(parameters)).unwrap();
-      //   successAlert(response.message);
-      //   setProductId(response);
+      const response = await dispatch(addProductData(parameters)).unwrap();
+      successAlert(response.message);
+      setProductId(response);
       handleNext();
     } catch (error) {
-      //   errorAlert(error.error);
+      errorAlert(error.error);
     }
   };
 

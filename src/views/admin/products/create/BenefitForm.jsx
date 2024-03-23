@@ -20,6 +20,7 @@ import { LoadingButton } from "@mui/lab";
 import { addProductBenefitsData } from "../../../../redux/api/admin/productService";
 import { errorAlert, successAlert } from "../../../../helpers/globalFunctions";
 import { authEndPoints } from "../../../../helpers/endpoints";
+import { BenefitForm } from "../../../../helpers/validate";
 
 function BenefitsForm({
   handleNext,
@@ -43,9 +44,9 @@ function BenefitsForm({
       health_benifits: [{}],
     },
     mode: "onChange",
-    // resolver: yupResolver(),
+    resolver: yupResolver(BenefitForm),
   });
-
+  console.log(errors);
   const { fields, append, remove } = useFieldArray({
     control,
     name: "health_benifits",
@@ -85,7 +86,7 @@ function BenefitsForm({
                   Controller={Controller}
                   label="Benefits"
                   error={
-                    errors.health_benifits?.[index]?.health_benifit?.message
+                    errors?.health_benifits?.[index]?.health_benifit?.message
                   }
                 />
               </Grid>

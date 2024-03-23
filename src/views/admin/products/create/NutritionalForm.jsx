@@ -31,6 +31,7 @@ import {
 } from "../../../../redux/api/admin/productService";
 import { errorAlert, successAlert } from "../../../../helpers/globalFunctions";
 import MetricForm from "./addMetricForm";
+import { NutritionForm } from "../../../../helpers/validate";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -65,8 +66,10 @@ function NutritionalForm({
       nutrician_details: [{}],
     },
     mode: "onChange",
-    // resolver: yupResolver(),
+    resolver: yupResolver(NutritionForm),
   });
+
+  console.log(errors);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -160,7 +163,7 @@ function NutritionalForm({
                   label="Metric"
                   Controller={Controller}
                   data={essential?.metric}
-                  // error={errors?.category?.message}
+                  error={errors?.nutrician_details?.[index]?.metric?.message}
                   onAddButtonClick={() => setOpen(true)}
                   // disabled={type === "edit" && true}
                   delteApiFn={delteApiFn}
