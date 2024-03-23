@@ -6,6 +6,11 @@ import {
   viewProductData,
   commonListData,
   editProductData,
+  addProductNutritionData,
+  addProductBenefitsData,
+  addMetricData,
+  removeMetricData,
+  // commonListMetricData,
 } from "../../../redux/api/admin/productService";
 
 const initialState = {
@@ -15,6 +20,16 @@ const initialState = {
     error: null,
   },
   addProduct: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  addProductNutrition: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  addProductBenefits: {
     loading: false,
     data: null,
     error: null,
@@ -34,11 +49,21 @@ const initialState = {
     data: null,
     error: null,
   },
-  commonList:{
+  commonList: {
     loading: false,
     data: null,
     error: null,
-  }
+  },
+  addMetric: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  removeMetric: {
+    loading: false,
+    data: null,
+    error: null,
+  },
 };
 
 export const productSlice = createSlice({
@@ -125,6 +150,58 @@ export const productSlice = createSlice({
       .addCase(commonListData.rejected, (state, action) => {
         state.commonList.loading = false;
         state.commonList.error = action.payload;
+      })
+
+      .addCase(addProductNutritionData.pending, (state, action) => {
+        state.addProductNutrition.loading = true;
+      })
+      .addCase(addProductNutritionData.fulfilled, (state, action) => {
+        state.addProductNutrition.loading = false;
+        state.addProductNutrition.data = action.payload;
+        state.addProductNutrition.error = null;
+      })
+      .addCase(addProductNutritionData.rejected, (state, action) => {
+        state.addProductNutrition.loading = false;
+        state.addProductNutrition.error = action.payload;
+      })
+
+      .addCase(addProductBenefitsData.pending, (state, action) => {
+        state.addProductBenefits.loading = true;
+      })
+      .addCase(addProductBenefitsData.fulfilled, (state, action) => {
+        state.addProductBenefits.loading = false;
+        state.addProductBenefits.data = action.payload;
+        state.addProductBenefits.error = null;
+      })
+      .addCase(addProductBenefitsData.rejected, (state, action) => {
+        state.addProductBenefits.loading = false;
+        state.addProductBenefits.error = action.payload;
+      })
+
+      .addCase(addMetricData.pending, (state, action) => {
+        state.addMetric.loading = true;
+      })
+      .addCase(addMetricData.fulfilled, (state, action) => {
+        state.addMetric.loading = false;
+        state.addMetric.data = action.payload;
+        state.addMetric.error = null;
+      })
+      .addCase(addMetricData.rejected, (state, action) => {
+        state.addMetric.loading = false;
+        state.addMetric.error = action.payload;
+      })
+
+      .addCase(removeMetricData.pending, (state, action) => {
+        state.removeMetric.loading = true;
+      })
+      .addCase(removeMetricData.fulfilled, (state, action) => {
+        state.removeMetric.loading = false;
+        state.removeMetric.data = action.payload;
+        state.removeMetric.error = null;
+      })
+      .addCase(removeMetricData.rejected, (state, action) => {
+        state.removeMetric.loading = false;
+        state.removeMetric.error = action.payload;
       });
   },
 });

@@ -23,8 +23,12 @@ export const authEndPoints = {
     deleteProductList: (id) => `/product/${id}/1`,
     productView: (name) => `/product?unique_label=${name}`,
     productAdd: "/product",
+    productAddNutri: "/nutriciandetails",
+    productAddBenefit: "/healthbenifits",
     editProduct: (id) => `/product/${id}`,
     listCommon: (name) => `/commonlist?required=${name}`,
+    metricAdd: "/metric",
+    metricRemove: (id) => `/metric/${id}`,
   },
 
   promotion: {

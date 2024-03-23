@@ -290,3 +290,32 @@ table {
   align-items: center;
   justify-content: center;
 }
+
+.select-with-add-nutri
+  .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  width: 150px !important;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  padding-bottom: 0px !important;
+}
+
+.admin-product-stepper
+  .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+  color: #951e76 !important;
+}
+
+.admin-product-stepper
+  .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+  color: #951e76 !important;
+}
+
+.product-stepper-button1:hover {
+  color: #951e76 !important;
+  background: white !important;
+}
+
+.product-stepper-button:hover {
+  color: #951e76 !important;
+  background: white !important;
+}

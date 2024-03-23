@@ -28,7 +28,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopBreaccrumb from "../../../../components/TopBreadcrumb";
 import AddProductForm from "../addProductform";
 import {
@@ -52,7 +52,7 @@ function ProductList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state?.adminProduct?.listProduct);
   const [directoryPage, setDirectoryPage] = useState("admin");
-
+  const navigate = useNavigate();
   const stateValues = useSelector((state) => {
     return {
       deleteLoading: state.adminProduct?.listProduct?.loading,
@@ -86,9 +86,10 @@ function ProductList() {
   };
 
   const handleClickOpen = () => {
-    setSingleData(null);
-    setOpen(true);
-    setAddType("add");
+    navigate("/admin/products/create");
+    // setSingleData(null);
+    // setOpen(true);
+    // setAddType("add");
   };
 
   const deleteDirectory = (id) => {
@@ -274,7 +275,7 @@ function ProductList() {
           />
         )}
 
-        {open === true ? (
+        {/* {open === true ? (
           <Dialog
             fullWidth={true}
             maxWidth={"sm"}
@@ -303,7 +304,7 @@ function ProductList() {
               type={addType}
             />
           </Dialog>
-        ) : null}
+        ) : null} */}
       </Box>
     </Box>
   );
