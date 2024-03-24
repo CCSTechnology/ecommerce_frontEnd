@@ -74,7 +74,7 @@ function NutritionalForm({
     mode: "onChange",
     resolver: yupResolver(NutritionForm),
   });
-
+  const [showFields, setShowFields] = useState(false);
   console.log(initialvalue);
 
   const { fields, append, remove } = useFieldArray({
@@ -282,20 +282,18 @@ function NutritionalForm({
                 />
               </Grid>
 
-              {fields.length >= 0 && (
-                <img
-                  src={AddIcon}
-                  className="misc-addicon"
-                  onClick={() =>
-                    append({
-                      id: field.id,
-                      metric: "",
-                      per_serve: "",
-                      nutrician_detail: "",
-                    })
-                  }
-                />
-              )}
+              <img
+                src={AddIcon}
+                className="misc-addicon"
+                onClick={() =>
+                  append({
+                    id: field.id,
+                    metric: "",
+                    per_serve: "",
+                    nutrician_detail: "",
+                  })
+                }
+              />
 
               {index >= 0 && (
                 <CloseIcon

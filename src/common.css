@@ -319,3 +319,7 @@ table {
   color: #951e76 !important;
   background: white !important;
 }
+
+.product-view-span {
+  padding-right: 20px !important;
+}

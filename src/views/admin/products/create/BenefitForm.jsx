@@ -27,6 +27,7 @@ import { errorAlert, successAlert } from "../../../../helpers/globalFunctions";
 import { authEndPoints } from "../../../../helpers/endpoints";
 import { BenefitForm } from "../../../../helpers/validate";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function BenefitsForm({
   handleNext,
@@ -37,6 +38,7 @@ function BenefitsForm({
   type,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const initialvalue = useSelector(
     (state) => state?.adminProduct?.viewProduct?.data?.data?.product
   );
@@ -146,6 +148,10 @@ function BenefitsForm({
     remove(index);
   };
 
+  const handleProductPage = () => {
+    navigate("/admin/products");
+  };
+
   useEffect(() => {
     if (type === "edit") {
       viewProduct();
@@ -192,22 +198,22 @@ function BenefitsForm({
                   }
                 />
               </Grid>
-              {fields.length >= 0 && (
-                <img
-                  src={AddIcon}
-                  className="misc-addicon"
-                  onClick={() =>
-                    append({
-                      // invoice_id: "",
-                      // item: "",
-                      // qty: "",
-                      // price: "",
-                      // receipt: [],
-                      health_benifit: "",
-                    })
-                  }
-                />
-              )}
+
+              <img
+                src={AddIcon}
+                className="misc-addicon"
+                onClick={() =>
+                  append({
+                    // invoice_id: "",
+                    // item: "",
+                    // qty: "",
+                    // price: "",
+                    // receipt: [],
+                    health_benifit: "",
+                  })
+                }
+              />
+
               {index >= 0 && (
                 <CloseIcon
                   variant="outlined"
@@ -250,6 +256,16 @@ function BenefitsForm({
             >
               {activeStep === steps.length - 1 ? "Save" : "Save"}
             </LoadingButton>
+          )}
+          {type === "edit" && (
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleProductPage}
+              sx={{ mr: 1, background: "#951e76", color: "white", ml: 2 }}
+              className="product-stepper-button"
+            >
+              Close
+            </Button>
           )}
         </Box>
       </form>
