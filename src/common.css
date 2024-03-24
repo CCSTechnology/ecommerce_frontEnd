@@ -323,3 +323,8 @@ table {
 .product-view-span {
   padding-right: 20px !important;
 }
+
+.button-edit-product:hover {
+  background: white !important;
+  color: #951e76 !important;
+}

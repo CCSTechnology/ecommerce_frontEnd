@@ -153,6 +153,14 @@ const ProductView = (props) => {
             <Link underline="hover" color="inherit" to="/admin/products">
               Products List
             </Link>
+            <Link
+              underline="hover"
+              color="text.primary"
+              to="#"
+              aria-current="page"
+            >
+              Product View
+            </Link>
           </Breadcrumbs>
         </div>
         <Card sx={{ minWidth: 275 }}>

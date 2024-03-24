@@ -225,6 +225,21 @@ function BenefitsForm({
           </Box>
         ))}
 
+        {fields?.length === 0 && (
+          <Button
+            variant="contained"
+            sx={{ background: "#951e76", color: "white" }}
+            className="button-edit-product"
+            onClick={() =>
+              append({
+                health_benifit: "",
+              })
+            }
+          >
+            Add New Field
+          </Button>
+        )}
+
         <Box sx={{ mt: 5 }} display={"flex"} justifyContent={"flex-end"}>
           <Button
             disabled={activeStep === 0}
