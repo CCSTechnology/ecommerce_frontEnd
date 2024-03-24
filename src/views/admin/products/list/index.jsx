@@ -50,9 +50,10 @@ function ProductList() {
   const [singleData, setSingleData] = useState(null);
   const [addType, setAddType] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const productList = useSelector((state) => state?.adminProduct?.listProduct);
   const [directoryPage, setDirectoryPage] = useState("admin");
-  const navigate = useNavigate();
+  console.log(singleData);
   const stateValues = useSelector((state) => {
     return {
       deleteLoading: state.adminProduct?.listProduct?.loading,
@@ -98,9 +99,10 @@ function ProductList() {
   };
 
   const editDirectory = (row) => {
-    setSingleData(row);
-    setOpen(true);
-    setAddType("edit");
+    // setSingleData(row);
+    // setOpen(true);
+    // setAddType("edit");
+    // navigate(`/admin/products/${row.unique_label}`);
   };
 
   const deleteDirectoryModalClose = () => {
@@ -236,11 +238,14 @@ function ProductList() {
                             sx={{ color: "black" }}
                           />
                         </Link>
+                        <Link to={`/admin/products/edit/${row.unique_label}`}>
+                          {" "}
+                          <EditIcon
+                            className="table-icons"
+                            // onClick={() => editDirectory(row.unique_label)}
+                          />
+                        </Link>
 
-                        <EditIcon
-                          className="table-icons"
-                          onClick={() => editDirectory(row.unique_label)}
-                        />
                         <DeleteIcon
                           className="table-icons"
                           onClick={() => deleteDirectory(row.id)}

@@ -32,6 +32,7 @@ const CategoryList = lazy(() => import("./views/admin/category/list"));
 const CategoryView = lazy(() => import("./views/admin/category/categoryView"));
 const ProductList = lazy(() => import("./views/admin/products/list"));
 const ProductCreate = lazy(() => import("./views/admin/products/create"));
+const ProductEdit = lazy(() => import("./views/admin/products/edit"));
 const ProductView = lazy(() => import("./views/admin/products/productView"));
 const CustomerList = lazy(() => import("./views/admin/customers/list"));
 const CustomerView = lazy(() => import("./views/admin/customers/customerView"));
@@ -135,6 +136,10 @@ function App() {
             <Route
               path="admin/products/create"
               element={<ProductCreate />}
+            ></Route>
+            <Route
+              path="admin/products/edit/:id"
+              element={<ProductEdit />}
             ></Route>
             <Route path="admin/products/:id" element={<ProductView />}></Route>
             <Route path="admin/customers" element={<CustomerList />}></Route>

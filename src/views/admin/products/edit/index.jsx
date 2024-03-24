@@ -39,10 +39,11 @@ import {
 import { productForm } from "../../../../helpers/validate";
 import { LoadingButton } from "@mui/lab";
 import { authEndPoints } from "../../../../helpers/endpoints";
-import BenefitsForm from "./BenefitForm";
-import NutritionalForm from "./NutritionalForm";
-import ProductInfoForm from "./ProductInfoForm";
+
 import { errorAlert } from "../../../../helpers/globalFunctions";
+import ProductInfoForm from "../create/ProductInfoForm";
+import NutritionalForm from "../create/NutritionalForm";
+import BenefitsForm from "../create/BenefitForm";
 import { Link } from "react-router-dom";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -63,7 +64,7 @@ const steps = [
   },
 ];
 
-function ProductCreate(props) {
+function ProductEdit(props) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const { onClick, initialData = null, type } = props;
@@ -112,12 +113,12 @@ function ProductCreate(props) {
     resolver: yupResolver(productForm),
     mode: "onChange",
   });
+
+  // Add Directory Api
   const handleClick = (event) => {
     event.preventDefault();
     console.info("You clicked a breadcrumb.");
   };
-  // Add Directory Api
-
   return (
     <Box>
       <Box className="indexBox">
@@ -133,7 +134,7 @@ function ProductCreate(props) {
               to="#"
               aria-current="page"
             >
-              Product Create
+              Product Edit
             </Link>
           </Breadcrumbs>
         </div>
@@ -187,7 +188,7 @@ function ProductCreate(props) {
                   handleNext={handleNext}
                   handleBack={handleBack}
                   setProductId={setProductId}
-                  type="add"
+                  type="edit"
                 />
               </Box>
             )}
@@ -199,7 +200,7 @@ function ProductCreate(props) {
                   handleNext={handleNext}
                   handleBack={handleBack}
                   productId={productId?.data?.id}
-                  type="add"
+                  type="edit"
                 />
               </Box>
             )}
@@ -211,7 +212,7 @@ function ProductCreate(props) {
                   handleNext={handleNext}
                   handleBack={handleBack}
                   productId={productId?.data?.id}
-                  type="add"
+                  type="edit"
                 />
               </Box>
             )}
@@ -222,4 +223,4 @@ function ProductCreate(props) {
   );
 }
 
-export default ProductCreate;
+export default ProductEdit;

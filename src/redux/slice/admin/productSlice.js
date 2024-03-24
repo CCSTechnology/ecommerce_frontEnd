@@ -10,6 +10,10 @@ import {
   addProductBenefitsData,
   addMetricData,
   removeMetricData,
+  editBenefitProductData,
+  editNutriProductData,
+  removeNutriData,
+  removeBenefitData,
   // commonListMetricData,
 } from "../../../redux/api/admin/productService";
 
@@ -39,6 +43,16 @@ const initialState = {
     data: null,
     error: null,
   },
+  editBenefitProduct: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  editNutriProduct: {
+    loading: false,
+    data: null,
+    error: null,
+  },
   listProduct: {
     loading: false,
     data: null,
@@ -60,6 +74,16 @@ const initialState = {
     error: null,
   },
   removeMetric: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  removeNutri: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  removeBenefit: {
     loading: false,
     data: null,
     error: null,
@@ -202,6 +226,58 @@ export const productSlice = createSlice({
       .addCase(removeMetricData.rejected, (state, action) => {
         state.removeMetric.loading = false;
         state.removeMetric.error = action.payload;
+      })
+
+      .addCase(editBenefitProductData.pending, (state, action) => {
+        state.editBenefitProduct.loading = true;
+      })
+      .addCase(editBenefitProductData.fulfilled, (state, action) => {
+        state.editBenefitProduct.loading = false;
+        state.editBenefitProduct.data = action.payload;
+        state.editBenefitProduct.error = null;
+      })
+      .addCase(editBenefitProductData.rejected, (state, action) => {
+        state.editBenefitProduct.loading = false;
+        state.editBenefitProduct.error = action.payload;
+      })
+
+      .addCase(editNutriProductData.pending, (state, action) => {
+        state.editNutriProduct.loading = true;
+      })
+      .addCase(editNutriProductData.fulfilled, (state, action) => {
+        state.editNutriProduct.loading = false;
+        state.editNutriProduct.data = action.payload;
+        state.editNutriProduct.error = null;
+      })
+      .addCase(editNutriProductData.rejected, (state, action) => {
+        state.editNutriProduct.loading = false;
+        state.editNutriProduct.error = action.payload;
+      })
+
+      .addCase(removeNutriData.pending, (state, action) => {
+        state.removeNutri.loading = true;
+      })
+      .addCase(removeNutriData.fulfilled, (state, action) => {
+        state.removeNutri.loading = false;
+        state.removeNutri.data = action.payload;
+        state.removeNutri.error = null;
+      })
+      .addCase(removeNutriData.rejected, (state, action) => {
+        state.removeNutri.loading = false;
+        state.removeNutri.error = action.payload;
+      })
+
+      .addCase(removeBenefitData.pending, (state, action) => {
+        state.removeBenefit.loading = true;
+      })
+      .addCase(removeBenefitData.fulfilled, (state, action) => {
+        state.removeBenefit.loading = false;
+        state.removeBenefit.data = action.payload;
+        state.removeBenefit.error = null;
+      })
+      .addCase(removeBenefitData.rejected, (state, action) => {
+        state.removeBenefit.loading = false;
+        state.removeBenefit.error = action.payload;
       });
   },
 });

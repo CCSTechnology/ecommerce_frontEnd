@@ -14,7 +14,7 @@ import {
   DialogContent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
@@ -27,7 +27,9 @@ import { authEndPoints } from "../../../../helpers/endpoints";
 import {
   addProductNutritionData,
   commonListData,
+  editNutriProductData,
   removeMetricData,
+  removeNutriData,
 } from "../../../../redux/api/admin/productService";
 import { errorAlert, successAlert } from "../../../../helpers/globalFunctions";
 import MetricForm from "./addMetricForm";
@@ -41,6 +43,7 @@ function NutritionalForm({
   activeStep,
   handleBack,
   productId,
+  type,
 }) {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -53,6 +56,9 @@ function NutritionalForm({
   });
   const [essentialId, setEssentialId] = useState({});
   console.log(essentialId);
+  const initialvalue = useSelector(
+    (state) => state?.adminProduct?.viewProduct?.data?.data?.product
+  );
   const {
     register,
     handleSubmit,
@@ -69,7 +75,7 @@ function NutritionalForm({
     resolver: yupResolver(NutritionForm),
   });
 
-  console.log(errors);
+  console.log(initialvalue);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -77,6 +83,13 @@ function NutritionalForm({
     required: true,
   });
 
+  const url = window.location.href;
+  const parts = url.split("/");
+  const productName = parts[parts.length - 1];
+  const handleNextButtonClick = () => {
+    // Call the parent component's handleNext function to move to the next step
+    handleNext();
+  };
   //Essential Api
   const essentialListApi = async () => {
     const value = "metric";
@@ -111,6 +124,35 @@ function NutritionalForm({
       errorAlert(error.error);
     }
   };
+
+  const handleNutriedit = async (values) => {
+    console.log(values);
+    const updatedNutricianDetails = values.nutrician_details.map(
+      (detail, index) => ({
+        ...detail,
+        id: initialvalue?.nutrician_details[index]?.id, // Access id from the initial value nutrician_details
+      })
+    );
+    console.log(updatedNutricianDetails);
+
+    const parameters = {
+      url: `${authEndPoints.product.editNutriProduct}`,
+      data: {
+        ...values,
+        product_id: initialvalue?.id,
+        nutrician_details: updatedNutricianDetails,
+      },
+    };
+    console.log(parameters);
+    try {
+      const response = await dispatch(
+        editNutriProductData(parameters)
+      ).unwrap();
+      successAlert(response.message);
+    } catch (error) {
+      errorAlert(error.error);
+    }
+  };
   const handleButtonClick = async () => {
     await essentialListApi(); // Call handleAddDirectory to add directory data
   };
@@ -131,14 +173,73 @@ function NutritionalForm({
     }
   };
 
+  const deleteApiNutri = async (index) => {
+    console.log(initialvalue?.nutrician_details[index]?.id);
+    if (initialvalue?.nutrician_details[index]?.id) {
+      const parameters = {
+        url: `${authEndPoints.product.nutriRemove(
+          initialvalue?.nutrician_details[index]?.id
+        )}`,
+      };
+      try {
+        const response = await dispatch(removeNutriData(parameters)).unwrap();
+        successAlert(response.message);
+      } catch (errors) {
+        errorAlert(errors?.error);
+      }
+    }
+    // Remove item from the form
+    remove(index);
+  };
+
+  const viewProduct = async () => {
+    const parameters = {
+      url: `${authEndPoints.product.productView(productName)}`,
+    };
+    try {
+      const res = await dispatch(viewProductData(parameters)).unwrap();
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
+
+  useEffect(() => {
+    if (type === "edit") {
+      viewProduct();
+    }
+  }, [type]);
+
   useEffect(() => {
     essentialListApi();
     // delteApiFn();
   }, []);
 
+  useEffect(() => {
+    // Extract the health benefits array from the initialvalue object
+    if (type === "edit") {
+      const initialBenefits = initialvalue?.nutrician_details || [];
+
+      // Map the health benefits array to a new array with the field name expected by react-hook-form
+      const defaultValues = initialBenefits.map((benefit) => ({
+        nutrician_detail: benefit.nutrician_detail,
+        metric: benefit.metric,
+        per_serve: benefit.per_serve,
+      }));
+
+      // Set the default values for the health_benefits field array
+      setValue("nutrician_details", defaultValues);
+    }
+  }, [initialvalue]);
+
   return (
     <Box sx={{ mx: 2 }}>
-      <form onSubmit={handleSubmit(handleInvoiceAdd)}>
+      <form
+        onSubmit={
+          type === "add"
+            ? handleSubmit(handleInvoiceAdd)
+            : handleSubmit(handleNutriedit)
+        }
+      >
         {fields.map((field, index) => (
           <Box key={field.id} sx={{ mt: 2 }}>
             <Stack direction={"row"} gap={3}>
@@ -180,23 +281,26 @@ function NutritionalForm({
                   error={errors.nutrician_details?.[index]?.per_serve?.message}
                 />
               </Grid>
-              <img
-                src={AddIcon}
-                className="misc-addicon"
-                onClick={() =>
-                  append({
-                    // invoice_id: "",
-                    metric: "",
-                    per_serve: "",
-                    nutrician_detail: "",
-                    // receipt: [],
-                  })
-                }
-              />{" "}
-              {index !== 0 && (
+
+              {fields.length >= 0 && (
+                <img
+                  src={AddIcon}
+                  className="misc-addicon"
+                  onClick={() =>
+                    append({
+                      id: field.id,
+                      metric: "",
+                      per_serve: "",
+                      nutrician_detail: "",
+                    })
+                  }
+                />
+              )}
+
+              {index >= 0 && (
                 <CloseIcon
                   variant="outlined"
-                  onClick={() => remove(index)}
+                  onClick={() => deleteApiNutri(index)}
                   className="misc-addicon"
                 ></CloseIcon>
               )}
@@ -212,16 +316,37 @@ function NutritionalForm({
           >
             Back
           </Button>
-          <LoadingButton
-            loadingPosition="center"
-            loading={isSubmitting}
+          {type === "edit" ? (
+            <LoadingButton
+              loadingPosition="center"
+              loading={isSubmitting}
+              variant="contained"
+              type="submit"
+              sx={{ background: "#951e76", color: "white" }}
+              className="product-stepper-button1"
+            >
+              {activeStep === steps.length - 1 ? "Finish" : "Update"}
+            </LoadingButton>
+          ) : (
+            <LoadingButton
+              loadingPosition="center"
+              loading={isSubmitting}
+              variant="contained"
+              type="submit"
+              sx={{ background: "#951e76", color: "white" }}
+              className="product-stepper-button1"
+            >
+              {activeStep === steps.length - 1 ? "Finish" : "Save"}
+            </LoadingButton>
+          )}
+          <Button
             variant="contained"
-            type="submit"
-            sx={{ background: "#951e76", color: "white" }}
+            onClick={handleNextButtonClick}
+            sx={{ background: "#951e76", color: "white", ml: 2 }}
             className="product-stepper-button1"
           >
-            {activeStep === steps.length - 1 ? "Finish" : "Save"}
-          </LoadingButton>
+            Next
+          </Button>
         </Box>
       </form>
       {open === true ? (

@@ -22,6 +22,7 @@ import { authEndPoints } from "../../../../helpers/endpoints";
 import BenefitsForm from "./BenefitForm";
 import NutritionalForm from "./NutritionalForm";
 import { errorAlert, successAlert } from "../../../../helpers/globalFunctions";
+import { useParams } from "react-router-dom";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -32,6 +33,7 @@ function ProductInfoForm({
   activeStep,
   handleBack,
   setProductId,
+  type,
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [adminsrole, setadminsRole] = useState(null);
@@ -48,6 +50,10 @@ function ProductInfoForm({
   const [essential, setEssential] = useState({
     cateLists: [],
   });
+  console.log(type);
+  const url = window.location.href;
+  const parts = url.split("/");
+  const productName = parts[parts.length - 1];
 
   const {
     register,
@@ -59,7 +65,7 @@ function ProductInfoForm({
     reset,
     formState: { errors, isSubmitting },
   } = useForm({
-    // defaultValues: type === "add" ? {} : initialvalue,
+    defaultValues: type === "add" ? {} : initialvalue,
     resolver: yupResolver(productForm),
     mode: "onChange",
   });
@@ -73,6 +79,18 @@ function ProductInfoForm({
     try {
       const response = await dispatch(commonListData(parameters)).unwrap();
       setEssential(response.data);
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
+
+  // view product
+  const viewProduct = async () => {
+    const parameters = {
+      url: `${authEndPoints.product.productView(productName)}`,
+    };
+    try {
+      const res = await dispatch(viewProductData(parameters)).unwrap();
     } catch (errors) {
       errorAlert(errors?.error);
     }
@@ -106,9 +124,66 @@ function ProductInfoForm({
     }
   };
 
+  const handleEditProduct = async (values) => {
+    console.log(values);
+    const { weight, ...data } = values;
+    const value = {
+      ...data,
+      weight: weight / 1000,
+    };
+    console.log(value);
+    const parameters = {
+      url: `${authEndPoints.product.editProduct(initialvalue?.id)}`,
+      data: value,
+    };
+    console.log(parameters);
+    try {
+      const response = await dispatch(editProductData(parameters)).unwrap();
+      successAlert(response.message);
+    } catch (error) {
+      errorAlert(error.error);
+      console.log(errors);
+    }
+  };
+
+  const handleNextButtonClick = () => {
+    // Call the parent component's handleNext function to move to the next step
+    handleNext();
+  };
+
+  useEffect(() => {
+    if (productName) {
+      const Img = productName.image ? productName.image : "";
+      setImages(Img);
+    }
+  }, []);
+
   useEffect(() => {
     essentialListApi();
   }, []);
+
+  useEffect(() => {
+    if (type === "edit") {
+      viewProduct();
+    }
+  }, [type]);
+
+  useEffect(() => {
+    if (type !== "add") {
+      if (initialvalue) {
+        const { weight, ...restOfValues } = initialvalue;
+        const value = {
+          ...restOfValues,
+          weight: weight * 1000,
+        };
+        reset(value);
+      } else {
+        reset();
+      }
+    } else {
+      reset();
+    }
+  }, [initialvalue]);
 
   return (
     // <Box>
@@ -117,7 +192,13 @@ function ProductInfoForm({
       {formLoading ? (
         <FormLoader />
       ) : (
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form
+          onSubmit={
+            type === "add"
+              ? handleSubmit(handleFormSubmit)
+              : handleSubmit(handleEditProduct)
+          }
+        >
           <Grid container spacing={5} sx={{ mb: 2 }}>
             <Grid item xs={6} direction={"column"}>
               <TextFormField
@@ -195,16 +276,40 @@ function ProductInfoForm({
             >
               Back
             </Button>
-            <LoadingButton
-              loadingPosition="center"
-              loading={isSubmitting}
-              variant="contained"
-              type="submit"
-              sx={{ background: "#951e76", color: "white" }}
-              className="product-stepper-button1"
-            >
-              {activeStep === steps.length - 1 ? "Finish" : "Save"}
-            </LoadingButton>
+            {type === "edit" ? (
+              <LoadingButton
+                loadingPosition="center"
+                loading={isSubmitting}
+                variant="contained"
+                type="submit"
+                sx={{ background: "#951e76", color: "white" }}
+                className="product-stepper-button1"
+              >
+                {activeStep === steps.length - 1 ? "Finish" : "Update"}
+              </LoadingButton>
+            ) : (
+              <LoadingButton
+                loadingPosition="center"
+                loading={isSubmitting}
+                variant="contained"
+                type="submit"
+                sx={{ background: "#951e76", color: "white" }}
+                className="product-stepper-button1"
+              >
+                {activeStep === steps.length - 1 ? "Finish" : "Save"}
+              </LoadingButton>
+            )}
+
+            {type === "edit" && (
+              <Button
+                variant="contained"
+                onClick={handleNextButtonClick}
+                sx={{ background: "#951e76", color: "white", ml: 2 }}
+                className="product-stepper-button1"
+              >
+                Next
+              </Button>
+            )}
           </Box>
         </form>
       )}

@@ -115,6 +115,52 @@ export const editProductData = createAsyncThunk(
     }
   }
 );
+
+export const editBenefitProductData = createAsyncThunk(
+  "editBenefitProductData",
+  async (params, thunkApi) => {
+    const { url = "", data = {} } = params;
+    try {
+      const response = await ADMINSERVER.post(
+        url,
+        {
+          ...data,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const editNutriProductData = createAsyncThunk(
+  "editNutriProductData",
+  async (params, thunkApi) => {
+    const { url = "", data = {} } = params;
+    try {
+      const response = await ADMINSERVER.post(
+        url,
+        {
+          ...data,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
 // get
 export const productListData = createAsyncThunk(
   "employeeListData",
@@ -150,6 +196,34 @@ export const deleteProductData = createAsyncThunk(
 
 export const removeMetricData = createAsyncThunk(
   "removeMetricData",
+  async (params, thunkApi) => {
+    const { url = "", data = {} } = params;
+    try {
+      const response = await ADMINSERVER.delete(url, {
+        ...data,
+      });
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+export const removeNutriData = createAsyncThunk(
+  "removeNutriData",
+  async (params, thunkApi) => {
+    const { url = "", data = {} } = params;
+    try {
+      const response = await ADMINSERVER.delete(url, {
+        ...data,
+      });
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+export const removeBenefitData = createAsyncThunk(
+  "removeBenefitData",
   async (params, thunkApi) => {
     const { url = "", data = {} } = params;
     try {

@@ -26,9 +26,13 @@ export const authEndPoints = {
     productAddNutri: "/nutriciandetails",
     productAddBenefit: "/healthbenifits",
     editProduct: (id) => `/product/${id}`,
+    editBenefitProduct: `/healthbenifitsupdate`,
+    editNutriProduct: `/nutriciandetailsupdate`,
     listCommon: (name) => `/commonlist?required=${name}`,
     metricAdd: "/metric",
     metricRemove: (id) => `/metric/${id}`,
+    nutriRemove: (id) => `/nutriciandetails/${id}`,
+    healthRemove: (id) => `/healthbenifits/${id}`,
   },
 
   promotion: {

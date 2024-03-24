@@ -8,7 +8,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -17,10 +17,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextFormField from "../../../../components/reusableFormFields/TextField";
 import { AddIcon } from "../../../../helpers/images";
 import { LoadingButton } from "@mui/lab";
-import { addProductBenefitsData } from "../../../../redux/api/admin/productService";
+import {
+  addProductBenefitsData,
+  editBenefitProductData,
+  removeBenefitData,
+  viewProductData,
+} from "../../../../redux/api/admin/productService";
 import { errorAlert, successAlert } from "../../../../helpers/globalFunctions";
 import { authEndPoints } from "../../../../helpers/endpoints";
 import { BenefitForm } from "../../../../helpers/validate";
+import { useEffect } from "react";
 
 function BenefitsForm({
   handleNext,
@@ -28,9 +34,13 @@ function BenefitsForm({
   activeStep,
   handleBack,
   productId,
+  type,
 }) {
   const dispatch = useDispatch();
-
+  const initialvalue = useSelector(
+    (state) => state?.adminProduct?.viewProduct?.data?.data?.product
+  );
+  console.log(initialvalue);
   const {
     register,
     handleSubmit,
@@ -53,6 +63,10 @@ function BenefitsForm({
     required: true,
   });
 
+  const url = window.location.href;
+  const parts = url.split("/");
+  const productName = parts[parts.length - 1];
+
   const handleInvoiceAdd = async (values) => {
     console.log(values);
     const parameters = {
@@ -71,9 +85,97 @@ function BenefitsForm({
     }
   };
 
+  const handleEditBenefits = async (values) => {
+    console.log(values);
+
+    const updatedNutricianDetails = values.health_benifits.map(
+      (detail, index) => ({
+        ...detail,
+        id: initialvalue?.health_benifits[index]?.id, // Access id from the initial value nutrician_details
+      })
+    );
+    console.log(updatedNutricianDetails);
+
+    const parameters = {
+      url: `${authEndPoints.product.editBenefitProduct}`,
+      data: {
+        ...values,
+        product_id: initialvalue?.id,
+        health_benifits: updatedNutricianDetails,
+      },
+    };
+
+    try {
+      const response = await dispatch(
+        editBenefitProductData(parameters)
+      ).unwrap();
+      successAlert(response.message);
+    } catch (error) {
+      errorAlert(error.error);
+    }
+  };
+
+  // view product
+  const viewProduct = async () => {
+    const parameters = {
+      url: `${authEndPoints.product.productView(productName)}`,
+    };
+    try {
+      const res = await dispatch(viewProductData(parameters)).unwrap();
+    } catch (errors) {
+      errorAlert(errors?.error);
+    }
+  };
+
+  const deleteApiNutri = async (index) => {
+    console.log(initialvalue?.health_benifits[index]?.id);
+    if (initialvalue?.health_benifits[index]?.id) {
+      const parameters = {
+        url: `${authEndPoints.product.healthRemove(
+          initialvalue?.health_benifits[index]?.id
+        )}`,
+      };
+      try {
+        const response = await dispatch(removeBenefitData(parameters)).unwrap();
+        successAlert(response.message);
+      } catch (errors) {
+        errorAlert(errors?.error);
+      }
+    }
+    // Remove item from the form
+    remove(index);
+  };
+
+  useEffect(() => {
+    if (type === "edit") {
+      viewProduct();
+    }
+  }, [type]);
+
+  useEffect(() => {
+    if (type === "edit") {
+      // Extract the health benefits array from the initialvalue object
+      const initialBenefits = initialvalue?.health_benifits || [];
+
+      // Map the health benefits array to a new array with the field name expected by react-hook-form
+      const defaultValues = initialBenefits.map((benefit) => ({
+        health_benifit: benefit.health_benifit,
+      }));
+
+      // Set the default values for the health_benefits field array
+      setValue("health_benifits", defaultValues);
+    }
+  }, [initialvalue]);
+
   return (
     <Box sx={{ mx: 2 }}>
-      <form onSubmit={handleSubmit(handleInvoiceAdd)}>
+      <form
+        onSubmit={
+          type === "add"
+            ? handleSubmit(handleInvoiceAdd)
+            : handleSubmit(handleEditBenefits)
+        }
+      >
         {fields.map((field, index) => (
           <Box key={field.id} sx={{ mt: 2 }}>
             <Stack direction={"row"} gap={3}>
@@ -90,24 +192,26 @@ function BenefitsForm({
                   }
                 />
               </Grid>
-              <img
-                src={AddIcon}
-                className="misc-addicon"
-                onClick={() =>
-                  append({
-                    // invoice_id: "",
-                    // item: "",
-                    // qty: "",
-                    // price: "",
-                    // receipt: [],
-                    health_benifit: "",
-                  })
-                }
-              />{" "}
-              {index !== 0 && (
+              {fields.length >= 0 && (
+                <img
+                  src={AddIcon}
+                  className="misc-addicon"
+                  onClick={() =>
+                    append({
+                      // invoice_id: "",
+                      // item: "",
+                      // qty: "",
+                      // price: "",
+                      // receipt: [],
+                      health_benifit: "",
+                    })
+                  }
+                />
+              )}
+              {index >= 0 && (
                 <CloseIcon
                   variant="outlined"
-                  onClick={() => remove(index)}
+                  onClick={() => deleteApiNutri(index)}
                   className="misc-addicon"
                 ></CloseIcon>
               )}
@@ -124,16 +228,29 @@ function BenefitsForm({
           >
             Back
           </Button>
-          <LoadingButton
-            loadingPosition="center"
-            loading={isSubmitting}
-            variant="contained"
-            type="submit"
-            sx={{ background: "#951e76", color: "white" }}
-            className="product-stepper-button1"
-          >
-            {activeStep === steps.length - 1 ? "Finish" : "Save"}
-          </LoadingButton>
+          {type === "edit" ? (
+            <LoadingButton
+              loadingPosition="center"
+              loading={isSubmitting}
+              variant="contained"
+              type="submit"
+              sx={{ background: "#951e76", color: "white" }}
+              className="product-stepper-button1"
+            >
+              {activeStep === steps.length - 1 ? "Update" : "Save"}
+            </LoadingButton>
+          ) : (
+            <LoadingButton
+              loadingPosition="center"
+              loading={isSubmitting}
+              variant="contained"
+              type="submit"
+              sx={{ background: "#951e76", color: "white" }}
+              className="product-stepper-button1"
+            >
+              {activeStep === steps.length - 1 ? "Save" : "Save"}
+            </LoadingButton>
+          )}
         </Box>
       </form>
     </Box>
