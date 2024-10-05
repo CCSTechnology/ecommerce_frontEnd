@@ -31,7 +31,7 @@ export default function HomeNew() {
     HomeApi();
   }, []);
   return (
-    <Box sx={{ background: "black" }}>
+    <Box>
       <StyledContainerNew>
         {/* <HeaderNew /> */}
         <HomeBannerNew />
