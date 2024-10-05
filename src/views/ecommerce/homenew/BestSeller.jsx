@@ -27,6 +27,7 @@ import {
 } from "../../../redux/api/public/cartServices";
 import { toast } from "react-toastify";
 import { errorAlert } from "../../../helpers/globalFunctions";
+import { ImagePath } from "../../../utils/helpers";
 
 const BestSeller = () => {
   const { data: HomeFeaturedData } = useSelector(
@@ -136,7 +137,7 @@ const BestSeller = () => {
                 <Grid item md={3} pl={2}>
                   <Box>
                     <img
-                      src={best_seller1}
+                      src={ImagePath + item.file_name}
                       className="our-products-image"
                     ></img>
                     <Stack direction={"column"} textAlign={"center"} gap={1}>
