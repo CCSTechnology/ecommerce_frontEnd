@@ -105,7 +105,7 @@ const ProductCardWrapper = styled(Link)(({ theme }) => ({
 
 const ProductImage = styled("img")`
   width: 254px;
-  height: 230px;
+  height: 312px;
   padding: 5px;
 `;
 

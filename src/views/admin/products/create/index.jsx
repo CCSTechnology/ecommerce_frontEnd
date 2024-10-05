@@ -54,12 +54,12 @@ const steps = [
     description: `Basic Information about the Product`,
   },
   {
-    label: "Health Benefits",
-    description: "Health Benefits about the Product",
-  },
-  {
     label: "Nutritional Facts ",
     description: `Nutritional Facts about the Product`,
+  },
+  {
+    label: "Health Benefits",
+    description: "Health Benefits about the Product",
   },
 ];
 

@@ -66,10 +66,8 @@ const addressForm = yup.object().shape({
 const BenefitForm = yup.object().shape({
   health_benifits: yup.array().of(
     yup.object().shape({
-      health_benifit: yup
-        .string()
-        .required("Benefits are a required Field")
-        .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+      health_benifit: yup.string().required("Benefits are a required Field"),
+      // .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
     })
   ),
 });
@@ -77,10 +75,8 @@ const BenefitForm = yup.object().shape({
 const NutritionForm = yup.object().shape({
   nutrician_details: yup.array().of(
     yup.object().shape({
-      nutrician_detail: yup
-        .string()
-        .required("Is a required Field")
-        .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
+      nutrician_detail: yup.string().required("Is a required Field"),
+      // .matches(/^[aA-zZ\s]+$/, "Numbers are not allowed"),
       per_serve: yup.string().required("Is a required Field"),
       // .matches(/^[0-9]{10}$/, "Alphabets not allowed"),
       metric: yup.string().required("Metric is  required"),

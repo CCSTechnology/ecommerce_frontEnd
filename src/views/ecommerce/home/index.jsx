@@ -13,15 +13,15 @@ import HomeSubBanner from "./HomeSubBanner";
 import HomeTestimonials from "./HomeTestimonials";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const HomeApi = async () => {
-    try {
-      await dispatch(homeDataService()).unwrap();
-    } catch (error) {}
-  };
-  useEffect(() => {
-    HomeApi();
-  }, []);
+ const dispatch = useDispatch();
+ const HomeApi = async () => {
+   try {
+     await dispatch(homeDataService()).unwrap();
+   } catch (error) {}
+ };
+ useEffect(() => {
+   HomeApi();
+ }, []);
 
   return (
     <StyledContainer>

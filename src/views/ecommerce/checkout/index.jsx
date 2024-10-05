@@ -53,6 +53,7 @@ export default memo(function GetLoginCheckout() {
     (state) => state.cart.cartViewServices
   );
   const [cartList, setCartList] = useState(null);
+  console.log(cartList);
   const [user, setUser] = useState(null);
   const [guest, setGuest] = useState(null);
   const [delivery, setDelivery] = useState(null);

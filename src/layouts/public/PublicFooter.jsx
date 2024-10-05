@@ -3,82 +3,83 @@ import styled from "styled-components";
 import StyledContainer from "../../components/ecommerce/StyledContainer";
 import { logo } from "../../helpers/images";
 import { Link } from "react-router-dom";
+import StyledContainerNew from "../../components/ecommerce/StyledContainernew";
 
 export default function PublicFooter(props) {
   return (
-    <StyledContainer>
-      <Div>
-        <Div2>
-          <Div3>
-            <Div4>
-              <Div5>
-                <Img loading="lazy" src={logo} />
-              </Div5>
-              {/* <Div7>
+    // <StyledContainerNew>
+    <Div>
+      <Div2>
+        <Div3>
+          <Div4>
+            <Div5>
+              <Img loading="lazy" src={logo} />
+            </Div5>
+            {/* <Div7>
                 Morbi cursus porttitor enim lobortis molestie. Duis gravida
                 turpis dui, eget bibendum magna congue nec.
               </Div7> */}
-              <Div8>
-                <Div9>(+91) 93211 88645</Div9>
-                <Div10>or</Div10>
-                <Div11> customercare@truevine.in</Div11>
-              </Div8>
-            </Div4>
-            {/* <Div12>
+            <Div8>
+              <Div9>(+91) 93211 88645</Div9>
+              <Div10>or</Div10>
+              <Div11> customercare@truevine.in</Div11>
+            </Div8>
+          </Div4>
+          {/* <Div12>
               <Div13>My Account</Div13>
               <Div14>My Account</Div14>
               <Div15>Order History</Div15>
 
               <Div17>Wishlist</Div17>
             </Div12> */}
-            <Div18>
-              <Div19>Helps</Div19>
-              <Link to="/contact-us">
-                <Div20>Contact Us</Div20>
-              </Link>
-              <Div21>Faqs</Div21>
-              <Link to="/terms-conditions">
-                <Div22>Terms & Condition</Div22>
-              </Link>
-              <Link to="/privacy-policy">
-                <Div23>Privacy Policy</Div23>
-              </Link>
-              <Link to="/shipping-policy">
-                <Div23>Shipping Policy</Div23>
-              </Link>
-              <Link to="/refund-policy">
-                <Div23>Cancellation & Refund Policy</Div23>
-              </Link>
-            </Div18>
-            <Div24>
-              <Div25>Proxy</Div25>
-              <Div26>About</Div26>
-              <Link to="/category/all">
-                <Div27>Shop</Div27>
-              </Link>
-              <Link to="/category/all">
-                <Div28>Product</Div28>
-              </Link>
-              <Link to="/cart">
-                <Div16>Shoping Cart</Div16>
-              </Link>
+          <Div18>
+            <Div19>Helps</Div19>
+            <Link to="/contact-us">
+              <Div20>Contact Us</Div20>
+            </Link>
+            <Div21>Faqs</Div21>
+            <Link to="/terms-conditions">
+              <Div22>Terms & Condition</Div22>
+            </Link>
+            <Link to="/privacy-policy">
+              <Div23>Privacy Policy</Div23>
+            </Link>
+            <Link to="/shipping-policy">
+              <Div23>Shipping Policy</Div23>
+            </Link>
+            <Link to="/refund-policy">
+              <Div23>Cancellation & Refund Policy</Div23>
+            </Link>
+          </Div18>
+          <Div24>
+            <Div25>Proxy</Div25>
+            <Div26>About</Div26>
+            <Link to="/category/all">
+              <Div27>Shop</Div27>
+            </Link>
+            <Link to="/category/all">
+              <Div28>Product</Div28>
+            </Link>
+            <Link to="/cart">
+              <Div16>Shoping Cart</Div16>
+            </Link>
 
-              {/* <Div29>Track Order</Div29> */}
-            </Div24>
-            <Div30>
-              <Div31>Categories</Div31>
-              <Div32>Peanut Butter</Div32>
-              {/* <Div33>Meat & Fish</Div33>
+            {/* <Div29>Track Order</Div29> */}
+          </Div24>
+          <Div30>
+            <Div31>Categories</Div31>
+            <Div32>Peanut Butter</Div32>
+            {/* <Div33>Meat & Fish</Div33>
               <Div34>Bread & Bakery</Div34>
               <Div35>Beauty & Health</Div35> */}
-            </Div30>
-          </Div3>
-          <Div36>
-            <Div37>
-              Truevine Foods Private Limited © 2024. All Rights Reserved
-            </Div37>
-            <Div38>
-              {/* <Img2
+          </Div30>
+        </Div3>
+        <Div36>
+          <Div37>
+            Truevine Foods Private Limited © 2024. All Rights Reserved
+          </Div37>
+          <Div38>
+            {/* <Img2
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/09319586-a7bc-4586-81e2-355f1c7519a9?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
               />
@@ -94,8 +95,8 @@ export default function PublicFooter(props) {
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/6bd9aefd-4044-472d-9d9d-26e4d4221105?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
               /> */}
-              {/* <Div39> */}
-              {/* <Div40>
+            {/* <Div39> */}
+            {/* <Div40>
                   <Img6
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/252c6e90-f27f-422b-8880-157d008b9350?apiKey=a16585d2108947c5b17ddc9b1a13aff2&"
@@ -103,12 +104,12 @@ export default function PublicFooter(props) {
                   <Div41>Secure</Div41>
                 </Div40>
                 <Div42>Payment</Div42> */}
-              {/* </Div39> */}
-            </Div38>
-          </Div36>
-        </Div2>
-      </Div>
-    </StyledContainer>
+            {/* </Div39> */}
+          </Div38>
+        </Div36>
+      </Div2>
+    </Div>
+    // </StyledContainerNew>
   );
 }
 
@@ -164,7 +165,7 @@ const Img = styled.img`
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
-  width: 32px;
+  width: 100px;
   overflow: hidden;
   max-width: 100%;
   margin: auto 0;

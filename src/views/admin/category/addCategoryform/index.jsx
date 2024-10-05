@@ -39,6 +39,7 @@ const AddCategoryForm = (props, disabled) => {
   const [essential, setEssential] = useState({
     cateLists: [],
   });
+  console.log(essential, "essential");
 
   const {
     register,

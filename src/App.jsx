@@ -58,6 +58,7 @@ const Login = lazy(() => import("./views/ecommerce/auth/login"));
 const SignUp = lazy(() => import("./views/ecommerce/auth/sign-up"));
 
 const Home = lazy(() => import("./views/ecommerce/home"));
+const HomeNew = lazy(() => import("./views/ecommerce/homenew"));
 const Products = lazy(() => import("./views/ecommerce/products"));
 const ChangePassword = lazy(() => import("./views/ecommerce/change-password"));
 const MyOrders = lazy(() => import("./views/ecommerce/myorders"));
@@ -97,8 +98,10 @@ function App() {
           <Route path="/guest-login" element={<GuestCheckOut />}></Route>
           <Route path="/register" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
+
           <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />}></Route>
+            <Route path="/homenew" element={<Home />}></Route>
+            <Route path="/" element={<HomeNew />}></Route>
             <Route
               path="/category/:categorySlug"
               element={<Products />}

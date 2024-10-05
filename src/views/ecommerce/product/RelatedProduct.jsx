@@ -68,7 +68,7 @@ export default function RelatedProduct({ relatedProduct }) {
     <StyledContainer>
       <HomeTitle
         featured={{
-          title: "Related Products",
+          title: "RELATED PRODUCTS",
         }}
         link={false}
       />
