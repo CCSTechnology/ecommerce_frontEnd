@@ -32,9 +32,10 @@ export default function HomeNew() {
   }, []);
   return (
     <Box>
+      <HomeBannerNew />
       <StyledContainerNew>
         {/* <HeaderNew /> */}
-        <HomeBannerNew />
+
         <HomeFeaturedNew />
         <HomeDesignNew />
         <OurProducts />
@@ -43,9 +44,9 @@ export default function HomeNew() {
         <BestSeller />
         {/* <Testimonial /> */}
 
-        <FinalSection />
         {/* <PublicFooter /> */}
       </StyledContainerNew>
+      <FinalSection />
     </Box>
   );
 }
