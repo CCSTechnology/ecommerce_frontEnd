@@ -4,10 +4,10 @@ import { product_1, product_2, product_3 } from "../../../helpers/images";
 
 const FinalSection = () => {
   return (
-    <Box sx={{ background: "#F9F9F9", height: "104px" }}>
+    <Box sx={{ background: "#F9F9F9", height: { md: "104px", xs: "150px" } }}>
       <Container maxWidth={"lg"}>
         <Grid container>
-          <Grid item md={3} mt={3} className="grid-final">
+          <Grid item md={3} mt={3} xs={6} className="grid-final">
             <Stack direction={"row"} gap={3}>
               {/* <p className="home-finalsec-div"> </p> */}
               <FeatureImage
@@ -17,7 +17,7 @@ const FinalSection = () => {
               <p className="final-sec">FREE SHIPPING</p>
             </Stack>
           </Grid>
-          <Grid item md={3} mt={3} className="grid-final">
+          <Grid item md={3} xs={6} mt={3} className="grid-final">
             <Stack direction={"row"} gap={3}>
               <FeatureImage
                 loading="lazy"
@@ -26,7 +26,7 @@ const FinalSection = () => {
               <p className="final-sec">24 hours Service</p>
             </Stack>
           </Grid>
-          <Grid item md={3} mt={3} className="grid-final">
+          <Grid item md={3} xs={6} mt={3} className="grid-final">
             <Stack direction={"row"} gap={3}>
               <FeatureImage
                 loading="lazy"
@@ -35,7 +35,7 @@ const FinalSection = () => {
               <p className="final-sec">Cash on Delivery</p>
             </Stack>
           </Grid>
-          <Grid item md={3} mt={3} className="grid-final">
+          <Grid item md={3} xs={6} mt={3} className="grid-final">
             <Stack direction={"row"} gap={3}>
               <FeatureImage
                 loading="lazy"

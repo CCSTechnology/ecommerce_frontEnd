@@ -16,7 +16,7 @@ const HomeFeaturedNew = () => {
             justifyContent: "center",
           }}
         >
-          <Stack direction="column">
+          <Stack direction="column" sx={{ p: 2 }}>
             {/* <p className="home-new-featured">Lorem ipsum dolor</p> */}
             <p className="home-new-featured1">
               Peanut Butter is a Energy Butter
@@ -29,6 +29,7 @@ const HomeFeaturedNew = () => {
         <Grid
           item
           md={4}
+          xs={6}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -45,7 +46,7 @@ const HomeFeaturedNew = () => {
               {" "}
               <img
                 src={Fiber}
-                className="home-featured-image"
+                // className="home-featured-image"
                 style={{ width: "150px", height: "130px" }}
               ></img>
             </Grid>
@@ -57,6 +58,7 @@ const HomeFeaturedNew = () => {
         <Grid
           item
           md={4}
+          xs={6}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -73,7 +75,7 @@ const HomeFeaturedNew = () => {
             >
               <img
                 src={Protein}
-                className="home-featured-image"
+                // className="home-featured-image"
                 style={{ width: "170px", height: "130px" }}
               ></img>
             </Grid>
@@ -85,6 +87,7 @@ const HomeFeaturedNew = () => {
         <Grid
           item
           md={4}
+          xs={12}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -101,7 +104,7 @@ const HomeFeaturedNew = () => {
             >
               <img
                 src={Vitamin}
-                className="home-featured-image"
+                // className="home-featured-image"
                 style={{ width: "130px", height: "130px" }}
               ></img>
             </Grid>

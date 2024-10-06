@@ -8,7 +8,7 @@ const HomeDesignNew = () => {
     <Box sx={{ background: "white" }} pt={8}>
       <Container maxWidth={"lg"}>
         <Grid container>
-          <Grid item md={6}>
+          <Grid item md={6} xs={12}>
             <Grid item md={10}>
               <Stack direction="column">
                 <p className="home-design">NOT JUST ANOTHER PEANUT BUTTER.</p>
@@ -24,13 +24,15 @@ const HomeDesignNew = () => {
               </Stack>
             </Grid>
           </Grid>
-          <Grid item md={6} mb={4} pl={4}>
+          <Grid item md={6} mb={4} pl={{ md: 4, xs: 0 }} xs={12}>
             <Box
               sx={{
                 background: "#F9F9F9",
-                height: "433px",
+                height: { md: "433px", xs: "233px" },
                 borderRadius: "33px",
-                width: "538px",
+                width: { md: "538px", xs: "238px" },
+                // width: "538px",
+                // height: "433px",
               }}
             >
               <img
@@ -46,13 +48,18 @@ const HomeDesignNew = () => {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item md={6} mb={4}>
+          <Grid item md={6} mb={4} xs={12} className="peanut-image">
             <Box
               sx={{
                 background: "#F9F9F9",
-                height: "433px",
+                height: { md: "433px", xs: "233px" },
+                // height: "433px",
                 borderRadius: "33px",
-                width: "538px",
+                // width: "538px",
+                width: { md: "538px", xs: "238px" },
+                // display: "flex",
+                // alignItems: "center",
+                // justifyContent: "center",
               }}
             >
               {" "}
@@ -67,7 +74,13 @@ const HomeDesignNew = () => {
               ></img>
             </Box>
           </Grid>
-          <Grid item md={6} pl={4}>
+          <Grid
+            item
+            md={6}
+            pl={{ md: 12, xs: 0, lg: 4 }}
+            xs={12}
+            className="peanut-image"
+          >
             <Grid item md={10}>
               <Stack direction="column">
                 <p className="home-design2">WHAT MAKES US DIFFERENT? </p>

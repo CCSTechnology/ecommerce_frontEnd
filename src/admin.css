@@ -705,3 +705,17 @@ ogo .backimg {
   }
   /* Add more styles here */
 }
+
+@media only screen and (max-width: 768px) and (min-width: 320px) {
+  .home-featured-image {
+    width: 338px !important;
+    height: 253px !important;
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-width: 769px) {
+  .peanut-image {
+    margin-top: 240px !important;
+    /* height: 253px !important; */
+  }
+}

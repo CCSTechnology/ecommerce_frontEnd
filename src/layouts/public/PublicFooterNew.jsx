@@ -5,10 +5,10 @@ import { facebook, insta, linkedin, logo1 } from "../../helpers/images";
 import { Link } from "react-router-dom";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 
-export default function PublicFooter(props) {
+export default function PublicFooterNew(props) {
   return (
     <StyledContainer>
-      <Box sx={{ color: "white" }}>
+      <Box sx={{ color: "black" }}>
         <Grid container>
           <Grid item md={5} mt={5} px={10}>
             <LogoContainer to="/">

@@ -502,7 +502,7 @@ table {
 
 .our-products-image {
   height: 100%;
-  width: 91%;
+  width: 100%;
   object-fit: cover;
 
   /* display: flex;

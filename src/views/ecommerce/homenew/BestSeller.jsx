@@ -93,7 +93,7 @@ const BestSeller = () => {
   return (
     <Box sx={{ background: "white" }}>
       <Grid container pt={5}>
-        <Grid md={12}>
+        <Grid xs={12}>
           <Stack direction={"column"}>
             {/* <p className="our-products-new">Lorem ipsum dolor</p> */}
             <p className="our-products-new1">BEST SELLERS</p>

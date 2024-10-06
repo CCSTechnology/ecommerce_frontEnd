@@ -81,8 +81,12 @@ const OurProducts = () => {
   return (
     <Box sx={{ background: "white" }}>
       <Grid container pt={5}>
-        <Grid md={12}>
-          <Stack direction={"column"}>
+        <Grid xs={12}>
+          <Stack
+            direction={"column"}
+            alignItems={"center"}
+            justifyContent={"center"}
+          >
             {/* <p className="our-products-new">Lorem ipsum dolor</p> */}
             <p className="our-products-new1">Our Products</p>
           </Stack>
@@ -125,7 +129,13 @@ const OurProducts = () => {
                   <Grid
                     item
                     md={4}
-                    sx={{ cursor: "pointer" }}
+                    xs={12}
+                    sx={{
+                      cursor: "pointer",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
 
                     // onClick={() => addToCart("add", item)}
                   >

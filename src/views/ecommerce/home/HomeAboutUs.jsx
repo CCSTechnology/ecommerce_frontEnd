@@ -94,7 +94,16 @@ export default function HomeAboutUs() {
                 </HomeAboutUsContent>
               </Stack>
             </Grid>
-            <Grid md={6} xs={12}>
+            <Grid
+              md={6}
+              xs={12}
+              sx={{
+                dispaly: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                p: { xs: 2, md: 0 },
+              }}
+            >
               <img
                 // src="https://ccstechnolgy.s3.eu-north-1.amazonaws.com/TruevineProducts/0e4ff2f4-a09c-4a43-8cde-f7e13a3821f4.webp"
                 src={About}
