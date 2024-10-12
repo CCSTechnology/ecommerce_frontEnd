@@ -2,13 +2,13 @@ import { Box, Grid, Stack, Typography, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import StyledContainer from "../../../components/ecommerce/StyledContainer";
+import { ImagePath } from '../../../utils/helpers';
 import HomeTitle from "../../../components/ecommerce/HomeTitle";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { About } from "../../../helpers/images";
 export default function HomeAboutUs() {
   const { data: HomeData } = useSelector((state) => state.home.homeDataService);
-  const aboutUs = HomeData?.about_us || null;
+  const aboutUs = HomeData || null;
   console.log(aboutUs, "ab");
   useEffect(() => {
     AOS.init({
@@ -46,7 +46,7 @@ export default function HomeAboutUs() {
           data-aos="fade-up"
           data-aos-duration="3000"
           className="lg-carosil"
-          // mt={6}
+        // mt={6}
         >
           {" "}
           <Grid container>
@@ -106,7 +106,7 @@ export default function HomeAboutUs() {
             >
               <img
                 // src="https://ccstechnolgy.s3.eu-north-1.amazonaws.com/TruevineProducts/0e4ff2f4-a09c-4a43-8cde-f7e13a3821f4.webp"
-                src={About}
+                src={ImagePath + aboutUs?.about?.image}
                 style={{
                   width: "98%",
                   marginBottom: "30px",

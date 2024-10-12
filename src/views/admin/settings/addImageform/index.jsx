@@ -200,6 +200,7 @@ const SettingForm = (props, disabled) => {
                         Select Banner Type
                       </MenuItem>
                       <MenuItem value="top">Top</MenuItem>
+                      <MenuItem value="about">About</MenuItem>
                       <MenuItem value="bottom">Bottom</MenuItem>
                     </Select>
                   </>

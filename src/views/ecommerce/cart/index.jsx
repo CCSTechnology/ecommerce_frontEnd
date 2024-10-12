@@ -6,6 +6,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
+  Grid,
   IconButton,
   Typography,
   styled,
@@ -59,7 +61,7 @@ const Cart = () => {
           cart_id,
         })
       ).unwrap();
-      setCartList(response?.details);
+      setCartList(response);
       console.log("ggg");
     } catch (error) {
       setCartList([]);
@@ -74,6 +76,10 @@ const Cart = () => {
     navigate("/checkout");
   };
 
+  const handleShopping = () => {
+    navigate("/category/all");
+  };
+
   useEffect(() => {
     console.log("ggg");
     listCartApi();
@@ -81,7 +87,6 @@ const Cart = () => {
   return (
     <Wrapper>
       <CustomBreadcrumbs breadcrumbs={breadcrumbs} />
-      <CardTitle>My Cart</CardTitle>
       {!cartList || cartList?.length === 0 ? (
         <Box
           sx={{
@@ -100,42 +105,65 @@ const Cart = () => {
           </Typography>
         </Box>
       ) : (
-        <ProductList>
-          {cartList?.map((product, index) => {
-            return (
-              <CartProductCard
-                key={index}
-                product={product}
-                finishApi={listCartApi}
-              />
-            );
-          })}
-        </ProductList>
+        <Grid container>
+          <Grid item md="8"><ProductList>
+            <CardTitle>My Cart</CardTitle>
+            <Box sx={{ border: "1px solid #e0e0e0", borderRadius: "10px", padding: "10px" }}>
+              {cartList?.details?.map((product, index) => {
+                return (
+                  <CartProductCard
+                    key={index}
+                    product={product}
+                    finishApi={listCartApi}
+                  />
+                );
+              })}</Box>
+
+          </ProductList></Grid>
+          <Grid item md="4">
+            <CartSummary>
+              <CardTitle>Cart Summary</CardTitle>
+              <Divider />
+              <Box sx={{ display: "flex", justifyContent: "space-between", px: "60px" }}>
+                <Title>Subtotal</Title>
+                <Title>₹ {cartList?.grand_total}</Title>
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "space-between", px: "60px" }}>
+                <Title>Total Weight</Title>
+                <Title>₹ {cartList?.total_weight}</Title>
+              </Box>
+              <ButtonWrapper>
+                {/* <Button variant='contained' onClick={handlePayment}>Check out</Button> */}
+                {cart_id ? (
+                  <Button
+                    variant="contained"
+                    onClick={handleCheckout}
+                    disabled={cartList?.details?.length > 0 ? false : true}
+                  >
+                    Check out
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    onClick={handlePayment}
+                    disabled={cartList?.details?.length > 0 ? false : true}
+                  >
+                    Check out
+                  </Button>
+                )}
+
+                <Button variant="contained" onClick={handleShopping}>Continue Shop</Button>
+              </ButtonWrapper>
+            </CartSummary>
+
+
+          </Grid>
+        </Grid>
+
       )}
 
-      <ButtonWrapper>
-        {/* <Button variant='contained' onClick={handlePayment}>Check out</Button> */}
-        {cart_id ? (
-          <Button
-            variant="contained"
-            onClick={handleCheckout}
-            disabled={cartList?.length > 0 ? false : true}
-          >
-            Check out
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            onClick={handlePayment}
-            disabled={cartList?.length > 0 ? false : true}
-          >
-            Check out
-          </Button>
-        )}
 
-        <Button variant="contained">Continue Shop</Button>
-      </ButtonWrapper>
-      {}
+      { }
       <Dialog
         title="Please Login"
         aria-labelledby="alert-dialog-title"
@@ -211,6 +239,16 @@ const ProductList = styled(Box)`
   flex-direction: column;
   gap: 12px;
   padding: 15px;
+  
+`;
+
+const CartSummary = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  // border: 1px solid var(--gray-scale-gray-300, #e0e0e0);
+  // border-radius: 4px;
 `;
 
 const CardTitle = styled(Typography)`
@@ -230,4 +268,11 @@ const ButtonWrapper = styled(Box)`
   justify-content: center;
   gap: 20px;
   padding-block: 20px;
+`;
+
+
+const Title = styled(Typography)`
+  color: var(--gray-scale-gray-900, #1a1a1a);
+  font: 400 16px/24px Poppins, sans-serif;
+
 `;

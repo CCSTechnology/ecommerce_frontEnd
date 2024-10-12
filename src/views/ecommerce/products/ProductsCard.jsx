@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 import { CartBag } from "../../../helpers/images";
 import imageUrl from "../../../assets/images/images_offer2.png";
 
-export default function ProductCard({ product, addToCart }) {
+export default function ProductCard({ product, addToCart, type }) {
   return (
     <Card to={"/product/" + product.unique_label}>
       <ImageContainer>
         <LazyImage loading="lazy" srcSet={ImagePath + product.file_name} />
-        <LazyImage2 loading="lazy" src={ImagePath + product.file_name} />
+        {!type && (
+          <LazyImage2 loading="lazy" src={ImagePath + product.file_name} />
+        )}
       </ImageContainer>
       {product.promotion && (
         <Box
@@ -51,7 +53,7 @@ export default function ProductCard({ product, addToCart }) {
           <Title>{product.product_name}</Title>
           {/* <Price>₹ {Number(product.cost).toFixed(2)}</Price> */}
           {product?.promotion?.sale_price_customer &&
-          product?.promotion?.sale_price_customer < product.cost ? (
+            product?.promotion?.sale_price_customer < product.cost ? (
             <Box>
               <ProductStrikePrice>
                 ₹ {Number(product.cost).toFixed(2)}

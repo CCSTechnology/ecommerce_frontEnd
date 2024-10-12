@@ -15,6 +15,8 @@ function TextFormField(props) {
     variant,
     disabled,
     sx,
+    multiline,
+    rows,
   } = props;
   return (
     <>
@@ -39,7 +41,9 @@ function TextFormField(props) {
               disabled={disabled}
               sx={sx}
               className="new-textfield"
-              // sx={{ backgroundColor: "white", width: "100%" }}
+              multiline={multiline}
+              rows={rows}
+            // sx={{ backgroundColor: "white", width: "100%" }}
             />
           </Box>
         )}

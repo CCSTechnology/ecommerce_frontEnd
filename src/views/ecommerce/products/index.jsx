@@ -99,6 +99,7 @@ const Products = () => {
                   product={product}
                   key={product.id}
                   addToCart={addToCart}
+                  type='list'
                 />
               );
             })}
@@ -164,9 +165,9 @@ function FilterComponent({ length }) {
   );
 }
 
-const ProductsWrapper = styled(Box)(({}) => ({}));
+const ProductsWrapper = styled(Box)(({ }) => ({}));
 
-const ProdductList = styled(Box)(({}) => ({
+const ProdductList = styled(Box)(({ }) => ({
   display: "flex",
   padding: "20px 20px",
   flexWrap: "wrap",
@@ -174,7 +175,7 @@ const ProdductList = styled(Box)(({}) => ({
   gap: "34px",
 }));
 
-const ProductsContainer = styled(Box)(({}) => ({
+const ProductsContainer = styled(Box)(({ }) => ({
   width: "100%",
   display: "flex",
   flexDirection: "column",
